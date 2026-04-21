@@ -2,141 +2,257 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周成鑫 - 3D渲染作品集</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>周成鑫 · 3D渲染作品集</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: #e0e0dc;
-            color: #000;
+            color: #111;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 顶部导航：居中在页面正上方 */
+        /* ---------- 顶部导航：导航居中，平面旋转笑脸在左侧 ---------- */
         header {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem 3rem;
+            padding: 2.2rem 3rem 1.5rem;
             width: 100%;
-        }
-
-        /* 3D 银色向日葵 自动旋转图标 - 最最最左边 + 往左边移动 */
-        .sunflower-icon {
-            font-size: 1.6rem; /* 比导航大一点 */
-            color: #c0c0c0; /* 标准银色 */
-            animation: rotate 8s linear infinite; /* 一直旋转 */
             position: relative;
-            left: -1024px; /* ✅ 往左边大幅度移动 */
-        }
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
+        /* 纯平面笑脸 — SVG 线条风格 + 持续旋转 */
+        .sunflower-icon {
+            position: absolute;
+            left: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            cursor: default;
+            user-select: none;
+            pointer-events: none;
+            animation: flatRotate 5s linear infinite;
+        }
+
+        @keyframes flatRotate {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* 导航链接 — 居中显示 */
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 2.5rem;
-            font-size: 1.2rem;
+            gap: 2.8rem;
+            font-size: 1.25rem;
             font-weight: 500;
+            letter-spacing: -0.01em;
         }
+
         .nav-links a {
-            color: #000;
+            color: #111;
             text-decoration: none;
             display: inline-block;
-            transition: transform 0.2s ease;
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transform-origin: center;
         }
 
-        /* 鼠标悬停放大效果 */
         .nav-links a:hover {
-            transform: scale(1.15);
+            transform: scale(1.18);
         }
 
-        /* 中间内容全屏居中 */
+        /* ---------- 主内容区 ---------- */
         main {
+            flex: 1;
             width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 6rem;
+            gap: 6.5rem;
+            padding: 1rem 2rem 3rem;
         }
 
-        /* 主标题视差效果：更丝滑的动画曲线 */
         .hero-title {
             display: flex;
             align-items: center;
-            gap: 2.5rem;
-            font-size: clamp(5rem, 11vw, 9rem);
+            justify-content: center;
+            gap: 2.2rem;
+            font-size: clamp(4.8rem, 11vw, 8.8rem);
             font-weight: 700;
             white-space: nowrap;
-            transition: transform 0.4s cubic-bezier(0.15, 0.05, 0.05, 1);
+            transition: transform 0.2s linear;
             will-change: transform;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: #0a0a0a;
         }
 
         .penguin-img {
-            width: clamp(75px, 7vw, 110px);
-            border-radius: 6px;
-            transform: rotate(-4deg);
+            width: clamp(75px, 7.5vw, 115px);
+            height: auto;
+            border-radius: 8px;
+            transform: rotate(-5deg);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            background: #ccc;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #222;
+            gap: 7rem;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #1e1e1e;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            padding-top: 2.8rem;
         }
 
-        /* 底部 */
+        .hero-desc div:first-child {
+            font-weight: 450;
+        }
+        .hero-desc div:last-child {
+            font-weight: 380;
+            color: #2c2c2c;
+        }
+
+        /* ---------- 底部 ---------- */
         footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 3rem;
+            padding: 1.8rem 3rem 2.2rem;
             width: 100%;
             font-size: 0.8rem;
-            color: #333;
+            font-weight: 450;
+            color: #1f1f1f;
+            letter-spacing: 0.02em;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
+
         .social-links {
             display: flex;
-            gap: 1.2rem;
+            gap: 1.6rem;
+        }
+        .social-links span {
+            cursor: default;
+            transition: opacity 0.2s;
+            font-weight: 500;
+        }
+        .social-links span:hover {
+            opacity: 0.7;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 700px) {
+            header {
+                padding: 1.5rem 1.5rem;
+            }
+            .sunflower-icon {
+                left: 1.5rem;
+                width: 36px;
+                height: 36px;
+            }
+            .nav-links {
+                gap: 1.8rem;
+                font-size: 1.1rem;
+            }
+            .hero-title {
+                gap: 1rem;
+                font-size: clamp(3rem, 10vw, 5rem);
+                white-space: normal;
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .penguin-img {
+                width: 65px;
+            }
+            .hero-desc {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+                padding-top: 1.5rem;
+            }
+            main {
+                gap: 3.5rem;
+            }
+            footer {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: flex-start;
+                padding: 1.5rem 1.8rem;
+            }
+        }
+
+        .hero-title span:first-child {
+            font-weight: 750;
+        }
+        .hero-title span:last-child {
+            font-weight: 650;
+            color: #202020;
         }
     </style>
 </head>
 <body>
-    <!-- 顶部导航：现在居中在正上方 -->
     <header>
-        <nav class="nav-links">
-            <!-- ✅ 最最最最最左边：银色向日葵 -->
-            <div class="sunflower-icon">🌻</div>
+        <!-- 平面笑脸：内联 SVG 绘制，简洁线条，旋转不停 -->
+        <div class="sunflower-icon" aria-label="旋转笑脸">
+            <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- 脸型：圆形轮廓 -->
+                <circle cx="50" cy="50" r="42" />
+                <!-- 左眼 -->
+                <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                <!-- 右眼 -->
+                <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                <!-- 微笑的嘴巴 -->
+                <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
+            </svg>
+        </div>
 
-            <a href="#">首页</a>
+        <nav class="nav-links">
+            <a href="#" aria-current="page">首页</a>
             <a href="#">关于</a>
             <a href="#">工作</a>
         </nav>
     </header>
 
-    <!-- 中间主体 -->
     <main>
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
-            <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" class="penguin-img" alt="penguin">
+            <!-- 
+                🔁🔁🔁 图片替换位置 🔁🔁🔁
+                请将下面 src="" 中的链接替换为您自己的图片地址。
+                建议图片尺寸为正方形 (1:1)，例如 200x200 或 500x500。
+            -->
+            <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" 
+                 class="penguin-img" 
+                 alt="个人头像或作品图" 
+                 loading="lazy">
+            <!-- 🔁🔁🔁 图片替换位置结束 🔁🔁🔁 -->
             <span>3D/TYPES</span>
         </div>
 
@@ -152,7 +268,6 @@
         </div>
     </main>
 
-    <!-- 底部 -->
     <footer>
         <div>— CERTIFIED PARTNER</div>
         <div>SHANGHAI — CHINA</div>
@@ -165,12 +280,47 @@
     </footer>
 
     <script>
-        const titleMove = document.getElementById('titleMove');
-        document.addEventListener('mousemove', (e) =>
-            const mouseX = e.clientX / window.innerWidth;
-            const moveX = (mouseX - 0.5) * -300; // 浮动幅度 超级大！
-            titleMove.style.transform = `translateX(${moveX}px)`;
-        });
+        (function() {
+            "use strict";
+
+            const titleMove = document.getElementById('titleMove');
+            if (titleMove) {
+                let targetX = 0;
+                let currentX = 0;
+                let rafId = null;
+                
+                const handleMouseMove = (e) => {
+                    const mouseX = e.clientX / window.innerWidth;
+                    targetX = (mouseX - 0.5) * 600;
+                    
+                    if (!rafId) {
+                        rafId = requestAnimationFrame(updateTransform);
+                    }
+                };
+
+                const updateTransform = () => {
+                    currentX += (targetX - currentX) * 0.35;
+                    titleMove.style.transform = `translateX(${currentX}px)`;
+                    
+                    if (Math.abs(targetX - currentX) > 0.3) {
+                        rafId = requestAnimationFrame(updateTransform);
+                    } else {
+                        titleMove.style.transform = `translateX(${targetX}px)`;
+                        currentX = targetX;
+                        rafId = null;
+                    }
+                };
+
+                document.addEventListener('mousemove', handleMouseMove);
+                
+                document.addEventListener('mouseleave', () => {
+                    targetX = 0;
+                    if (!rafId) {
+                        rafId = requestAnimationFrame(updateTransform);
+                    }
+                });
+            }
+        })();
     </script>
 </body>
 </html>
