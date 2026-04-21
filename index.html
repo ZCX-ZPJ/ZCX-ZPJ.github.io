@@ -120,7 +120,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 再度放大加粗，左右偏移更多 */
+        /* 介绍区域 — 字体大小、粗细完全一致，左右偏移量加大到 ±4rem */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -128,28 +128,26 @@
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
-            font-size: 1.3rem;               /* 再次放大 */
+            font-size: 1.3rem;
             line-height: 1.6;
             color: #1e1e1e;
-            font-weight: 400;
+            font-weight: 550;
             letter-spacing: -0.01em;
             border-top: 1px solid rgba(0,0,0,0.06);
             padding-top: 2.8rem;
         }
 
-        /* 左栏：更粗，向左移动更多 */
+        /* 左栏：向左拉开更多 */
         .hero-desc div:first-child {
-            font-weight: 600;                 /* 加粗两号 */
             justify-self: start;
-            margin-left: -2.5rem;             /* 左移更多 */
+            margin-left: -4rem;              /* 从 -2.5rem 增加至 -4rem */
         }
 
-        /* 右栏：加粗，向右移动更多 */
+        /* 右栏：向右拉开更多 */
         .hero-desc div:last-child {
-            font-weight: 500;                 /* 加粗 */
             color: #2c2c2c;
             justify-self: end;
-            margin-right: -2.5rem;            /* 右移更多 */
+            margin-right: -4rem;             /* 从 +2.5rem 增加至 +4rem */
         }
 
         /* ----- 底部信息 ----- */
@@ -179,7 +177,7 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (取消偏移，恢复居中，字体适当缩小) ----- */
+        /* ----- 移动端适配 (取消偏移，居中显示) ----- */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
@@ -208,7 +206,8 @@
                 grid-template-columns: 1fr;
                 gap: 1.8rem;
                 padding-top: 1.5rem;
-                font-size: 1.1rem;            /* 移动端适度放大 */
+                font-size: 1.1rem;
+                font-weight: 550;
             }
             /* 移动端取消左右偏移，居中显示 */
             .hero-desc div:first-child,
@@ -217,7 +216,6 @@
                 margin-right: 0;
                 justify-self: center;
                 text-align: center;
-                font-weight: 550;
             }
             main {
                 gap: 3.5rem;
@@ -272,7 +270,7 @@
             <span>3D/TYPESPORTFOLIO</span>
         </div>
 
-        <!-- 双栏介绍 — 加粗放大，左右拉开更多 -->
+        <!-- 双栏介绍 — 左右拉开更远，粗细一致 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
