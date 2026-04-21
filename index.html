@@ -25,7 +25,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ---------- 顶部导航：导航居中，平面旋转笑脸在左侧 ---------- */
+        /* 顶部导航：导航居中，平面旋转笑脸在左侧 */
         header {
             display: flex;
             justify-content: center;
@@ -76,7 +76,7 @@
             transform: scale(1.18);
         }
 
-        /* ---------- 主内容区 ---------- */
+        /* 主内容区 */
         main {
             flex: 1;
             width: 100%;
@@ -140,7 +140,7 @@
             color: #2c2c2c;
         }
 
-        /* ---------- 底部 ---------- */
+        /* 底部 */
         footer {
             display: flex;
             justify-content: space-between;
@@ -221,13 +221,9 @@
         <!-- 平面笑脸：内联 SVG 绘制，简洁线条，旋转不停 -->
         <div class="sunflower-icon" aria-label="旋转笑脸">
             <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                <!-- 脸型：圆形轮廓 -->
                 <circle cx="50" cy="50" r="42" />
-                <!-- 左眼 -->
                 <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
-                <!-- 右眼 -->
                 <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none" />
-                <!-- 微笑的嘴巴 -->
                 <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
             </svg>
         </div>
@@ -244,15 +240,27 @@
             <span>周成鑫</span>
             <span>—</span>
             <!-- 
-                🔁🔁🔁 图片替换位置 🔁🔁🔁
-                请将下面 src="" 中的链接替换为您自己的图片地址。
-                建议图片尺寸为正方形 (1:1)，例如 200x200 或 500x500。
+                ====================================================
+                🔁 GitHub 仓库图片替换说明 🔁
+                ====================================================
+                1. 将您的图片上传至 GitHub 仓库（例如 /images 文件夹）。
+                2. 在仓库页面点击图片，然后点击 "Download" 按钮。
+                3. 右键点击 "Download" 按钮，选择 "复制链接地址"。
+                   该地址通常以 "https://raw.githubusercontent.com/" 开头。
+                4. 将下面 <img> 标签的 src 属性值替换为您复制的 raw 链接。
+                
+                示例格式：
+                https://raw.githubusercontent.com/用户名/仓库名/分支名/路径/图片.jpg
+                
+                当前显示的是示例占位图片。
+                ====================================================
             -->
-            <img src="<img src="1.png" class="full-img" alt="展示图1">" 
+            <img src="https://raw.githubusercontent.com/your-username/your-repo/main/images/your-photo.jpg" 
                  class="penguin-img" 
                  alt="个人头像或作品图" 
-                 loading="lazy">
-            <!-- 🔁🔁🔁 图片替换位置结束 🔁🔁🔁 -->
+                 loading="lazy"
+                 onerror="this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';this.onerror=null;">
+            <!-- 图片替换位置结束 -->
             <span>3D/TYPES</span>
         </div>
 
