@@ -76,24 +76,25 @@
             transform: scale(1.18);
         }
 
-        /* 主内容区 */
+        /* 主内容区 — 保持原有居中方式，不做改动 */
         main {
             flex: 1;
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center;      /* 还原：整体垂直居中 */
             align-items: center;
-            gap: 6.5rem;
+            gap: 6.5rem;                 /* 原版间距 */
             padding: 1rem 2rem 3rem;
         }
 
+        /* 标题区域 — 放大 + 上移 (通过负 margin 实现，不影响下方介绍) */
         .hero-title {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 2.2rem;
-            font-size: clamp(4.8rem, 11vw, 8.8rem);
+            font-size: clamp(6rem, 13vw, 11rem);  /* 放大 */
             font-weight: 700;
             white-space: nowrap;
             transition: transform 0.2s linear;
@@ -101,10 +102,12 @@
             letter-spacing: -0.02em;
             line-height: 1;
             color: #0a0a0a;
+            margin-top: -4rem;            /* 上移，但不破坏整体居中流式 */
         }
 
+        /* 中间图片 — 同步放大 */
         .penguin-img {
-            width: clamp(75px, 7.5vw, 115px);
+            width: clamp(100px, 9vw, 150px);   /* 放大 */
             height: auto;
             border-radius: 8px;
             transform: rotate(-5deg);
@@ -116,6 +119,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
+        /* 介绍区域 — 完全保持原样，无任何位移 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -167,7 +171,7 @@
             opacity: 0.7;
         }
 
-        /* 移动端适配 */
+        /* 移动端适配 — 相应调整，但保持介绍区域原逻辑 */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
@@ -183,13 +187,14 @@
             }
             .hero-title {
                 gap: 1rem;
-                font-size: clamp(3rem, 10vw, 5rem);
+                font-size: clamp(4rem, 12vw, 7rem);
                 white-space: normal;
                 flex-wrap: wrap;
                 text-align: center;
+                margin-top: -2rem;          /* 移动端上移幅度减小 */
             }
             .penguin-img {
-                width: 65px;
+                width: 80px;
             }
             .hero-desc {
                 grid-template-columns: 1fr;
@@ -197,7 +202,7 @@
                 padding-top: 1.5rem;
             }
             main {
-                gap: 3.5rem;
+                gap: 3.5rem;                /* 原移动端间距 */
             }
             footer {
                 flex-direction: column;
@@ -239,28 +244,12 @@
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
-            <!-- 
-                ====================================================
-                🔁 GitHub 仓库图片替换说明 🔁
-                ====================================================
-                1. 将您的图片上传至 GitHub 仓库（例如 /images 文件夹）。
-                2. 在仓库页面点击图片，然后点击 "Download" 按钮。
-                3. 右键点击 "Download" 按钮，选择 "复制链接地址"。
-                   该地址通常以 "https://raw.githubusercontent.com/" 开头。
-                4. 将下面 <img> 标签的 src 属性值替换为您复制的 raw 链接。
-                
-                示例格式：
-                https://raw.githubusercontent.com/用户名/仓库名/分支名/路径/图片.jpg
-                
-                当前显示的是示例占位图片。
-                ====================================================
-            -->
-            <img src="https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true" 
+            <!-- 图片区域：您可替换为自己的 GitHub 图片链接 -->
+            <img src="https://raw.githubusercontent.com/your-username/your-repo/main/images/your-photo.jpg" 
                  class="penguin-img" 
                  alt="个人头像或作品图" 
                  loading="lazy"
-                 onerror="this.src='https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true';this.onerror=null;">
-            <!-- 图片替换位置结束 -->
+                 onerror="this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';this.onerror=null;">
             <span>3D/TYPES</span>
         </div>
 
@@ -298,8 +287,14 @@
                 let rafId = null;
                 
                 const handleMouseMove = (e) => {
-                    const mouseX = e.clientX / window.innerWidth;
-                    targetX = (mouseX - 0.5) * 600;
+                    // 仅当鼠标位于上半屏时移动标题
+                    const halfHeight = window.innerHeight / 2;
+                    if (e.clientY < halfHeight) {
+                        const mouseX = e.clientX / window.innerWidth;
+                        targetX = (mouseX - 0.5) * 600;   // 保持 -300px ~ 300px
+                    } else {
+                        targetX = 0;
+                    }
                     
                     if (!rafId) {
                         rafId = requestAnimationFrame(updateTransform);
