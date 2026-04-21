@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
     <style>
+        /* ----- 全局重置与变量 ----- */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +26,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 顶部导航：导航居中，平面旋转笑脸在左侧 */
+        /* ----- 头部导航：居中 + 左侧旋转笑脸 ----- */
         header {
             display: flex;
             justify-content: center;
@@ -35,8 +36,8 @@
             position: relative;
         }
 
-        /* 纯平面笑脸 — SVG 线条风格 + 持续旋转 */
-        .sunflower-icon {
+        /* 平面线条笑脸 — 持续旋转 */
+        .smiley-icon {
             position: absolute;
             left: 3rem;
             top: 50%;
@@ -46,15 +47,15 @@
             cursor: default;
             user-select: none;
             pointer-events: none;
-            animation: flatRotate 5s linear infinite;
+            animation: rotateSmiley 5s linear infinite;
         }
 
-        @keyframes flatRotate {
+        @keyframes rotateSmiley {
             0% { transform: translateY(-50%) rotate(0deg); }
             100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        /* 导航链接 — 居中显示 */
+        /* 导航链接组 — 完全居中 */
         .nav-links {
             display: flex;
             align-items: center;
@@ -76,25 +77,25 @@
             transform: scale(1.18);
         }
 
-        /* 主内容区 — 保持原有居中方式，不做改动 */
+        /* ----- 主内容：垂直居中，标题放大且微调上移 ----- */
         main {
             flex: 1;
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;      /* 还原：整体垂直居中 */
+            justify-content: center;
             align-items: center;
-            gap: 6.5rem;                 /* 原版间距 */
+            gap: 6.5rem;
             padding: 1rem 2rem 3rem;
         }
 
-        /* 标题区域 — 放大 + 上移 (通过负 margin 实现，不影响下方介绍) */
+        /* 大标题区域 */
         .hero-title {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 2.2rem;
-            font-size: clamp(6rem, 13vw, 11rem);  /* 放大 */
+            font-size: clamp(6rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
             transition: transform 0.2s linear;
@@ -102,12 +103,12 @@
             letter-spacing: -0.02em;
             line-height: 1;
             color: #0a0a0a;
-            margin-top: -4rem;            /* 上移，但不破坏整体居中流式 */
+            margin-top: -4rem;
         }
 
-        /* 中间图片 — 同步放大 */
-        .penguin-img {
-            width: clamp(100px, 9vw, 150px);   /* 放大 */
+        /* 头像/作品图片 — 同步放大，带轻微旋转 */
+        .profile-img {
+            width: clamp(100px, 9vw, 150px);
             height: auto;
             border-radius: 8px;
             transform: rotate(-5deg);
@@ -119,7 +120,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 完全保持原样，无任何位移 */
+        /* 介绍区域 — 再度放大加粗，左右偏移更多 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -127,8 +128,8 @@
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 1.3rem;               /* 再次放大 */
+            line-height: 1.6;
             color: #1e1e1e;
             font-weight: 400;
             letter-spacing: -0.01em;
@@ -136,15 +137,22 @@
             padding-top: 2.8rem;
         }
 
+        /* 左栏：更粗，向左移动更多 */
         .hero-desc div:first-child {
-            font-weight: 450;
-        }
-        .hero-desc div:last-child {
-            font-weight: 380;
-            color: #2c2c2c;
+            font-weight: 600;                 /* 加粗两号 */
+            justify-self: start;
+            margin-left: -2.5rem;             /* 左移更多 */
         }
 
-        /* 底部 */
+        /* 右栏：加粗，向右移动更多 */
+        .hero-desc div:last-child {
+            font-weight: 500;                 /* 加粗 */
+            color: #2c2c2c;
+            justify-self: end;
+            margin-right: -2.5rem;            /* 右移更多 */
+        }
+
+        /* ----- 底部信息 ----- */
         footer {
             display: flex;
             justify-content: space-between;
@@ -171,12 +179,12 @@
             opacity: 0.7;
         }
 
-        /* 移动端适配 — 相应调整，但保持介绍区域原逻辑 */
+        /* ----- 移动端适配 (取消偏移，恢复居中，字体适当缩小) ----- */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
             }
-            .sunflower-icon {
+            .smiley-icon {
                 left: 1.5rem;
                 width: 36px;
                 height: 36px;
@@ -191,18 +199,28 @@
                 white-space: normal;
                 flex-wrap: wrap;
                 text-align: center;
-                margin-top: -2rem;          /* 移动端上移幅度减小 */
+                margin-top: -2rem;
             }
-            .penguin-img {
+            .profile-img {
                 width: 80px;
             }
             .hero-desc {
                 grid-template-columns: 1fr;
                 gap: 1.8rem;
                 padding-top: 1.5rem;
+                font-size: 1.1rem;            /* 移动端适度放大 */
+            }
+            /* 移动端取消左右偏移，居中显示 */
+            .hero-desc div:first-child,
+            .hero-desc div:last-child {
+                margin-left: 0;
+                margin-right: 0;
+                justify-self: center;
+                text-align: center;
+                font-weight: 550;
             }
             main {
-                gap: 3.5rem;                /* 原移动端间距 */
+                gap: 3.5rem;
             }
             footer {
                 flex-direction: column;
@@ -212,6 +230,7 @@
             }
         }
 
+        /* 标题文字粗细微调 */
         .hero-title span:first-child {
             font-weight: 750;
         }
@@ -223,8 +242,8 @@
 </head>
 <body>
     <header>
-        <!-- 平面笑脸：内联 SVG 绘制，简洁线条，旋转不停 -->
-        <div class="sunflower-icon" aria-label="旋转笑脸">
+        <!-- 平面线条笑脸 SVG — 极简风格，无限旋转 -->
+        <div class="smiley-icon" aria-label="旋转笑脸">
             <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="50" cy="50" r="42" />
                 <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
@@ -241,18 +260,19 @@
     </header>
 
     <main>
+        <!-- 标题 + 可替换图片 -->
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
-            <!-- 图片区域：您可替换为自己的 GitHub 图片链接 -->
-            <img src="https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true" 
-                 class="penguin-img" 
-                 alt="个人头像或作品图" 
+            <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
+                 class="profile-img" 
+                 alt="周成鑫个人作品或头像" 
                  loading="lazy"
-                 onerror="this.src='https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true".image';this.onerror=null;">
+                 onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
             <span>3D/TYPESPORTFOLIO</span>
         </div>
 
+        <!-- 双栏介绍 — 加粗放大，左右拉开更多 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
@@ -280,49 +300,49 @@
         (function() {
             "use strict";
 
-            const titleMove = document.getElementById('titleMove');
-            if (titleMove) {
-                let targetX = 0;
-                let currentX = 0;
-                let rafId = null;
-                
-                const handleMouseMove = (e) => {
-                    // 仅当鼠标位于上半屏时移动标题
-                    const halfHeight = window.innerHeight / 2;
-                    if (e.clientY < halfHeight) {
-                        const mouseX = e.clientX / window.innerWidth;
-                        targetX = (mouseX - 0.5) * 600;   // 保持 -300px ~ 300px
-                    } else {
-                        targetX = 0;
-                    }
-                    
-                    if (!rafId) {
-                        rafId = requestAnimationFrame(updateTransform);
-                    }
-                };
+            const titleElement = document.getElementById('titleMove');
+            if (!titleElement) return;
 
-                const updateTransform = () => {
-                    currentX += (targetX - currentX) * 0.35;
-                    titleMove.style.transform = `translateX(${currentX}px)`;
-                    
-                    if (Math.abs(targetX - currentX) > 0.3) {
-                        rafId = requestAnimationFrame(updateTransform);
-                    } else {
-                        titleMove.style.transform = `translateX(${targetX}px)`;
-                        currentX = targetX;
-                        rafId = null;
-                    }
-                };
-
-                document.addEventListener('mousemove', handleMouseMove);
+            let targetX = 0;
+            let currentX = 0;
+            let rafId = null;
+            
+            function updateTransform() {
+                currentX += (targetX - currentX) * 0.35;
+                titleElement.style.transform = `translateX(${currentX}px)`;
                 
-                document.addEventListener('mouseleave', () => {
-                    targetX = 0;
-                    if (!rafId) {
-                        rafId = requestAnimationFrame(updateTransform);
-                    }
-                });
+                if (Math.abs(targetX - currentX) > 0.3) {
+                    rafId = requestAnimationFrame(updateTransform);
+                } else {
+                    titleElement.style.transform = `translateX(${targetX}px)`;
+                    currentX = targetX;
+                    rafId = null;
+                }
             }
+
+            function handleMouseMove(e) {
+                const halfHeight = window.innerHeight / 2;
+                if (e.clientY < halfHeight) {
+                    const mouseX = e.clientX / window.innerWidth;
+                    targetX = (mouseX - 0.5) * 1000;   // -500px ~ 500px
+                } else {
+                    targetX = 0;
+                }
+                
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateTransform);
+                }
+            }
+
+            function handleMouseLeave() {
+                targetX = 0;
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateTransform);
+                }
+            }
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseleave', handleMouseLeave);
         })();
     </script>
 </body>
