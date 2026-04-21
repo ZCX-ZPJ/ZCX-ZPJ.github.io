@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周成鑫 - 3D渲染作品集 | 全屏居中首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e0e0dc;
+            color: #000;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* 顶部导航：居中在页面正上方 */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 3rem;
+            width: 100%;
+        }
+
+        /* 3D 银色向日葵 自动旋转图标 - 最最最左边 + 往左边移动 */
+        .sunflower-icon {
+            font-size: 1.6rem; /* 比导航大一点 */
+            color: #c0c0c0; /* 标准银色 */
+            animation: rotate 8s linear infinite; /* 一直旋转 */
+            position: relative;
+            left: -40px; /* ✅ 往左边大幅度移动 */
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        /* 鼠标悬停放大效果 */
+        .nav-links a:hover {
+            transform: scale(1.15);
+        }
+
+        /* 中间内容全屏居中 */
+        main {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6rem;
+        }
+
+        /* 主标题视差效果：更丝滑的动画曲线 */
+        .hero-title {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            font-size: clamp(5rem, 11vw, 9rem);
+            font-weight: 700;
+            white-space: nowrap;
+            transition: transform 0.4s cubic-bezier(0.15, 0.05, 0.05, 1);
+            will-change: transform;
+        }
+
+        .penguin-img {
+            width: clamp(75px, 7vw, 110px);
+            border-radius: 6px;
+            transform: rotate(-4deg);
+        }
+
+        .hero-desc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        /* 底部 */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 3rem;
+            width: 100%;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航：现在居中在正上方 -->
+    <header>
+        <nav class="nav-links">
+            <!-- ✅ 最最最最最左边：银色向日葵 -->
+            <div class="sunflower-icon">🌻</div>
+
+            <a href="#">首页</a>
+            <a href="#">关于</a>
+            <a href="#">工作</a>
+        </nav>
+    </header>
+
+    <!-- 中间主体 -->
+    <main>
+        <div class="hero-title" id="titleMove">
+            <span>周成鑫</span>
+            <span>—</span>
+            <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" class="penguin-img" alt="penguin">
+            <span>3D/TYPES</span>
+        </div>
+
+        <div class="hero-desc">
+            <div>
+                Hi, 我是周成鑫，一名数字创意设计师<br>
+                专注将创意策略转化为视觉作品
+            </div>
+            <div>
+                Motion Designer, 3D Rendering, Content Creation<br>
+                C4D / Redshift 三维渲染视觉设计师
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer>
+        <div>— CERTIFIED PARTNER</div>
+        <div>SHANGHAI — CHINA</div>
+        <div class="social-links">
+            <span>X</span>
+            <span>IG</span>
+            <span>Be</span>
+            <span>⑧</span>
+        </div>
+    </footer>
+
+    <script>
+        const titleMove = document.getElementById('titleMove');
+        document.addEventListener('mousemove', (e) =>
+            const mouseX = e.clientX / window.innerWidth;
+            const moveX = (mouseX - 0.5) * -300; // 浮动幅度 超级大！
+            titleMove.style.transform = `translateX(${moveX}px)`;
+        });
+    </script>
+</body>
+</html>
