@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周成鑫 - 3D渲染作品集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #e0e0dc; /* 同款浅灰底色 */
+            color: #000;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8rem;
+        }
+        .logo-icon {
+            font-size: 1.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* 主标题容器（鼠标视差核心区域） */
+        .hero-title {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: clamp(5rem, 12vw, 10rem);
+            font-weight: 700;
+            white-space: nowrap;
+            margin: 10vh 0 8vh;
+            /* 开启视差动画 */
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+        }
+
+        /* 企鹅小图标 */
+        .penguin-img {
+            width: clamp(80px, 8vw, 120px);
+            border-radius: 8px;
+            transform: rotate(-5deg);
+        }
+
+        /* 下方两行介绍文字 */
+        .hero-desc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 0 4rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #222;
+        }
+
+        /* 底部页脚 */
+        footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="logo-icon">❉</div>
+        <nav class="nav-links">
+            <a href="#">首页</a>
+            <a href="#">关于</a>
+            <a href="#">工作</a>
+        </nav>
+    </header>
+
+    <!-- 中间主标题（鼠标移动会跟着动！） -->
+    <main class="hero">
+        <div class="hero-title" id="titleMove">
+            <span>周成鑫</span>
+            <span>—</span>
+            <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" class="penguin-img" alt="penguin">
+            <span>3D/TYPES</span>
+        </div>
+
+        <!-- 下方介绍文案 -->
+        <div class="hero-desc">
+            <div>
+                Hi, 我是周成鑫，一名数字创意设计师<br>
+                专注将创意策略转化为视觉作品
+            </div>
+            <div>
+                Motion Designer, 3D Rendering, Content Creation<br>
+                C4D / Redshift 三维渲染视觉设计师
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部页脚 -->
+    <footer>
+        <div>— CERTIFIED PARTNER</div>
+        <div>SHANGHAI — CHINA</div>
+        <div class="social-links">
+            <span>X</span>
+            <span>IG</span>
+            <span>Be</span>
+            <span>⑧</span>
+        </div>
+    </footer>
+
+    <!-- 鼠标视差交互JS代码 -->
+    <script>
+        // 获取标题元素
+        const titleMove = document.getElementById('titleMove');
+        // 鼠标移动监听
+        document.addEventListener('mousemove', (e) => {
+            // 计算鼠标在页面水平位置百分比
+            const mouseX = e.clientX / window.innerWidth;
+            // 左右移动偏移量（数值越大动效越明显）
+            const moveX = (mouseX - 0.5) * -80;
+            // 给标题添加位移，实现跟随鼠标滑动
+            titleMove.style.transform = `translateX(${moveX}px)`;
+        });
+    </script>
+</body>
+</html>
