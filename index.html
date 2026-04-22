@@ -183,6 +183,22 @@
             word-spacing: 0.2em;
         }
 
+        /* 软件名称悬停效果 — 橙色 + 微微放大 */
+        .software-item {
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.2s ease;
+            cursor: default;
+        }
+        .software-item:hover {
+            color: #ff8c42;
+            transform: scale(1.05);
+        }
+        /* AI工作流悬停效果 */
+        .ai-line .software-item:hover {
+            color: #ff8c42;
+            transform: scale(1.05);
+        }
+
         /* ----- 底部信息 ----- */
         footer {
             display: flex;
@@ -310,15 +326,27 @@
             </span>
         </div>
 
-        <!-- 双栏介绍 — 右栏已移除MoI -->
+        <!-- 双栏介绍 — AI工作流拆分响应 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
                 专注将创意策略转化为视觉作品
             </div>
             <div>
-                <span class="toolbox-line"><strong>日常工具箱：</strong>C4D/Redshift  Rhino  Creo  PS  AI  AE  PR  Style3D</span>
-                <span class="ai-line">Ai人工智能工作流（椒图Ai  Lovart）</span>
+                <span class="toolbox-line">
+                    <strong>日常工具箱：</strong>
+                    <span class="software-item">C4D/Redshift</span>  
+                    <span class="software-item">Rhino</span>  
+                    <span class="software-item">Creo</span>  
+                    <span class="software-item">PS</span>  
+                    <span class="software-item">AI</span>  
+                    <span class="software-item">AE</span>  
+                    <span class="software-item">PR</span>  
+                    <span class="software-item">Style3D</span>
+                </span>
+                <span class="ai-line">
+                    <span class="software-item">Ai人工智能工作流</span>（<span class="software-item">椒图Ai</span>  <span class="software-item">Lovart</span>）
+                </span>
             </div>
         </div>
     </main>
