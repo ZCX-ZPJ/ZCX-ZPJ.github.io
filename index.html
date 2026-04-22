@@ -217,26 +217,21 @@
             font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: 0.05em;
-            flex: 1;
-            display: flex;
-            justify-content: center;
         }
 
         .footer-center {
             font-size: 1.2rem;
             letter-spacing: 0.3rem;
             font-weight: 400;
-            flex: 1;
-            display: flex;
-            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .footer-right {
             display: flex;
             gap: 1.5rem;
             align-items: center;
-            flex: 1;
-            justify-content: center;
         }
 
         .icon-wrapper {
@@ -334,10 +329,13 @@
 
             .hero-desc {
                 --offset: 0rem;
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.2rem;
                 padding-top: 1.5rem;
                 font-size: max(1rem, 3.8vw);
+                text-align: center;
             }
 
             .hero-desc::before { left: 0; width: 100%; }
@@ -346,9 +344,23 @@
             .hero-desc div:last-child {
                 margin-left: 0;
                 margin-right: 0;
-                justify-self: center;
-                text-align: center;
                 width: 100%;
+                text-align: center;
+            }
+
+            .hero-desc div:first-child {
+                margin-bottom: 0.3rem;
+            }
+
+            .hero-desc div:last-child {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .toolbox-line {
+                margin-bottom: 0.3rem;
             }
 
             .software-item:hover { transform: none; color: inherit; }
@@ -379,8 +391,13 @@
                 text-align: center;
                 padding: 1.5rem;
                 font-size: 0.85rem;
+                position: relative;
             }
             .footer-left { font-size: 0.9rem; }
+            .footer-center {
+                position: static;
+                transform: none;
+            }
             .footer-right { justify-content: center; }
             .icon-wrapper::after { font-size: 0.65rem; }
         }
