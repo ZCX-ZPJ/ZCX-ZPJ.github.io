@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ===== 全局变量 ===== */
+        :root {
+            --bg-color: #e0e0dc;
+            --text-dark: #111;
+            --text-gray: #2c2c2c;
+            --accent-orange: #ff8c42;
+            --border-light: rgba(0,0,0,0.06);
+            --offset: clamp(2rem, 6vw, 4rem);
+            --container-width: min(1100px, 85vw);
         }
 
-        html {
-            overflow-x: hidden;
-        }
+        /* ===== 基础重置 ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; }
 
         body {
-            background-color: #e0e0dc;
-            color: #111;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100vw;
             min-height: 100vh;
@@ -29,6 +34,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* ===== 头部导航 ===== */
         header {
             display: flex;
             justify-content: center;
@@ -45,8 +51,6 @@
             transform: translateY(-50%);
             width: clamp(32px, 5vw, 44px);
             height: clamp(32px, 5vw, 44px);
-            cursor: default;
-            user-select: none;
             pointer-events: none;
             animation: rotateSmiley 5s linear infinite;
         }
@@ -66,17 +70,13 @@
         }
 
         .nav-links a {
-            color: #111;
+            color: var(--text-dark);
             text-decoration: none;
-            display: inline-block;
             transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
-            transform-origin: center;
         }
+        .nav-links a:hover { transform: scale(1.18); }
 
-        .nav-links a:hover {
-            transform: scale(1.18);
-        }
-
+        /* ===== 主内容区 ===== */
         main {
             flex: 1;
             width: 100%;
@@ -86,9 +86,9 @@
             align-items: center;
             gap: clamp(4rem, 8vw, 6.5rem);
             padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
-            overflow: visible;
         }
 
+        /* 标题区 */
         .hero-title {
             display: flex;
             align-items: center;
@@ -105,16 +105,17 @@
             margin-top: clamp(-5rem, -6vw, -3rem);
         }
 
-        .hero-title .dot-text {
+        .hero-title span:first-child { font-weight: 750; }
+        .hero-title span:last-child { font-weight: 650; color: #202020; }
+
+        .dot-text {
             display: inline-block;
             line-height: 1;
             vertical-align: middle;
-            transform: translateY(0);
             font-weight: 650;
-            font-size: 1em;
         }
 
-        .dot-text .middle-dot {
+        .middle-dot {
             font-size: 1.1em;
             font-weight: 700;
             display: inline-block;
@@ -129,19 +130,19 @@
             border-radius: 8px;
             transform: rotate(-5deg);
             box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
             object-fit: cover;
             aspect-ratio: 1/1;
             background: #ccc;
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 使用精确的偏移量对齐 */
+        /* 介绍区 — 分割线精确对齐 */
         .hero-desc {
+            --offset: clamp(2.5rem, 6vw, 4rem);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: clamp(3rem, 8vw, 7rem);
-            max-width: min(1100px, 85vw);
+            max-width: var(--container-width);
             width: 100%;
             margin: 0 auto;
             font-size: clamp(1rem, 2vw, 1.3rem);
@@ -154,78 +155,52 @@
             overflow: visible;
         }
 
-        /* 分割线 — 精确对齐左右边缘 */
+        /* 主分割线 — 覆盖容器宽度 */
         .hero-desc::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: calc(-1 * var(--offset));
+            width: calc(100% + 2 * var(--offset));
             height: 1px;
-            background-color: rgba(0,0,0,0.06);
+            background-color: var(--border-light);
         }
 
-        /* 左栏 — 通过负边距向左延伸，分割线也随之延伸 */
+        /* 左栏 — 向左延伸 */
         .hero-desc div:first-child {
             justify-self: start;
-            margin-left: -4rem;
-            position: relative;
+            margin-left: calc(-1 * var(--offset));
         }
 
-        /* 右栏 — 通过负边距向右延伸，分割线也随之延伸 */
+        /* 右栏 — 向右延伸，PC端左对齐 */
         .hero-desc div:last-child {
-            color: #2c2c2c;
+            color: var(--text-gray);
             justify-self: end;
-            margin-right: -4rem;
+            margin-right: calc(-1 * var(--offset));
             text-align: left;
             font-weight: 550;
             line-height: 1.6;
-            letter-spacing: -0.01em;
-            position: relative;
-        }
-
-        /* 扩展分割线以匹配左右栏的延伸 */
-        .hero-desc div:first-child::before {
-            content: '';
-            position: absolute;
-            top: calc(-1 * clamp(1.5rem, 3vw, 2.8rem));
-            left: -4rem;
-            width: 4rem;
-            height: 1px;
-            background-color: rgba(0,0,0,0.06);
-        }
-
-        .hero-desc div:last-child::after {
-            content: '';
-            position: absolute;
-            top: calc(-1 * clamp(1.5rem, 3vw, 2.8rem));
-            right: -4rem;
-            width: 4rem;
-            height: 1px;
-            background-color: rgba(0,0,0,0.06);
         }
 
         .toolbox-line {
             display: block;
             margin-bottom: 0.2rem;
         }
-        .toolbox-line strong {
-            font-weight: 650;
-        }
-        .ai-line {
-            display: block;
-        }
+        .toolbox-line strong { font-weight: 650; }
+        .ai-line { display: block; }
 
+        /* 软件项悬停效果 */
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.2s ease;
             cursor: default;
         }
         .software-item:hover {
-            color: #ff8c42;
+            color: var(--accent-orange);
             transform: scale(1.05);
         }
 
+        /* ===== 底部信息 ===== */
         footer {
             display: flex;
             justify-content: space-between;
@@ -236,7 +211,7 @@
             font-weight: 450;
             color: #1f1f1f;
             letter-spacing: 0.02em;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid var(--border-light);
         }
 
         .social-links {
@@ -248,15 +223,11 @@
             transition: opacity 0.2s;
             font-weight: 500;
         }
-        .social-links span:hover {
-            opacity: 0.7;
-        }
+        .social-links span:hover { opacity: 0.7; }
 
+        /* ===== 移动端适配 ===== */
         @media (max-width: 768px) {
-            .nav-links {
-                font-size: 1.1rem;
-                gap: 1.5rem;
-            }
+            .nav-links { font-size: 1.1rem; gap: 1.5rem; }
 
             .hero-title {
                 white-space: normal;
@@ -274,16 +245,14 @@
             }
 
             .hero-desc {
+                --offset: 0rem;
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
                 padding-top: 1.5rem;
                 font-size: max(1rem, 3.8vw);
             }
 
-            .hero-desc::before {
-                left: 0;
-                width: 100%;
-            }
+            .hero-desc::before { left: 0; width: 100%; }
 
             .hero-desc div:first-child,
             .hero-desc div:last-child {
@@ -294,49 +263,25 @@
                 width: 100%;
             }
 
-            .hero-desc div:first-child::before,
-            .hero-desc div:last-child::after {
-                display: none;
-            }
+            .software-item:hover { transform: none; color: inherit; }
+            .hero-desc div:last-child .software-item { margin: 0 0.15rem; }
 
-            .software-item:hover {
-                transform: none;
-                color: inherit;
-            }
-
-            .hero-desc div:last-child .software-item {
-                margin: 0 0.15rem;
-                animation: none;
-            }
-
-            .hero-desc div:last-child .software-item:nth-child(1) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0s; }
-            .hero-desc div:last-child .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4s; }
-            .hero-desc div:last-child .software-item:nth-child(3) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1.5s; }
-            .hero-desc div:last-child .software-item:nth-child(4) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 5s; }
-            .hero-desc div:last-child .software-item:nth-child(5) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 2.5s; }
-            .hero-desc div:last-child .software-item:nth-child(6) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0.8s; }
-            .hero-desc div:last-child .software-item:nth-child(7) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
-            
-            .ai-line .software-item:nth-child(1) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1s; }
-            .ai-line .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
-            .ai-line .software-item:nth-child(3) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
+            /* 移动端闪烁动画 — 使用独立类名 */
+            .blink-1 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0s; }
+            .blink-2 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4s; }
+            .blink-3 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1.5s; }
+            .blink-4 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 5s; }
+            .blink-5 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 2.5s; }
+            .blink-6 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0.8s; }
+            .blink-7 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
+            .blink-8 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1s; }
+            .blink-9 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
+            .blink-10 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
 
             @keyframes softOrangeBlink {
-                0%, 100% {
-                    color: #2c2c2c;
-                    transform: scale(1);
-                    text-shadow: none;
-                }
-                15%, 35% {
-                    color: #ff9d5c;
-                    transform: scale(1.02);
-                    text-shadow: 0 0 6px rgba(255,157,92,0.3);
-                }
-                25% {
-                    color: #ff8c42;
-                    transform: scale(1.03);
-                    text-shadow: 0 0 10px rgba(255,140,66,0.4);
-                }
+                0%, 100% { color: var(--text-gray); transform: scale(1); text-shadow: none; }
+                15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
+                25% { color: var(--accent-orange); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
 
             footer {
@@ -347,18 +292,7 @@
                 padding: 1.5rem;
                 font-size: 0.85rem;
             }
-            .social-links {
-                justify-content: center;
-                font-size: 0.9rem;
-            }
-        }
-
-        .hero-title span:first-child {
-            font-weight: 750;
-        }
-        .hero-title span:last-child {
-            font-weight:650;
-            color: #202020;
+            .social-links { justify-content: center; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -401,16 +335,16 @@
             <div>
                 <span class="toolbox-line">
                     <strong>日常工具箱：</strong>
-                    <span class="software-item">C4D/Redshift</span> 
-                    <span class="software-item">Rhino</span> 
-                    <span class="software-item">PS</span> 
-                    <span class="software-item">AI</span> 
-                    <span class="software-item">AE</span> 
-                    <span class="software-item">PR</span> 
-                    <span class="software-item">Style3D</span>
+                    <span class="software-item blink-1">C4D/Redshift</span> 
+                    <span class="software-item blink-2">Rhino</span> 
+                    <span class="software-item blink-3">PS</span> 
+                    <span class="software-item blink-4">AI</span> 
+                    <span class="software-item blink-5">AE</span> 
+                    <span class="software-item blink-6">PR</span> 
+                    <span class="software-item blink-7">Style3D</span>
                 </span>
                 <span class="ai-line">
-                    <span class="software-item">Ai人工智能工作流</span>（<span class="software-item">椒图Ai</span>  <span class="software-item">Lovart</span>）
+                    <span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）
                 </span>
             </div>
         </div>
@@ -433,6 +367,7 @@
             const titleElement = document.getElementById('titleMove');
             if (!titleElement) return;
             let targetX = 0, currentX = 0, rafId = null;
+            
             function updateTransform() {
                 currentX += (targetX - currentX) * 0.25;
                 titleElement.style.transform = `translateX(${currentX}px)`;
@@ -444,20 +379,22 @@
                     rafId = null;
                 }
             }
+            
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
-                    const mouseX = e.clientX / window.innerWidth;
-                    targetX = (mouseX - 0.5) * 1600;
+                    targetX = (e.clientX / window.innerWidth - 0.5) * 1600;
                 } else {
                     targetX = 0;
                 }
                 if (!rafId) rafId = requestAnimationFrame(updateTransform);
             }
+            
             function handleMouseLeave() {
                 targetX = 0;
                 if (!rafId) rafId = requestAnimationFrame(updateTransform);
             }
+            
             document.addEventListener('mousemove', handleMouseMove);
             document.addEventListener('mouseleave', handleMouseLeave);
         })();
