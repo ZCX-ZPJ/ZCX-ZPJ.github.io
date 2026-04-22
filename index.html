@@ -13,6 +13,7 @@
             --accent-orange: #ff8c42;
             --border-light: rgba(0,0,0,0.06);
             --container-width: min(1100px, 85vw);
+            --offset: clamp(2.5rem, 6vw, 4rem);
         }
 
         /* ===== 基础重置 ===== */
@@ -51,10 +52,10 @@
             width: clamp(32px, 5vw, 44px);
             height: clamp(32px, 5vw, 44px);
             pointer-events: none;
-            animation: rotateSmiley 5s linear infinite;
+            animation: rotate 5s linear infinite;
         }
 
-        @keyframes rotateSmiley {
+        @keyframes rotate {
             0% { transform: translateY(-50%) rotate(0deg); }
             100% { transform: translateY(-50%) rotate(360deg); }
         }
@@ -135,9 +136,8 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区 — 分割线精确对齐 */
+        /* 介绍区 */
         .hero-desc {
-            --offset: clamp(2.5rem, 6vw, 4rem);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: clamp(3rem, 8vw, 7rem);
@@ -154,7 +154,6 @@
             overflow: visible;
         }
 
-        /* 主分割线 — 覆盖容器宽度 */
         .hero-desc::before {
             content: '';
             position: absolute;
@@ -165,13 +164,11 @@
             background-color: var(--border-light);
         }
 
-        /* 左栏 — 向左延伸 */
         .hero-desc div:first-child {
             justify-self: start;
             margin-left: calc(-1 * var(--offset));
         }
 
-        /* 右栏 — 向右延伸，PC端左对齐 */
         .hero-desc div:last-child {
             color: var(--text-gray);
             justify-self: end;
@@ -188,7 +185,6 @@
         .toolbox-line strong { font-weight: 650; }
         .ai-line { display: block; }
 
-        /* 软件项悬停效果 */
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.2s ease;
@@ -211,28 +207,12 @@
             color: #1f1f1f;
             letter-spacing: 0.02em;
             border-top: 1px solid var(--border-light);
+            position: relative;
         }
 
-        .footer-left {
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        .footer-center {
-            font-size: 1.2rem;
-            letter-spacing: 0.3rem;
-            font-weight: 400;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .footer-right {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
+        .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
+        .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); }
+        .footer-right { display: flex; gap: 1.5rem; align-items: center; }
 
         .icon-wrapper {
             position: relative;
@@ -255,17 +235,14 @@
             line-height: 1;
         }
 
-        .icon-wrapper:hover .icon-text {
-            color: var(--accent-orange);
-            transform: scale(1.1);
-        }
-
+        .icon-wrapper:hover .icon-text,
         .icon-wrapper:hover svg {
+            color: var(--accent-orange);
             fill: var(--accent-orange);
             transform: scale(1.1);
         }
 
-        /* 自定义悬停提示 */
+        /* 悬停提示 */
         .icon-wrapper::after {
             content: attr(data-title);
             position: absolute;
@@ -310,21 +287,11 @@
 
         /* ===== 移动端适配 ===== */
         @media (max-width: 768px) {
-            header {
-                padding: 1rem 1.5rem;
-            }
+            :root { --offset: 0rem; }
 
-            .smiley-icon {
-                width: 30px;
-                height: 30px;
-                min-width: 30px;
-                min-height: 30px;
-            }
-
-            .nav-links { 
-                font-size: 1rem; 
-                gap: 1.5rem; 
-            }
+            header { padding: 1rem 1.5rem; }
+            .smiley-icon { width: 30px; height: 30px; min-width: 30px; min-height: 30px; }
+            .nav-links { font-size: 1rem; gap: 1.5rem; }
 
             main {
                 justify-content: space-evenly;
@@ -341,19 +308,10 @@
                 gap: 0.6rem;
                 margin: 0;
             }
-            .hero-title .dot-text {
-                width: 100%;
-                text-align: center;
-                margin-top: 0.2rem;
-            }
-
-            .profile-img {
-                width: 65px;
-                min-width: 65px;
-            }
+            .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
+            .profile-img { width: 65px; min-width: 65px; }
 
             .hero-desc {
-                --offset: 0rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -365,42 +323,26 @@
             }
 
             .hero-desc::before { left: 0; width: 100%; }
-
             .hero-desc div:first-child,
-            .hero-desc div:last-child {
-                margin-left: 0;
-                margin-right: 0;
-                width: 100%;
-                text-align: center;
-            }
-
-            .hero-desc div:last-child {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.3rem;
-            }
-
-            .toolbox-line {
-                margin-bottom: 0.1rem;
-            }
-
+            .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
+            .hero-desc div:last-child { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+            .toolbox-line { margin-bottom: 0.1rem; }
             .software-item:hover { transform: none; color: inherit; }
             .hero-desc div:last-child .software-item { margin: 0 0.12rem; }
 
-            /* 移动端闪烁动画 */
-            .blink-1 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0s; }
-            .blink-2 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4s; }
-            .blink-3 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1.5s; }
-            .blink-4 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 5s; }
-            .blink-5 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 2.5s; }
-            .blink-6 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0.8s; }
-            .blink-7 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
-            .blink-8 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1s; }
-            .blink-9 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
-            .blink-10 { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
+            /* 闪烁动画 */
+            .blink-1 { animation: softBlink 6s ease-in-out infinite; animation-delay: 0s; }
+            .blink-2 { animation: softBlink 6s ease-in-out infinite; animation-delay: 4s; }
+            .blink-3 { animation: softBlink 6s ease-in-out infinite; animation-delay: 1.5s; }
+            .blink-4 { animation: softBlink 6s ease-in-out infinite; animation-delay: 5s; }
+            .blink-5 { animation: softBlink 6s ease-in-out infinite; animation-delay: 2.5s; }
+            .blink-6 { animation: softBlink 6s ease-in-out infinite; animation-delay: 0.8s; }
+            .blink-7 { animation: softBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
+            .blink-8 { animation: softBlink 6s ease-in-out infinite; animation-delay: 1s; }
+            .blink-9 { animation: softBlink 6s ease-in-out infinite; animation-delay: 3s; }
+            .blink-10 { animation: softBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
 
-            @keyframes softOrangeBlink {
+            @keyframes softBlink {
                 0%, 100% { color: var(--text-gray); transform: scale(1); text-shadow: none; }
                 15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent-orange); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
@@ -413,25 +355,12 @@
                 text-align: center;
                 padding: 0.8rem 1.5rem;
                 font-size: 0.8rem;
-                position: relative;
             }
             .footer-left { font-size: 0.85rem; }
-            .footer-center {
-                position: static;
-                transform: none;
-                font-size: 1rem;
-            }
-            .footer-right { 
-                justify-content: center;
-                gap: 1.2rem;
-            }
-            .icon-wrapper svg {
-                width: 20px;
-                height: 20px;
-            }
-            .icon-text {
-                font-size: 1.2rem;
-            }
+            .footer-center { position: static; transform: none; font-size: 1rem; }
+            .footer-right { justify-content: center; gap: 1.2rem; }
+            .icon-wrapper svg { width: 20px; height: 20px; }
+            .icon-text { font-size: 1.2rem; }
             .icon-wrapper::after { font-size: 0.6rem; }
         }
     </style>
@@ -462,25 +391,20 @@
                  alt="周成鑫个人作品或头像" 
                  loading="lazy"
                  onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
-            <span class="dot-text">
-                3D<span class="middle-dot">·</span>TYPESPORTFOLIO
-            </span>
+            <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
         </div>
 
         <div class="hero-desc">
-            <div>
-                Hi, 我是周成鑫，一名数字创意设计师<br>
-                专注将创意策略转化为视觉作品
-            </div>
+            <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
             <div>
                 <span class="toolbox-line">
                     <strong>日常工具箱：</strong>
-                    <span class="software-item blink-1">C4D/Redshift</span> 
-                    <span class="software-item blink-2">Rhino</span> 
-                    <span class="software-item blink-3">PS</span> 
-                    <span class="software-item blink-4">AI</span> 
-                    <span class="software-item blink-5">AE</span> 
-                    <span class="software-item blink-6">PR</span> 
+                    <span class="software-item blink-1">C4D/Redshift</span>
+                    <span class="software-item blink-2">Rhino</span>
+                    <span class="software-item blink-3">PS</span>
+                    <span class="software-item blink-4">AI</span>
+                    <span class="software-item blink-5">AE</span>
+                    <span class="software-item blink-6">PR</span>
                     <span class="software-item blink-7">Style3D</span>
                 </span>
                 <span class="ai-line">
@@ -515,39 +439,38 @@
     <script>
         (function() {
             "use strict";
-            const titleElement = document.getElementById('titleMove');
-            if (!titleElement) return;
-            let targetX = 0, currentX = 0, rafId = null;
+            const title = document.getElementById('titleMove');
+            if (!title) return;
+            let targetX = 0, currentX = 0, raf = null;
             
-            function updateTransform() {
+            function update() {
                 currentX += (targetX - currentX) * 0.25;
-                titleElement.style.transform = `translateX(${currentX}px)`;
+                title.style.transform = `translateX(${currentX}px)`;
                 if (Math.abs(targetX - currentX) > 0.5) {
-                    rafId = requestAnimationFrame(updateTransform);
+                    raf = requestAnimationFrame(update);
                 } else {
-                    titleElement.style.transform = `translateX(${targetX}px)`;
+                    title.style.transform = `translateX(${targetX}px)`;
                     currentX = targetX;
-                    rafId = null;
+                    raf = null;
                 }
             }
             
-            function handleMouseMove(e) {
-                const halfHeight = window.innerHeight / 2;
-                if (e.clientY < halfHeight) {
+            function move(e) {
+                if (e.clientY < window.innerHeight / 2) {
                     targetX = (e.clientX / window.innerWidth - 0.5) * 1600;
                 } else {
                     targetX = 0;
                 }
-                if (!rafId) rafId = requestAnimationFrame(updateTransform);
+                if (!raf) raf = requestAnimationFrame(update);
             }
             
-            function handleMouseLeave() {
+            function leave() {
                 targetX = 0;
-                if (!rafId) rafId = requestAnimationFrame(updateTransform);
+                if (!raf) raf = requestAnimationFrame(update);
             }
             
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseleave', handleMouseLeave);
+            document.addEventListener('mousemove', move);
+            document.addEventListener('mouseleave', leave);
         })();
     </script>
 </body>
