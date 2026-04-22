@@ -234,7 +234,7 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (标题换行后强制居中，软件介绍区域闪烁) ----- */
+        /* ----- 移动端适配 (标题换行后强制居中，软件介绍区域橙色随机闪亮) ----- */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
@@ -285,27 +285,49 @@
                 text-align: center;
             }
 
-            /* 移动端软件介绍区域 — 闪烁呼吸效果 */
-            .hero-desc div:last-child {
-                animation: softBlink 2.5s ease-in-out infinite;
-            }
-
-            /* 闪烁动画：透明度与轻微缩放变化 */
-            @keyframes softBlink {
-                0%, 100% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                50% {
-                    opacity: 0.7;
-                    transform: scale(1.02);
-                }
-            }
-
-            /* 移动端取消悬停放大，避免冲突 */
+            /* 移动端取消桌面端悬停效果 */
             .software-item:hover {
                 transform: none;
                 color: inherit;
+            }
+
+            /* 每个软件项独立随机闪烁 */
+            .hero-desc div:last-child .software-item {
+                animation: none; /* 先清除可能存在的动画 */
+            }
+
+            /* 为每个软件项单独设置随机闪烁动画 */
+            .hero-desc div:last-child .software-item:nth-child(1) { animation: orangeBlink 1.8s ease-in-out infinite; animation-delay: 0s; }
+            .hero-desc div:last-child .software-item:nth-child(2) { animation: orangeBlink 2.1s ease-in-out infinite; animation-delay: 0.3s; }
+            .hero-desc div:last-child .software-item:nth-child(3) { animation: orangeBlink 1.5s ease-in-out infinite; animation-delay: 0.7s; }
+            .hero-desc div:last-child .software-item:nth-child(4) { animation: orangeBlink 2.4s ease-in-out infinite; animation-delay: 0.1s; }
+            .hero-desc div:last-child .software-item:nth-child(5) { animation: orangeBlink 1.9s ease-in-out infinite; animation-delay: 0.5s; }
+            .hero-desc div:last-child .software-item:nth-child(6) { animation: orangeBlink 2.2s ease-in-out infinite; animation-delay: 0.9s; }
+            .hero-desc div:last-child .software-item:nth-child(7) { animation: orangeBlink 1.6s ease-in-out infinite; animation-delay: 0.2s; }
+            .hero-desc div:last-child .software-item:nth-child(8) { animation: orangeBlink 2.0s ease-in-out infinite; animation-delay: 0.6s; }
+            
+            /* AI工作流中的文字也随机闪烁 */
+            .ai-line .software-item:nth-child(1) { animation: orangeBlink 2.3s ease-in-out infinite; animation-delay: 0.4s; }
+            .ai-line .software-item:nth-child(2) { animation: orangeBlink 1.7s ease-in-out infinite; animation-delay: 0.8s; }
+            .ai-line .software-item:nth-child(3) { animation: orangeBlink 2.5s ease-in-out infinite; animation-delay: 0.15s; }
+
+            /* 橙色闪亮动画 */
+            @keyframes orangeBlink {
+                0%, 100% {
+                    color: #2c2c2c;
+                    transform: scale(1);
+                    text-shadow: none;
+                }
+                30%, 70% {
+                    color: #ff8c42;
+                    transform: scale(1.08);
+                    text-shadow: 0 0 8px rgba(255,140,66,0.4);
+                }
+                50% {
+                    color: #ff6b1a;
+                    transform: scale(1.12);
+                    text-shadow: 0 0 12px rgba(255,107,26,0.5);
+                }
             }
 
             main {
