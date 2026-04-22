@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
     <style>
-        /* ----- 全局重置与变量 ----- */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +29,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ----- 头部导航：居中 + 左侧旋转笑脸 ----- */
         header {
             display: flex;
             justify-content: center;
@@ -40,7 +38,6 @@
             position: relative;
         }
 
-        /* 平面线条笑脸 — 持续旋转 */
         .smiley-icon {
             position: absolute;
             left: max(1.5rem, 4vw);
@@ -59,7 +56,6 @@
             100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        /* 导航链接组 — 完全居中 */
         .nav-links {
             display: flex;
             align-items: center;
@@ -81,7 +77,6 @@
             transform: scale(1.18);
         }
 
-        /* ----- 主内容：垂直居中，标题放大且微调上移 ----- */
         main {
             flex: 1;
             width: 100%;
@@ -94,7 +89,6 @@
             overflow: visible;
         }
 
-        /* 大标题区域 */
         .hero-title {
             display: flex;
             align-items: center;
@@ -142,7 +136,6 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 使用百分比偏移，自适应窗口 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -160,24 +153,21 @@
             overflow: visible;
         }
 
-        /* 横向拉长的分割线 — 使用百分比，始终比容器宽 */
         .hero-desc::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -5%;
-            width: 110%;
+            left: clamp(-6rem, -8%, -3rem);
+            width: calc(100% - clamp(-12rem, -16%, -6rem) + clamp(-6rem, -8%, -3rem));
             height: 1px;
             background-color: rgba(0,0,0,0.06);
         }
 
-        /* 左栏：向左拉开，使用百分比 */
         .hero-desc div:first-child {
             justify-self: start;
             margin-left: clamp(-6rem, -8%, -3rem);
         }
 
-        /* 右栏：向右拉开，使用百分比 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
@@ -209,7 +199,6 @@
             transform: scale(1.05);
         }
 
-        /* ----- 底部信息 ----- */
         footer {
             display: flex;
             justify-content: space-between;
@@ -236,7 +225,6 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (字体放大，居中显示) ----- */
         @media (max-width: 768px) {
             .nav-links {
                 font-size: 1.1rem;
@@ -356,7 +344,6 @@
                 <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
             </svg>
         </div>
-
         <nav class="nav-links">
             <a href="#" aria-current="page">首页</a>
             <a href="#">关于</a>
@@ -388,7 +375,6 @@
                     <strong>日常工具箱：</strong>
                     <span class="software-item">C4D/Redshift</span> 
                     <span class="software-item">Rhino</span> 
-                    <span class="software-item">Creo</span> 
                     <span class="software-item">PS</span> 
                     <span class="software-item">AI</span> 
                     <span class="software-item">AE</span> 
@@ -416,18 +402,12 @@
     <script>
         (function() {
             "use strict";
-
             const titleElement = document.getElementById('titleMove');
             if (!titleElement) return;
-
-            let targetX = 0;
-            let currentX = 0;
-            let rafId = null;
-            
+            let targetX = 0, currentX = 0, rafId = null;
             function updateTransform() {
                 currentX += (targetX - currentX) * 0.25;
                 titleElement.style.transform = `translateX(${currentX}px)`;
-                
                 if (Math.abs(targetX - currentX) > 0.5) {
                     rafId = requestAnimationFrame(updateTransform);
                 } else {
@@ -436,7 +416,6 @@
                     rafId = null;
                 }
             }
-
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
@@ -445,19 +424,12 @@
                 } else {
                     targetX = 0;
                 }
-                
-                if (!rafId) {
-                    rafId = requestAnimationFrame(updateTransform);
-                }
+                if (!rafId) rafId = requestAnimationFrame(updateTransform);
             }
-
             function handleMouseLeave() {
                 targetX = 0;
-                if (!rafId) {
-                    rafId = requestAnimationFrame(updateTransform);
-                }
+                if (!rafId) rafId = requestAnimationFrame(updateTransform);
             }
-
             document.addEventListener('mousemove', handleMouseMove);
             document.addEventListener('mouseleave', handleMouseLeave);
         })();
