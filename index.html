@@ -89,7 +89,7 @@
             padding: 1rem 2rem 3rem;
         }
 
-        /* 大标题区域 */
+        /* 大标题区域 — 内部元素均已垂直居中 */
         .hero-title {
             display: flex;
             align-items: center;
@@ -106,6 +106,25 @@
             margin-top: -4rem;
         }
 
+        /* 右侧文字及中间点的样式 — 垂直居中且点号加粗醒目 */
+        .hero-title .dot-text {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            transform: translateY(0);
+            font-weight: 650;
+        }
+
+        /* 特别强调中间点，确保它在视觉上处于正中央 */
+        .dot-text .middle-dot {
+            font-size: 1.1em;        /* 稍大于周围文字，更醒目 */
+            font-weight: 700;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+            margin: 0 0.05em;         /* 微调左右间距 */
+        }
+
         /* 头像/作品图片 — 同步放大，带轻微旋转 */
         .profile-img {
             width: clamp(100px, 9vw, 150px);
@@ -120,7 +139,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 字体大小、粗细完全一致，左右偏移量加大到 ±4rem */
+        /* 介绍区域 — 分割线及双栏布局 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -140,14 +159,14 @@
         /* 左栏：向左拉开更多 */
         .hero-desc div:first-child {
             justify-self: start;
-            margin-left: -4rem;              /* 从 -2.5rem 增加至 -4rem */
+            margin-left: -4rem;
         }
 
         /* 右栏：向右拉开更多 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
-            margin-right: -4rem;             /* 从 +2.5rem 增加至 +4rem */
+            margin-right: -4rem;
         }
 
         /* ----- 底部信息 ----- */
@@ -258,19 +277,21 @@
     </header>
 
     <main>
-        <!-- 标题 + 可替换图片 -->
+        <!-- 标题 + 可替换图片 — 中间点已替换为居中的“·”并强化居中 -->
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
-            <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
+            <img src="https://https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true" 
                  class="profile-img" 
                  alt="周成鑫个人作品或头像" 
                  loading="lazy"
                  onerror="this.onerror=null; this.src='https://https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true;">
-            <span>3D.TYPESPORTFOLIO</span>
+            <span class="dot-text">
+                3D<span class="middle-dot">·</span>TYPESPORTFOLIO
+            </span>
         </div>
 
-        <!-- 双栏介绍 — 左右拉开更远，粗细一致 -->
+        <!-- 双栏介绍 — 左右拉开，视觉舒展 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
@@ -305,6 +326,7 @@
             let currentX = 0;
             let rafId = null;
             
+            // 平滑更新标题位移
             function updateTransform() {
                 currentX += (targetX - currentX) * 0.35;
                 titleElement.style.transform = `translateX(${currentX}px)`;
@@ -318,6 +340,7 @@
                 }
             }
 
+            // 鼠标移动：仅上半屏触发视差，幅度 ±500px
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
@@ -332,6 +355,7 @@
                 }
             }
 
+            // 鼠标离开窗口时标题归中
             function handleMouseLeave() {
                 targetX = 0;
                 if (!rafId) {
