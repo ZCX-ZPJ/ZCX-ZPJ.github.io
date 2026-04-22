@@ -18,20 +18,146 @@
 
         /* ===== 基础重置 ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { overflow-x: hidden; }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-dark);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100vw;
-            min-height: 100vh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== 页面容器 ===== */
+        .pages-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .page {
+            min-height: 100vh;
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        /* 第二页特殊布局 */
+        #page2 {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page2-hero {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .hero-image-container {
+            width: min(800px, 90vw);
+            height: min(600px, 70vh);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform-origin: center center;
+        }
+
+        .hero-image-container.zoomed {
+            transform: scale(0.35);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #ccc;
+        }
+
+        .hero-title-text {
+            margin-top: 2rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 650;
+            letter-spacing: -0.02em;
+            transition: opacity 0.4s ease;
+        }
+
+        /* 九宫格作品集 */
+        .gallery-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), visibility 0.6s;
+            padding: 2rem;
+        }
+
+        .gallery-section.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 650;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ccc;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 第二页头部和底部 */
+        #page2 header,
+        #page2 footer {
+            position: relative;
+            z-index: 10;
+            background-color: var(--bg-color);
         }
 
         /* ===== 头部导航 ===== */
@@ -362,115 +488,310 @@
             .icon-wrapper svg { width: 20px; height: 20px; }
             .icon-text { font-size: 1.2rem; }
             .icon-wrapper::after { font-size: 0.6rem; }
+
+            .gallery-grid { gap: 0.8rem; }
+            .hero-image-container { height: min(400px, 50vh); }
+            .hero-image-container.zoomed { transform: scale(0.5); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="smiley-icon" aria-label="旋转笑脸">
-            <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="50" cy="50" r="42" />
-                <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
-                <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none" />
-                <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
-            </svg>
-        </div>
-        <nav class="nav-links">
-            <a href="#" aria-current="page">首页</a>
-            <a href="#">关于</a>
-            <a href="#">工作</a>
-        </nav>
-    </header>
+    <div class="pages-container">
+        <!-- 第一页 -->
+        <div class="page" id="page1">
+            <header>
+                <div class="smiley-icon" aria-label="旋转笑脸">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="50" cy="50" r="42" />
+                        <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                        <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                        <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
+                    </svg>
+                </div>
+                <nav class="nav-links">
+                    <a href="#" aria-current="page">首页</a>
+                    <a href="#">关于</a>
+                    <a href="#">工作</a>
+                </nav>
+            </header>
 
-    <main>
-        <div class="hero-title" id="titleMove">
-            <span>周成鑫</span>
-            <span>—</span>
-            <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
-                 class="profile-img" 
-                 alt="周成鑫个人作品或头像" 
-                 loading="lazy"
-                 onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
-            <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
+            <main>
+                <div class="hero-title" id="titleMove">
+                    <span>周成鑫</span>
+                    <span>—</span>
+                    <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
+                         class="profile-img" 
+                         alt="周成鑫个人作品或头像" 
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
+                    <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
+                </div>
+
+                <div class="hero-desc">
+                    <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
+                    <div>
+                        <span class="toolbox-line">
+                            <strong>日常工具箱：</strong>
+                            <span class="software-item blink-1">C4D/Redshift</span>
+                            <span class="software-item blink-2">Rhino</span>
+                            <span class="software-item blink-3">PS</span>
+                            <span class="software-item blink-4">AI</span>
+                            <span class="software-item blink-5">AE</span>
+                            <span class="software-item blink-6">PR</span>
+                            <span class="software-item blink-7">Style3D</span>
+                        </span>
+                        <span class="ai-line">
+                            <span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）
+                        </span>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <div class="footer-left">期待合作</div>
+                <div class="footer-center">···</div>
+                <div class="footer-right">
+                    <div class="icon-wrapper" data-title="ZHOU-9-57">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/>
+                            <path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/>
+                            <path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/>
+                        </svg>
+                    </div>
+                    <div class="icon-wrapper" data-title="2077821405">
+                        <span class="icon-text">Q</span>
+                    </div>
+                    <div class="icon-wrapper" data-title="13226408301">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </footer>
         </div>
 
-        <div class="hero-desc">
-            <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
-            <div>
-                <span class="toolbox-line">
-                    <strong>日常工具箱：</strong>
-                    <span class="software-item blink-1">C4D/Redshift</span>
-                    <span class="software-item blink-2">Rhino</span>
-                    <span class="software-item blink-3">PS</span>
-                    <span class="software-item blink-4">AI</span>
-                    <span class="software-item blink-5">AE</span>
-                    <span class="software-item blink-6">PR</span>
-                    <span class="software-item blink-7">Style3D</span>
-                </span>
-                <span class="ai-line">
-                    <span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）
-                </span>
+        <!-- 第二页 -->
+        <div class="page" id="page2" style="opacity: 0;">
+            <!-- 大图展示区 -->
+            <div class="page2-hero" id="page2Hero">
+                <div class="hero-image-container" id="heroImageContainer">
+                    <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" 
+                         alt="作品展示" 
+                         class="hero-image">
+                </div>
+                <div class="hero-title-text">精选作品</div>
             </div>
-        </div>
-    </main>
 
-    <footer>
-        <div class="footer-left">期待合作</div>
-        <div class="footer-center">···</div>
-        <div class="footer-right">
-            <div class="icon-wrapper" data-title="ZHOU-9-57">
-                <svg viewBox="0 0 24 24" width="22" height="22">
-                    <path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/>
-                    <path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/>
-                    <path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/>
-                </svg>
+            <!-- 九宫格作品集 -->
+            <div class="gallery-section" id="gallerySection">
+                <div class="gallery-title">作品集</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品1"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品2"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品3"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品4"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品5"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品6"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品7"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品8"></div>
+                    <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品9"></div>
+                </div>
             </div>
-            <div class="icon-wrapper" data-title="2077821405">
-                <span class="icon-text">Q</span>
-            </div>
-            <div class="icon-wrapper" data-title="13226408301">
-                <svg viewBox="0 0 24 24" width="22" height="22">
-                    <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/>
-                </svg>
-            </div>
+
+            <!-- 第二页头部和底部 -->
+            <header style="position: absolute; top: 0; left: 0; z-index: 20;">
+                <div class="smiley-icon" aria-label="旋转笑脸">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="50" cy="50" r="42" />
+                        <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                        <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none" />
+                        <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6" />
+                    </svg>
+                </div>
+                <nav class="nav-links">
+                    <a href="#">首页</a>
+                    <a href="#" aria-current="page">作品</a>
+                    <a href="#">工作</a>
+                </nav>
+            </header>
+
+            <footer style="position: absolute; bottom: 0; left: 0; z-index: 20;">
+                <div class="footer-left">期待合作</div>
+                <div class="footer-center">···</div>
+                <div class="footer-right">
+                    <div class="icon-wrapper" data-title="ZHOU-9-57">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/>
+                            <path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/>
+                            <path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/>
+                        </svg>
+                    </div>
+                    <div class="icon-wrapper" data-title="2077821405">
+                        <span class="icon-text">Q</span>
+                    </div>
+                    <div class="icon-wrapper" data-title="13226408301">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
+    </div>
 
     <script>
         (function() {
             "use strict";
+            
+            // 第一页标题视差效果
             const title = document.getElementById('titleMove');
-            if (!title) return;
-            let targetX = 0, currentX = 0, raf = null;
-            
-            function update() {
-                currentX += (targetX - currentX) * 0.25;
-                title.style.transform = `translateX(${currentX}px)`;
-                if (Math.abs(targetX - currentX) > 0.5) {
-                    raf = requestAnimationFrame(update);
-                } else {
-                    title.style.transform = `translateX(${targetX}px)`;
-                    currentX = targetX;
-                    raf = null;
+            if (title) {
+                let targetX = 0, currentX = 0, raf = null;
+                
+                function update() {
+                    currentX += (targetX - currentX) * 0.25;
+                    title.style.transform = `translateX(${currentX}px)`;
+                    if (Math.abs(targetX - currentX) > 0.5) {
+                        raf = requestAnimationFrame(update);
+                    } else {
+                        title.style.transform = `translateX(${targetX}px)`;
+                        currentX = targetX;
+                        raf = null;
+                    }
                 }
-            }
-            
-            function move(e) {
-                if (e.clientY < window.innerHeight / 2) {
-                    targetX = (e.clientX / window.innerWidth - 0.5) * 1600;
-                } else {
+                
+                function move(e) {
+                    if (e.clientY < window.innerHeight / 2) {
+                        targetX = (e.clientX / window.innerWidth - 0.5) * 1600;
+                    } else {
+                        targetX = 0;
+                    }
+                    if (!raf) raf = requestAnimationFrame(update);
+                }
+                
+                function leave() {
                     targetX = 0;
+                    if (!raf) raf = requestAnimationFrame(update);
                 }
-                if (!raf) raf = requestAnimationFrame(update);
+                
+                document.addEventListener('mousemove', move);
+                document.addEventListener('mouseleave', leave);
             }
+
+            // 页面切换与缩放效果
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const heroContainer = document.getElementById('heroImageContainer');
+            const page2Hero = document.getElementById('page2Hero');
+            const gallerySection = document.getElementById('gallerySection');
             
-            function leave() {
-                targetX = 0;
-                if (!raf) raf = requestAnimationFrame(update);
-            }
+            let currentPage = 1;
+            let isTransitioning = false;
+            let scrollProgress = 0;
             
-            document.addEventListener('mousemove', move);
-            document.addEventListener('mouseleave', leave);
+            // 监听第二页内部的滚动
+            page2.addEventListener('wheel', (e) => {
+                if (currentPage !== 2) return;
+                e.preventDefault();
+                
+                const delta = e.deltaY;
+                scrollProgress = Math.min(1, Math.max(0, scrollProgress + delta * 0.002));
+                
+                if (scrollProgress > 0.3 && !isTransitioning) {
+                    // 触发缩放并显示九宫格
+                    heroContainer.classList.add('zoomed');
+                    setTimeout(() => {
+                        page2Hero.style.opacity = '0';
+                        gallerySection.classList.add('visible');
+                        setTimeout(() => {
+                            page2Hero.style.display = 'none';
+                        }, 600);
+                    }, 400);
+                    isTransitioning = true;
+                }
+            }, { passive: false });
+            
+            // 全局页面切换
+            let globalScrollLock = false;
+            
+            window.addEventListener('wheel', (e) => {
+                if (globalScrollLock) return;
+                
+                const delta = e.deltaY;
+                
+                if (delta > 0 && currentPage === 1) {
+                    e.preventDefault();
+                    globalScrollLock = true;
+                    currentPage = 2;
+                    
+                    page1.style.opacity = '0';
+                    page2.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        page2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        globalScrollLock = false;
+                        scrollProgress = 0;
+                        heroContainer.classList.remove('zoomed');
+                        page2Hero.style.opacity = '1';
+                        page2Hero.style.display = 'flex';
+                        gallerySection.classList.remove('visible');
+                        isTransitioning = false;
+                    }, 600);
+                } else if (delta < 0 && currentPage === 2 && scrollProgress === 0) {
+                    e.preventDefault();
+                    globalScrollLock = true;
+                    currentPage = 1;
+                    
+                    page2.style.opacity = '0';
+                    page1.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        page1.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        globalScrollLock = false;
+                    }, 600);
+                }
+            }, { passive: false });
+            
+            // 触摸滑动支持
+            let touchStartY = 0;
+            
+            window.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+            });
+            
+            window.addEventListener('touchmove', (e) => {
+                if (globalScrollLock) return;
+                const touchY = e.touches[0].clientY;
+                const diff = touchStartY - touchY;
+                
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0 && currentPage === 1) {
+                        globalScrollLock = true;
+                        currentPage = 2;
+                        page1.style.opacity = '0';
+                        page2.style.opacity = '1';
+                        setTimeout(() => {
+                            page2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            globalScrollLock = false;
+                            scrollProgress = 0;
+                            heroContainer.classList.remove('zoomed');
+                            page2Hero.style.opacity = '1';
+                            page2Hero.style.display = 'flex';
+                            gallerySection.classList.remove('visible');
+                            isTransitioning = false;
+                        }, 600);
+                    } else if (diff < 0 && currentPage === 2 && scrollProgress === 0) {
+                        globalScrollLock = true;
+                        currentPage = 1;
+                        page2.style.opacity = '0';
+                        page1.style.opacity = '1';
+                        setTimeout(() => {
+                            page1.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            globalScrollLock = false;
+                        }, 600);
+                    }
+                }
+            }, { passive: true });
         })();
     </script>
 </body>
