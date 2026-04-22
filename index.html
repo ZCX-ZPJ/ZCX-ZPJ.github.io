@@ -48,8 +48,8 @@
             transform: translateY(-50%);
             width: min(44px, 5vw);
             height: min(44px, 5vw);
-            min-width: 30px;
-            min-height: 30px;
+            min-width: 32px;
+            min-height: 32px;
             cursor: default;
             user-select: none;
             pointer-events: none;
@@ -95,7 +95,7 @@
             padding: 1rem min(2rem, 3vw) min(3rem, 4vw);
         }
 
-        /* 大标题区域 — 内部元素均已垂直居中，使用更平滑的过渡曲线 */
+        /* 大标题区域 */
         .hero-title {
             display: flex;
             align-items: center;
@@ -112,7 +112,6 @@
             margin-top: min(-4rem, -5vw);
         }
 
-        /* 右侧文字及中间点的样式 — 垂直居中且点号加粗醒目 */
         .hero-title .dot-text {
             display: inline-block;
             line-height: 1;
@@ -122,7 +121,6 @@
             font-size: 1em;
         }
 
-        /* 特别强调中间点，确保它在视觉上处于正中央 */
         .dot-text .middle-dot {
             font-size: 1.1em;
             font-weight: 700;
@@ -132,10 +130,9 @@
             margin: 0 0.05em;
         }
 
-        /* 头像/作品图片 — 同步放大，带轻微旋转 */
         .profile-img {
             width: min(150px, 10vw);
-            min-width: 60px;
+            min-width: 65px;
             height: auto;
             border-radius: 8px;
             transform: rotate(-5deg);
@@ -147,7 +144,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 分割线横向拉长与下方文案对齐 */
+        /* 介绍区域 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -164,7 +161,6 @@
             position: relative;
         }
 
-        /* 横向拉长的分割线 — 与下方文案左右边界完全对齐 */
         .hero-desc::before {
             content: '';
             position: absolute;
@@ -175,13 +171,11 @@
             background-color: rgba(0,0,0,0.06);
         }
 
-        /* 左栏：向左拉开更多 */
         .hero-desc div:first-child {
             justify-self: start;
             margin-left: min(-4rem, -6vw);
         }
 
-        /* 右栏：向右拉开更多，文字左对齐，字体参数与左栏完全一致 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
@@ -192,7 +186,6 @@
             letter-spacing: -0.01em;
         }
 
-        /* 右栏内容微调 — 保持与左栏一致的视觉节奏 */
         .toolbox-line {
             display: block;
             margin-bottom: 0.2rem;
@@ -204,7 +197,6 @@
             display: block;
         }
 
-        /* 软件名称悬停效果 — 橙色 + 微微放大（桌面端） */
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.2s ease;
@@ -242,32 +234,46 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (标题换行后强制居中，软件介绍区域缓慢错开闪烁) ----- */
+        /* ----- 移动端适配 (字体放大，确保可读) ----- */
         @media (max-width: 768px) {
+            /* 导航字体固定大小 */
+            .nav-links {
+                font-size: 1.1rem;
+                gap: 1.5rem;
+            }
+
+            /* 标题放大，使用max确保最小尺寸 */
             .hero-title {
                 white-space: normal;
                 flex-wrap: wrap;
                 text-align: center;
                 justify-content: center;
-                font-size: min(6rem, 15vw);
+                font-size: max(2.8rem, 10vw);
+                gap: 0.8rem;
+                margin-top: -1rem;
             }
             .hero-title .dot-text {
                 width: 100%;
                 text-align: center;
                 margin-top: 0.25rem;
+                font-size: 1em;
             }
+
+            /* 介绍区域字体放大 */
             .hero-desc {
                 grid-template-columns: 1fr;
-                gap: min(1.8rem, 3vw);
-                padding-top: min(1.5rem, 3vw);
-                font-size: min(1.1rem, 3vw);
+                gap: 1.5rem;
+                padding-top: 1.5rem;
+                font-size: max(1rem, 3.5vw);
             }
-            /* 移动端分割线恢复常规宽度 */
+
+            /* 分割线恢复常规宽度 */
             .hero-desc::before {
                 left: 0;
                 width: 100%;
             }
-            /* 移动端左右栏完全居中 */
+
+            /* 左右栏完全居中 */
             .hero-desc div:first-child,
             .hero-desc div:last-child {
                 margin-left: auto;
@@ -277,23 +283,22 @@
                 width: 100%;
             }
 
-            /* 移动端取消桌面端悬停效果 */
+            /* 取消桌面端悬停效果 */
             .software-item:hover {
                 transform: none;
                 color: inherit;
             }
 
-            /* 移动端软件项增加左右边距，防止闪烁时遮挡 */
+            /* 软件项间距 */
             .hero-desc div:last-child .software-item {
-                margin: 0 max(0.1rem, 0.3vw);
+                margin: 0 0.15rem;
             }
 
-            /* 缓慢闪烁动画 — 每个软件项独立，时长拉长，错开节奏 */
+            /* 闪烁动画 */
             .hero-desc div:last-child .software-item {
                 animation: none;
             }
 
-            /* 为每个软件项单独设置缓慢闪烁，每次亮2-3个且不相邻 */
             .hero-desc div:last-child .software-item:nth-child(1) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0s; }
             .hero-desc div:last-child .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4s; }
             .hero-desc div:last-child .software-item:nth-child(3) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1.5s; }
@@ -303,12 +308,10 @@
             .hero-desc div:last-child .software-item:nth-child(7) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
             .hero-desc div:last-child .software-item:nth-child(8) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 5.5s; }
             
-            /* AI工作流中的文字也缓慢闪烁，错开节奏 */
             .ai-line .software-item:nth-child(1) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1s; }
             .ai-line .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
             .ai-line .software-item:nth-child(3) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
 
-            /* 缓慢橙色闪亮动画 — 放大效果减弱，避免遮挡 */
             @keyframes softOrangeBlink {
                 0%, 100% {
                     color: #2c2c2c;
@@ -327,19 +330,21 @@
                 }
             }
 
+            /* 底部字体固定大小 */
             footer {
                 flex-direction: column;
-                gap: max(0.8rem, 1.5vw);
+                gap: 0.8rem;
                 align-items: center;
                 text-align: center;
-                padding: min(1.5rem, 3vw);
+                padding: 1.5rem;
+                font-size: 0.85rem;
             }
             .social-links {
                 justify-content: center;
+                font-size: 0.9rem;
             }
         }
 
-        /* 标题文字粗细微调 */
         .hero-title span:first-child {
             font-weight: 750;
         }
@@ -351,7 +356,6 @@
 </head>
 <body>
     <header>
-        <!-- 平面线条笑脸 SVG — 极简风格，无限旋转 -->
         <div class="smiley-icon" aria-label="旋转笑脸">
             <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="50" cy="50" r="42" />
@@ -369,7 +373,6 @@
     </header>
 
     <main>
-        <!-- 标题 + 可替换图片 — 移动端右排强制居中 -->
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
@@ -383,7 +386,6 @@
             </span>
         </div>
 
-        <!-- 双栏介绍 — 分割线与下方文案对齐 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
@@ -430,7 +432,6 @@
             let currentX = 0;
             let rafId = null;
             
-            // 平滑更新标题位移 — 使用更自然的缓动系数
             function updateTransform() {
                 currentX += (targetX - currentX) * 0.25;
                 titleElement.style.transform = `translateX(${currentX}px)`;
@@ -444,7 +445,6 @@
                 }
             }
 
-            // 鼠标移动：仅上半屏触发视差，幅度保持 ±800px
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
@@ -459,7 +459,6 @@
                 }
             }
 
-            // 鼠标离开窗口时标题归中
             function handleMouseLeave() {
                 targetX = 0;
                 if (!rafId) {
