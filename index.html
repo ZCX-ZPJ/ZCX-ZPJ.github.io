@@ -35,7 +35,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: min(2.2rem, 3vw) min(3rem, 4vw);
+            padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
             width: 100%;
             position: relative;
         }
@@ -43,13 +43,11 @@
         /* 平面线条笑脸 — 持续旋转 */
         .smiley-icon {
             position: absolute;
-            left: min(3rem, 4vw);
+            left: max(1.5rem, 4vw);
             top: 50%;
             transform: translateY(-50%);
-            width: min(44px, 5vw);
-            height: min(44px, 5vw);
-            min-width: 32px;
-            min-height: 32px;
+            width: clamp(32px, 5vw, 44px);
+            height: clamp(32px, 5vw, 44px);
             cursor: default;
             user-select: none;
             pointer-events: none;
@@ -65,8 +63,8 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: min(2.8rem, 3vw);
-            font-size: min(1.25rem, 2vw);
+            gap: clamp(1.8rem, 3vw, 2.8rem);
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
             font-weight: 500;
             letter-spacing: -0.01em;
         }
@@ -91,8 +89,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: min(6.5rem, 8vw);
-            padding: 1rem min(2rem, 3vw) min(3rem, 4vw);
+            gap: clamp(4rem, 8vw, 6.5rem);
+            padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+            overflow: visible;
         }
 
         /* 大标题区域 */
@@ -100,8 +99,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: min(2.2rem, 3vw);
-            font-size: min(11rem, 13vw);
+            gap: clamp(1.2rem, 2.5vw, 2.2rem);
+            font-size: clamp(4rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
             transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -109,7 +108,7 @@
             letter-spacing: -0.02em;
             line-height: 1;
             color: #0a0a0a;
-            margin-top: min(-4rem, -5vw);
+            margin-top: clamp(-5rem, -6vw, -3rem);
         }
 
         .hero-title .dot-text {
@@ -131,8 +130,7 @@
         }
 
         .profile-img {
-            width: min(150px, 10vw);
-            min-width: 65px;
+            width: clamp(70px, 10vw, 150px);
             height: auto;
             border-radius: 8px;
             transform: rotate(-5deg);
@@ -144,42 +142,46 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 */
+        /* 介绍区域 — 使用百分比偏移，自适应窗口 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: min(7rem, 8vw);
-            max-width: min(1100px, 90vw);
+            gap: clamp(3rem, 8vw, 7rem);
+            max-width: min(1100px, 85vw);
             width: 100%;
             margin: 0 auto;
-            font-size: min(1.3rem, 2vw);
+            font-size: clamp(1rem, 2vw, 1.3rem);
             line-height: 1.6;
             color: #1e1e1e;
             font-weight: 550;
             letter-spacing: -0.01em;
-            padding-top: min(2.8rem, 4vw);
+            padding-top: clamp(1.5rem, 3vw, 2.8rem);
             position: relative;
+            overflow: visible;
         }
 
+        /* 横向拉长的分割线 — 使用百分比，始终比容器宽 */
         .hero-desc::before {
             content: '';
             position: absolute;
             top: 0;
-            left: min(-4rem, -6vw);
-            width: calc(100% + min(8rem, 12vw));
-            height: max(1px, 0.1vw);
+            left: -5%;
+            width: 110%;
+            height: 1px;
             background-color: rgba(0,0,0,0.06);
         }
 
+        /* 左栏：向左拉开，使用百分比 */
         .hero-desc div:first-child {
             justify-self: start;
-            margin-left: min(-4rem, -6vw);
+            margin-left: clamp(-6rem, -8%, -3rem);
         }
 
+        /* 右栏：向右拉开，使用百分比 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
-            margin-right: min(-4rem, -6vw);
+            margin-right: clamp(-6rem, -8%, -3rem);
             text-align: left;
             font-weight: 550;
             line-height: 1.6;
@@ -212,9 +214,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: min(1.8rem, 2.5vw) min(3rem, 4vw);
+            padding: clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
             width: 100%;
-            font-size: min(0.8rem, 1.2vw);
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
             font-weight: 450;
             color: #1f1f1f;
             letter-spacing: 0.02em;
@@ -223,7 +225,7 @@
 
         .social-links {
             display: flex;
-            gap: min(1.6rem, 2vw);
+            gap: clamp(1rem, 2vw, 1.6rem);
         }
         .social-links span {
             cursor: default;
@@ -234,15 +236,13 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (字体放大，确保可读) ----- */
+        /* ----- 移动端适配 (字体放大，居中显示) ----- */
         @media (max-width: 768px) {
-            /* 导航字体固定大小 */
             .nav-links {
                 font-size: 1.1rem;
                 gap: 1.5rem;
             }
 
-            /* 标题放大，使用max确保最小尺寸 */
             .hero-title {
                 white-space: normal;
                 flex-wrap: wrap;
@@ -256,45 +256,38 @@
                 width: 100%;
                 text-align: center;
                 margin-top: 0.25rem;
-                font-size: 1em;
             }
 
-            /* 介绍区域字体放大 */
             .hero-desc {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
                 padding-top: 1.5rem;
-                font-size: max(1rem, 3.5vw);
+                font-size: max(1rem, 3.8vw);
             }
 
-            /* 分割线恢复常规宽度 */
             .hero-desc::before {
                 left: 0;
                 width: 100%;
             }
 
-            /* 左右栏完全居中 */
             .hero-desc div:first-child,
             .hero-desc div:last-child {
-                margin-left: auto;
-                margin-right: auto;
+                margin-left: 0;
+                margin-right: 0;
                 justify-self: center;
                 text-align: center;
                 width: 100%;
             }
 
-            /* 取消桌面端悬停效果 */
             .software-item:hover {
                 transform: none;
                 color: inherit;
             }
 
-            /* 软件项间距 */
             .hero-desc div:last-child .software-item {
                 margin: 0 0.15rem;
             }
 
-            /* 闪烁动画 */
             .hero-desc div:last-child .software-item {
                 animation: none;
             }
@@ -330,7 +323,6 @@
                 }
             }
 
-            /* 底部字体固定大小 */
             footer {
                 flex-direction: column;
                 gap: 0.8rem;
