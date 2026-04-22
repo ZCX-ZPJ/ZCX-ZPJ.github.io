@@ -117,12 +117,12 @@
 
         /* 特别强调中间点，确保它在视觉上处于正中央 */
         .dot-text .middle-dot {
-            font-size: 1.1em;        /* 稍大于周围文字，更醒目 */
+            font-size: 1.1em;
             font-weight: 700;
             display: inline-block;
             vertical-align: middle;
             line-height: 1;
-            margin: 0 0.05em;         /* 微调左右间距 */
+            margin: 0 0.05em;
         }
 
         /* 头像/作品图片 — 同步放大，带轻微旋转 */
@@ -162,11 +162,25 @@
             margin-left: -4rem;
         }
 
-        /* 右栏：向右拉开更多 */
+        /* 右栏：向右拉开更多，文字左对齐 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
             margin-right: -4rem;
+            text-align: left;
+        }
+
+        /* 右栏内容微调 */
+        .toolbox-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .toolbox-line strong {
+            font-weight: 650;
+        }
+        .ai-line {
+            display: block;
+            word-spacing: 0.2em;
         }
 
         /* ----- 底部信息 ----- */
@@ -196,7 +210,7 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (取消偏移，居中显示) ----- */
+        /* ----- 移动端适配 (标题换行后强制居中) ----- */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
@@ -217,6 +231,12 @@
                 flex-wrap: wrap;
                 text-align: center;
                 margin-top: -2rem;
+                justify-content: center;
+            }
+            .hero-title .dot-text {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.25rem;
             }
             .profile-img {
                 width: 80px;
@@ -228,7 +248,6 @@
                 font-size: 1.1rem;
                 font-weight: 550;
             }
-            /* 移动端取消左右偏移，居中显示 */
             .hero-desc div:first-child,
             .hero-desc div:last-child {
                 margin-left: 0;
@@ -277,29 +296,29 @@
     </header>
 
     <main>
-        <!-- 标题 + 可替换图片 — 中间点已替换为居中的“·”并强化居中 -->
+        <!-- 标题 + 可替换图片 — 移动端右排强制居中 -->
         <div class="hero-title" id="titleMove">
             <span>周成鑫</span>
             <span>—</span>
-            <img src="https://https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true" 
+            <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
                  class="profile-img" 
                  alt="周成鑫个人作品或头像" 
                  loading="lazy"
-                 onerror="this.onerror=null; this.src='https://https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/1.png?raw=true;">
+                 onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
             <span class="dot-text">
                 3D<span class="middle-dot">·</span>TYPESPORTFOLIO
             </span>
         </div>
 
-        <!-- 双栏介绍 — 左右拉开，视觉舒展 -->
+        <!-- 双栏介绍 — 右栏已移除MoI -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
                 专注将创意策略转化为视觉作品
             </div>
             <div>
-                Motion Designer, 3D Rendering, Content Creation<br>
-                C4D / Redshift 三维渲染视觉设计师
+                <span class="toolbox-line"><strong>日常工具箱：</strong>C4D/Redshift  Rhino  Creo  PS  AI  AE  PR  Style3D</span>
+                <span class="ai-line">Ai人工智能工作流（椒图Ai  Lovart）</span>
             </div>
         </div>
     </main>
