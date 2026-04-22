@@ -89,7 +89,7 @@
             padding: 1rem 2rem 3rem;
         }
 
-        /* 大标题区域 — 内部元素均已垂直居中 */
+        /* 大标题区域 — 内部元素均已垂直居中，使用更平滑的过渡曲线 */
         .hero-title {
             display: flex;
             align-items: center;
@@ -98,7 +98,7 @@
             font-size: clamp(6rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
-            transition: transform 0.15s linear;
+            transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);  /* 更平滑的缓动 */
             will-change: transform;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -396,7 +396,7 @@
             <div>
                 <span class="toolbox-line">
                     <strong>日常工具箱：</strong>
-                    <span class="software-item">C4D/Redshift</span> 
+                    <span class="software-item">C4D/ Redshift</span> 
                     <span class="software-item">Rhino</span> 
                     <span class="software-item">Creo</span> 
                     <span class="software-item">PS</span> 
@@ -434,12 +434,12 @@
             let currentX = 0;
             let rafId = null;
             
-            // 快速更新标题位移
+            // 平滑更新标题位移 — 使用更自然的缓动系数
             function updateTransform() {
-                currentX += (targetX - currentX) * 0.5;
+                currentX += (targetX - currentX) * 0.25;      // 降低系数，移动更柔和
                 titleElement.style.transform = `translateX(${currentX}px)`;
                 
-                if (Math.abs(targetX - currentX) > 0.2) {
+                if (Math.abs(targetX - currentX) > 0.5) {     // 增大阈值，减少动画抖动
                     rafId = requestAnimationFrame(updateTransform);
                 } else {
                     titleElement.style.transform = `translateX(${targetX}px)`;
@@ -448,12 +448,12 @@
                 }
             }
 
-            // 鼠标移动：仅上半屏触发视差，幅度 ±800px
+            // 鼠标移动：仅上半屏触发视差，幅度保持 ±800px (系数1600)
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
                     const mouseX = e.clientX / window.innerWidth;
-                    targetX = (mouseX - 0.5) * 1600;   // -800px ~ 800px
+                    targetX = (mouseX - 0.5) * 1600;   // -800px ~ 800px (保持不变)
                 } else {
                     targetX = 0;
                 }
