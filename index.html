@@ -136,6 +136,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
+        /* 介绍区域 — 使用精确的偏移量对齐 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -153,29 +154,55 @@
             overflow: visible;
         }
 
+        /* 分割线 — 精确对齐左右边缘 */
         .hero-desc::before {
             content: '';
             position: absolute;
             top: 0;
-            left: clamp(-6rem, -8%, -3rem);
-            width: calc(100% - clamp(-12rem, -16%, -6rem) + clamp(-6rem, -8%, -3rem));
+            left: 0;
+            width: 100%;
             height: 1px;
             background-color: rgba(0,0,0,0.06);
         }
 
+        /* 左栏 — 通过负边距向左延伸，分割线也随之延伸 */
         .hero-desc div:first-child {
             justify-self: start;
-            margin-left: clamp(-6rem, -8%, -3rem);
+            margin-left: -4rem;
+            position: relative;
         }
 
+        /* 右栏 — 通过负边距向右延伸，分割线也随之延伸 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
-            margin-right: clamp(-6rem, -8%, -3rem);
+            margin-right: -4rem;
             text-align: left;
             font-weight: 550;
             line-height: 1.6;
             letter-spacing: -0.01em;
+            position: relative;
+        }
+
+        /* 扩展分割线以匹配左右栏的延伸 */
+        .hero-desc div:first-child::before {
+            content: '';
+            position: absolute;
+            top: calc(-1 * clamp(1.5rem, 3vw, 2.8rem));
+            left: -4rem;
+            width: 4rem;
+            height: 1px;
+            background-color: rgba(0,0,0,0.06);
+        }
+
+        .hero-desc div:last-child::after {
+            content: '';
+            position: absolute;
+            top: calc(-1 * clamp(1.5rem, 3vw, 2.8rem));
+            right: -4rem;
+            width: 4rem;
+            height: 1px;
+            background-color: rgba(0,0,0,0.06);
         }
 
         .toolbox-line {
@@ -267,6 +294,11 @@
                 width: 100%;
             }
 
+            .hero-desc div:first-child::before,
+            .hero-desc div:last-child::after {
+                display: none;
+            }
+
             .software-item:hover {
                 transform: none;
                 color: inherit;
@@ -274,9 +306,6 @@
 
             .hero-desc div:last-child .software-item {
                 margin: 0 0.15rem;
-            }
-
-            .hero-desc div:last-child .software-item {
                 animation: none;
             }
 
@@ -287,7 +316,6 @@
             .hero-desc div:last-child .software-item:nth-child(5) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 2.5s; }
             .hero-desc div:last-child .software-item:nth-child(6) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 0.8s; }
             .hero-desc div:last-child .software-item:nth-child(7) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3.5s; }
-            .hero-desc div:last-child .software-item:nth-child(8) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 5.5s; }
             
             .ai-line .software-item:nth-child(1) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 1s; }
             .ai-line .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
@@ -329,7 +357,7 @@
             font-weight: 750;
         }
         .hero-title span:last-child {
-            font-weight: 650;
+            font-weight:650;
             color: #202020;
         }
     </style>
