@@ -98,7 +98,7 @@
             font-size: clamp(6rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
-            transition: transform 0.2s linear;
+            transition: transform 0.15s linear;
             will-change: transform;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -139,7 +139,7 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 介绍区域 — 分割线及双栏布局 */
+        /* 介绍区域 — 分割线横向拉长与下方文案对齐 */
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -152,8 +152,19 @@
             color: #1e1e1e;
             font-weight: 550;
             letter-spacing: -0.01em;
-            border-top: 1px solid rgba(0,0,0,0.06);
             padding-top: 2.8rem;
+            position: relative;
+        }
+
+        /* 横向拉长的分割线 — 与下方文案左右边界完全对齐 */
+        .hero-desc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -4rem;
+            width: calc(100% + 8rem);
+            height: 1px;
+            background-color: rgba(0,0,0,0.06);
         }
 
         /* 左栏：向左拉开更多 */
@@ -162,39 +173,36 @@
             margin-left: -4rem;
         }
 
-        /* 右栏：向右拉开更多，文字左对齐 */
+        /* 右栏：向右拉开更多，文字左对齐，字体参数与左栏完全一致 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
             margin-right: -4rem;
             text-align: left;
+            font-weight: 550;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
         }
 
-        /* 右栏内容微调 */
+        /* 右栏内容微调 — 保持与左栏一致的视觉节奏 */
         .toolbox-line {
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
         .toolbox-line strong {
             font-weight: 650;
         }
         .ai-line {
             display: block;
-            word-spacing: 0.2em;
         }
 
-        /* 软件名称悬停效果 — 橙色 + 微微放大 */
+        /* 软件名称悬停效果 — 橙色 + 微微放大（桌面端） */
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.2s ease;
             cursor: default;
         }
         .software-item:hover {
-            color: #ff8c42;
-            transform: scale(1.05);
-        }
-        /* AI工作流悬停效果 */
-        .ai-line .software-item:hover {
             color: #ff8c42;
             transform: scale(1.05);
         }
@@ -226,7 +234,7 @@
             opacity: 0.7;
         }
 
-        /* ----- 移动端适配 (标题换行后强制居中) ----- */
+        /* ----- 移动端适配 (标题换行后强制居中，软件介绍区域闪烁) ----- */
         @media (max-width: 700px) {
             header {
                 padding: 1.5rem 1.5rem;
@@ -264,6 +272,11 @@
                 font-size: 1.1rem;
                 font-weight: 550;
             }
+            /* 移动端分割线恢复常规宽度 */
+            .hero-desc::before {
+                left: 0;
+                width: 100%;
+            }
             .hero-desc div:first-child,
             .hero-desc div:last-child {
                 margin-left: 0;
@@ -271,6 +284,30 @@
                 justify-self: center;
                 text-align: center;
             }
+
+            /* 移动端软件介绍区域 — 闪烁呼吸效果 */
+            .hero-desc div:last-child {
+                animation: softBlink 2.5s ease-in-out infinite;
+            }
+
+            /* 闪烁动画：透明度与轻微缩放变化 */
+            @keyframes softBlink {
+                0%, 100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 0.7;
+                    transform: scale(1.02);
+                }
+            }
+
+            /* 移动端取消悬停放大，避免冲突 */
+            .software-item:hover {
+                transform: none;
+                color: inherit;
+            }
+
             main {
                 gap: 3.5rem;
             }
@@ -326,7 +363,7 @@
             </span>
         </div>
 
-        <!-- 双栏介绍 — AI工作流拆分响应 -->
+        <!-- 双栏介绍 — 分割线与下方文案对齐 -->
         <div class="hero-desc">
             <div>
                 Hi, 我是周成鑫，一名数字创意设计师<br>
@@ -335,13 +372,13 @@
             <div>
                 <span class="toolbox-line">
                     <strong>日常工具箱：</strong>
-                    <span class="software-item">C4D/Redshift</span>  
-                    <span class="software-item">Rhino</span>  
-                    <span class="software-item">Creo</span>  
-                    <span class="software-item">PS</span>  
-                    <span class="software-item">AI</span>  
-                    <span class="software-item">AE</span>  
-                    <span class="software-item">PR</span>  
+                    <span class="software-item">C4D/Redshift</span> 
+                    <span class="software-item">Rhino</span> 
+                    <span class="software-item">Creo</span> 
+                    <span class="software-item">PS</span> 
+                    <span class="software-item">AI</span> 
+                    <span class="software-item">AE</span> 
+                    <span class="software-item">PR</span> 
                     <span class="software-item">Style3D</span>
                 </span>
                 <span class="ai-line">
@@ -373,12 +410,12 @@
             let currentX = 0;
             let rafId = null;
             
-            // 平滑更新标题位移
+            // 快速更新标题位移
             function updateTransform() {
-                currentX += (targetX - currentX) * 0.35;
+                currentX += (targetX - currentX) * 0.5;
                 titleElement.style.transform = `translateX(${currentX}px)`;
                 
-                if (Math.abs(targetX - currentX) > 0.3) {
+                if (Math.abs(targetX - currentX) > 0.2) {
                     rafId = requestAnimationFrame(updateTransform);
                 } else {
                     titleElement.style.transform = `translateX(${targetX}px)`;
@@ -387,12 +424,12 @@
                 }
             }
 
-            // 鼠标移动：仅上半屏触发视差，幅度 ±500px
+            // 鼠标移动：仅上半屏触发视差，幅度 ±800px
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
                     const mouseX = e.clientX / window.innerWidth;
-                    targetX = (mouseX - 0.5) * 1000;   // -500px ~ 500px
+                    targetX = (mouseX - 0.5) * 1600;   // -800px ~ 800px
                 } else {
                     targetX = 0;
                 }
