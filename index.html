@@ -91,7 +91,7 @@
             transition: all 0.05s linear;
         }
 
-        /* 九宫格作品集 - 真正全屏居中 */
+        /* 九宫格作品集 */
         .gallery-section {
             position: fixed;
             top: 0;
@@ -105,18 +105,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 25px;
         }
 
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: 0;
+            gap: 25px;
             width: 100%;
-            height: 100vh;
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
+            height: 100%;
+            max-width: calc(100vh * 1.2);
+            margin: 0 auto;
         }
 
         .gallery-item {
@@ -126,10 +126,13 @@
             cursor: pointer;
             width: 100%;
             height: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         .gallery-item:hover {
             transform: scale(0.98);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
 
         .gallery-item img {
@@ -459,6 +462,10 @@
             .icon-wrapper svg { width: 20px; height: 20px; }
             .icon-text { font-size: 1.2rem; }
             .icon-wrapper::after { font-size: 0.6rem; }
+
+            .gallery-section { padding: 12px; }
+            .gallery-grid { gap: 12px; }
+            .gallery-item { border-radius: 12px; }
         }
     </style>
 </head>
@@ -485,11 +492,12 @@
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span>
                 <span>—</span>
-                <img src="https://picsum.photos/200/200?random=1" 
+                <!-- 🔁 在这里替换您的头像图片 -->
+                <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" 
                      class="profile-img" 
                      alt="周成鑫个人作品或头像" 
                      loading="lazy"
-                     onerror="this.src='https://picsum.photos/200/200?random=1'">
+                     onerror="this.onerror=null; this.src='https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image';">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
 
@@ -539,13 +547,25 @@
     <!-- 满屏大图 -->
     <div class="fullscreen-image" id="fullscreenImage">
         <div class="image-wrapper" id="imageWrapper">
-            <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
+            <!-- 🔁 在这里替换满屏大图 -->
+            <img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品展示" id="mainImage">
         </div>
     </div>
 
-    <!-- 九宫格作品集 - 全屏居中 -->
+    <!-- 九宫格作品集 -->
     <div class="gallery-section" id="gallerySection">
-        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- 🔁 在这里替换9张作品图片 -->
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品1"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品2"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品3"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品4"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品5"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品6"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品7"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品8"></div>
+            <div class="gallery-item"><img src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/020f9000f38c40089922d3d390049311~tplv-a9rns2rl98-image.image" alt="作品9"></div>
+        </div>
     </div>
 
     <!-- 第二页 -->
@@ -594,19 +614,6 @@
     <script>
         (function() {
             "use strict";
-            
-            // 随机生成九宫格图片
-            const galleryGrid = document.getElementById('galleryGrid');
-            for (let i = 0; i < 9; i++) {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                const img = document.createElement('img');
-                img.src = `https://picsum.photos/400/400?random=${i + 50}`;
-                img.alt = `作品${i + 1}`;
-                img.loading = 'lazy';
-                item.appendChild(img);
-                galleryGrid.appendChild(item);
-            }
             
             // 第一页标题视差效果
             const title = document.getElementById('titleMove');
