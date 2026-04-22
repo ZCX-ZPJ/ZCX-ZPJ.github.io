@@ -98,7 +98,7 @@
             font-size: clamp(6rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
-            transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);  /* 更平滑的缓动 */
+            transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
             will-change: transform;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -293,6 +293,11 @@
                 color: inherit;
             }
 
+            /* 移动端软件项增加左右边距，防止闪烁时遮挡 */
+            .hero-desc div:last-child .software-item {
+                margin: 0 0.2rem;
+            }
+
             /* 缓慢闪烁动画 — 每个软件项独立，时长拉长，错开节奏 */
             .hero-desc div:last-child .software-item {
                 animation: none;
@@ -313,7 +318,7 @@
             .ai-line .software-item:nth-child(2) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 3s; }
             .ai-line .software-item:nth-child(3) { animation: softOrangeBlink 6s ease-in-out infinite; animation-delay: 4.5s; }
 
-            /* 缓慢橙色闪亮动画 */
+            /* 缓慢橙色闪亮动画 — 放大效果减弱，避免遮挡 */
             @keyframes softOrangeBlink {
                 0%, 100% {
                     color: #2c2c2c;
@@ -322,12 +327,12 @@
                 }
                 15%, 35% {
                     color: #ff9d5c;
-                    transform: scale(1.05);
+                    transform: scale(1.02);      /* 从1.05降至1.02 */
                     text-shadow: 0 0 6px rgba(255,157,92,0.3);
                 }
                 25% {
                     color: #ff8c42;
-                    transform: scale(1.08);
+                    transform: scale(1.03);      /* 从1.08降至1.03 */
                     text-shadow: 0 0 10px rgba(255,140,66,0.4);
                 }
             }
@@ -436,10 +441,10 @@
             
             // 平滑更新标题位移 — 使用更自然的缓动系数
             function updateTransform() {
-                currentX += (targetX - currentX) * 0.25;      // 降低系数，移动更柔和
+                currentX += (targetX - currentX) * 0.25;
                 titleElement.style.transform = `translateX(${currentX}px)`;
                 
-                if (Math.abs(targetX - currentX) > 0.5) {     // 增大阈值，减少动画抖动
+                if (Math.abs(targetX - currentX) > 0.5) {
                     rafId = requestAnimationFrame(updateTransform);
                 } else {
                     titleElement.style.transform = `translateX(${targetX}px)`;
@@ -448,12 +453,12 @@
                 }
             }
 
-            // 鼠标移动：仅上半屏触发视差，幅度保持 ±800px (系数1600)
+            // 鼠标移动：仅上半屏触发视差，幅度保持 ±800px
             function handleMouseMove(e) {
                 const halfHeight = window.innerHeight / 2;
                 if (e.clientY < halfHeight) {
                     const mouseX = e.clientX / window.innerWidth;
-                    targetX = (mouseX - 0.5) * 1600;   // -800px ~ 800px (保持不变)
+                    targetX = (mouseX - 0.5) * 1600;
                 } else {
                     targetX = 0;
                 }
