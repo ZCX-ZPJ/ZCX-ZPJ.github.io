@@ -12,6 +12,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             background-color: #e0e0dc;
             color: #111;
@@ -31,7 +35,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: clamp(1.5rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 3rem);
+            padding: min(2.2rem, 3vw) min(3rem, 4vw);
             width: 100%;
             position: relative;
         }
@@ -39,11 +43,13 @@
         /* 平面线条笑脸 — 持续旋转 */
         .smiley-icon {
             position: absolute;
-            left: clamp(1.5rem, 4vw, 3rem);
+            left: min(3rem, 4vw);
             top: 50%;
             transform: translateY(-50%);
-            width: clamp(36px, 5vw, 44px);
-            height: clamp(36px, 5vw, 44px);
+            width: min(44px, 5vw);
+            height: min(44px, 5vw);
+            min-width: 30px;
+            min-height: 30px;
             cursor: default;
             user-select: none;
             pointer-events: none;
@@ -59,8 +65,8 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: clamp(1.8rem, 3vw, 2.8rem);
-            font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+            gap: min(2.8rem, 3vw);
+            font-size: min(1.25rem, 2vw);
             font-weight: 500;
             letter-spacing: -0.01em;
         }
@@ -85,8 +91,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: clamp(3.5rem, 6vw, 6.5rem);
-            padding: 1rem clamp(1rem, 3vw, 2rem) 3rem;
+            gap: min(6.5rem, 8vw);
+            padding: 1rem min(2rem, 3vw) min(3rem, 4vw);
         }
 
         /* 大标题区域 — 内部元素均已垂直居中，使用更平滑的过渡曲线 */
@@ -94,8 +100,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: clamp(1rem, 2.5vw, 2.2rem);
-            font-size: clamp(4rem, 12vw, 11rem);
+            gap: min(2.2rem, 3vw);
+            font-size: min(11rem, 13vw);
             font-weight: 700;
             white-space: nowrap;
             transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -103,7 +109,7 @@
             letter-spacing: -0.02em;
             line-height: 1;
             color: #0a0a0a;
-            margin-top: clamp(-2rem, -4vw, -4rem);
+            margin-top: min(-4rem, -5vw);
         }
 
         /* 右侧文字及中间点的样式 — 垂直居中且点号加粗醒目 */
@@ -113,6 +119,7 @@
             vertical-align: middle;
             transform: translateY(0);
             font-weight: 650;
+            font-size: 1em;
         }
 
         /* 特别强调中间点，确保它在视觉上处于正中央 */
@@ -127,7 +134,8 @@
 
         /* 头像/作品图片 — 同步放大，带轻微旋转 */
         .profile-img {
-            width: clamp(80px, 9vw, 150px);
+            width: min(150px, 10vw);
+            min-width: 60px;
             height: auto;
             border-radius: 8px;
             transform: rotate(-5deg);
@@ -143,16 +151,16 @@
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: clamp(3rem, 7vw, 7rem);
-            max-width: 1100px;
+            gap: min(7rem, 8vw);
+            max-width: min(1100px, 90vw);
             width: 100%;
             margin: 0 auto;
-            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            font-size: min(1.3rem, 2vw);
             line-height: 1.6;
             color: #1e1e1e;
             font-weight: 550;
             letter-spacing: -0.01em;
-            padding-top: clamp(1.5rem, 3vw, 2.8rem);
+            padding-top: min(2.8rem, 4vw);
             position: relative;
         }
 
@@ -161,23 +169,23 @@
             content: '';
             position: absolute;
             top: 0;
-            left: clamp(-6rem, -8vw, -4rem);
-            width: calc(100% + clamp(6rem, 10vw, 8rem));
-            height: 1px;
+            left: min(-4rem, -6vw);
+            width: calc(100% + min(8rem, 12vw));
+            height: max(1px, 0.1vw);
             background-color: rgba(0,0,0,0.06);
         }
 
         /* 左栏：向左拉开更多 */
         .hero-desc div:first-child {
             justify-self: start;
-            margin-left: clamp(-6rem, -8vw, -4rem);
+            margin-left: min(-4rem, -6vw);
         }
 
         /* 右栏：向右拉开更多，文字左对齐，字体参数与左栏完全一致 */
         .hero-desc div:last-child {
             color: #2c2c2c;
             justify-self: end;
-            margin-right: clamp(-6rem, -8vw, -4rem);
+            margin-right: min(-4rem, -6vw);
             text-align: left;
             font-weight: 550;
             line-height: 1.6;
@@ -212,9 +220,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: clamp(1.5rem, 2vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
+            padding: min(1.8rem, 2.5vw) min(3rem, 4vw);
             width: 100%;
-            font-size: clamp(0.75rem, 1vw, 0.8rem);
+            font-size: min(0.8rem, 1.2vw);
             font-weight: 450;
             color: #1f1f1f;
             letter-spacing: 0.02em;
@@ -223,7 +231,7 @@
 
         .social-links {
             display: flex;
-            gap: clamp(1.2rem, 2vw, 1.6rem);
+            gap: min(1.6rem, 2vw);
         }
         .social-links span {
             cursor: default;
@@ -234,64 +242,25 @@
             opacity: 0.7;
         }
 
-        /* ----- 中等屏幕适配 (768px - 1024px) ----- */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .hero-title {
-                white-space: normal;
-                flex-wrap: wrap;
-            }
-            .hero-desc {
-                gap: 4rem;
-            }
-            .hero-desc div:first-child {
-                margin-left: -2rem;
-            }
-            .hero-desc div:last-child {
-                margin-right: -2rem;
-            }
-            .hero-desc::before {
-                left: -2rem;
-                width: calc(100% + 4rem);
-            }
-        }
-
         /* ----- 移动端适配 (标题换行后强制居中，软件介绍区域缓慢错开闪烁) ----- */
         @media (max-width: 768px) {
-            header {
-                padding: 1.5rem;
-            }
-            .smiley-icon {
-                left: 1.5rem;
-                width: 36px;
-                height: 36px;
-            }
-            .nav-links {
-                gap: 1.5rem;
-                font-size: 1rem;
-            }
             .hero-title {
-                gap: 0.8rem;
-                font-size: clamp(3.5rem, 10vw, 6rem);
                 white-space: normal;
                 flex-wrap: wrap;
                 text-align: center;
-                margin-top: -1.5rem;
                 justify-content: center;
+                font-size: min(6rem, 15vw);
             }
             .hero-title .dot-text {
                 width: 100%;
                 text-align: center;
                 margin-top: 0.25rem;
             }
-            .profile-img {
-                width: 70px;
-            }
             .hero-desc {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding-top: 1.5rem;
-                font-size: 1rem;
-                font-weight: 550;
+                gap: min(1.8rem, 3vw);
+                padding-top: min(1.5rem, 3vw);
+                font-size: min(1.1rem, 3vw);
             }
             /* 移动端分割线恢复常规宽度 */
             .hero-desc::before {
@@ -316,7 +285,7 @@
 
             /* 移动端软件项增加左右边距，防止闪烁时遮挡 */
             .hero-desc div:last-child .software-item {
-                margin: 0 0.15rem;
+                margin: 0 max(0.1rem, 0.3vw);
             }
 
             /* 缓慢闪烁动画 — 每个软件项独立，时长拉长，错开节奏 */
@@ -358,15 +327,12 @@
                 }
             }
 
-            main {
-                gap: 3rem;
-            }
             footer {
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: max(0.8rem, 1.5vw);
                 align-items: center;
                 text-align: center;
-                padding: 1.5rem;
+                padding: min(1.5rem, 3vw);
             }
             .social-links {
                 justify-content: center;
