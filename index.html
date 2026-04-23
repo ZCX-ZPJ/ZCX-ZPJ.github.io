@@ -367,7 +367,6 @@
             align-items: center;
             justify-content: center;
             padding: var(--card-gap);
-            transform: translateY(50px);
         }
 
         .gallery-item {
@@ -500,7 +499,6 @@
                 width: calc(100vw - var(--card-gap) * 2);
                 height: 100vh;
                 padding: var(--card-gap);
-                transform: translateY(0); /* 移动端取消下移，保证满屏 */
             }
             .gallery-item {
                 border-radius: 12px;
@@ -717,7 +715,7 @@
                 page1.style.opacity = 1 - p1Progress;
                 page1.style.pointerEvents = p1Progress > 0.8 ? 'none' : 'auto';
 
-                const p2End = vh * 1.2;
+                const p2End = vh * 1.6;
                 const inPage2 = sY >= p2Start && sY < p2End;
                 if (inPage2) {
                     page2.style.opacity = 1;
