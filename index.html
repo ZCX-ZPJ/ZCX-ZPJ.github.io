@@ -51,7 +51,7 @@
             z-index: 12;
             opacity: 0;
             pointer-events: none;
-            background: var(--bg);
+            background: var(--bg);        /* 与第一页背景完全一致 */
             display: flex; align-items: center; justify-content: center;
             padding: 4px;
             transition: opacity 0.3s;
@@ -77,7 +77,7 @@
             inset: 0;
             z-index: 21;
             display: flex; align-items: center; justify-content: center;
-            background: var(--bg);
+            background: var(--bg);        /* 与第一页背景完全一致 */
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
             transform: translateY(100%);
             overflow: hidden;
@@ -161,6 +161,7 @@
     </style>
 </head>
 <body>
+    <!-- 第一页 -->
     <div class="page" id="page1">
         <header>
             <div class="smiley-icon">
@@ -200,12 +201,15 @@
         </footer>
     </div>
 
+    <!-- 九宫格（背景与第一页一致） -->
     <div class="gallery-section" id="gallerySection">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
+    <!-- 大图容器（背景与第一页一致） -->
     <div class="image-wrapper" id="imageWrapper">
         <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
     </div>
+    <!-- 第二页（空） -->
     <div class="page" id="page2"></div>
 
     <script>
@@ -218,6 +222,7 @@
             const galleryGrid = document.getElementById('galleryGrid');
             const title = document.getElementById('titleMove');
 
+            // 生成九宫格
             const centralUrl = mainImage.src;
             const items = [];
             for (let i = 0; i < 9; i++) {
@@ -231,6 +236,7 @@
                 items.push(item);
             }
 
+            // 标题视差
             if (title) {
                 let tx=0,cx=0,raf;
                 const updateTitle=()=>{
@@ -254,7 +260,7 @@
             let zoomScale = 1, targetZoom = 1, activeIndex = 4, isZoomMode = false, animating = false;
             const MAX_SCALE = 4, LERP = 0.22, STEP = 0.1;
             let lastCenter = null;
-            let zoomLocked = false; // 是否因缩放锁定了页面滚动
+            let zoomLocked = false;
 
             const getActive=(x,y)=>{
                 for(let i=0;i<items.length;i++){
@@ -311,19 +317,8 @@
                 }
             };
 
-            const unlockScroll = () => {
-                if (zoomLocked) {
-                    document.body.style.overflow = '';
-                    zoomLocked = false;
-                }
-            };
-
-            const lockScroll = () => {
-                if (!zoomLocked) {
-                    document.body.style.overflow = 'hidden';
-                    zoomLocked = true;
-                }
-            };
+            const unlockScroll = () => { if (zoomLocked) { document.body.style.overflow = ''; zoomLocked = false; } };
+            const lockScroll = () => { if (!zoomLocked) { document.body.style.overflow = 'hidden'; zoomLocked = true; } };
 
             const stopZoom = (finalScale) => {
                 zoomScale = finalScale;
@@ -338,14 +333,8 @@
             };
 
             const animateZoom = () => {
-                if (targetZoom >= MAX_SCALE - 0.001) {
-                    stopZoom(MAX_SCALE);
-                    return;
-                }
-                if (targetZoom <= 1.001) {
-                    stopZoom(1);
-                    return;
-                }
+                if (targetZoom >= MAX_SCALE - 0.001) { stopZoom(MAX_SCALE); return; }
+                if (targetZoom <= 1.001) { stopZoom(1); return; }
 
                 zoomScale += (targetZoom - zoomScale) * LERP;
                 if (Math.abs(targetZoom - zoomScale) < 0.0005) zoomScale = targetZoom;
@@ -364,19 +353,11 @@
                 if (!isZoomMode) return;
                 e.preventDefault();
                 const delta = e.deltaY > 0 ? 1 : -1;
-                if (delta < 0) {
-                    targetZoom = Math.min(MAX_SCALE, targetZoom + STEP);
-                } else {
-                    targetZoom = Math.max(1, targetZoom - STEP);
-                }
+                if (delta < 0) targetZoom = Math.min(MAX_SCALE, targetZoom + STEP);
+                else targetZoom = Math.max(1, targetZoom - STEP);
                 activeIndex = getActive(e.clientX, e.clientY);
                 startAnim();
-                // 只要目标缩放>1，就锁定滚动
-                if (targetZoom > 1.001) {
-                    lockScroll();
-                } else {
-                    unlockScroll();
-                }
+                if (targetZoom > 1.001) lockScroll(); else unlockScroll();
             };
 
             const move = (e) => {
@@ -403,7 +384,6 @@
                 const startP2 = vh * (1 + BUFFER);
                 const thirdPhaseStart = startP2 + vh;
 
-                // 如果用户向上滚动离开了第三阶段，强制退出缩放模式并解锁滚动
                 if (sY < thirdPhaseStart && isZoomMode) {
                     stopZoom(1);
                     unlockScroll();
@@ -437,10 +417,7 @@
                     if (isZoomMode) stopZoom(1);
                 } else if (sY >= thirdPhaseStart) {
                     gallerySection.style.opacity = 1; gallerySection.style.zIndex = '25';
-                    if (!isZoomMode) {
-                        isZoomMode = true;
-                        stopZoom(1); // 初始不锁定滚动
-                    }
+                    if (!isZoomMode) { isZoomMode = true; stopZoom(1); }
                     imageWrapper.style.opacity = '0';
                 }
 
