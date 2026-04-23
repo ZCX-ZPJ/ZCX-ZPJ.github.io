@@ -28,7 +28,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             height: 200vh;
-            /* 两屏高度，便于观察滚动过渡 */
             overflow-x: hidden;
         }
 
@@ -40,7 +39,7 @@
             cursor: pointer !important;
         }
 
-        /* ---------- 第一页 (固定) ---------- */
+        /* ---------- 第一页 ---------- */
         .page1 {
             position: fixed;
             inset: 0;
@@ -51,10 +50,8 @@
             pointer-events: auto;
             z-index: 20;
             will-change: transform, opacity;
-            transition: none;
         }
 
-        /* 第一页内部元素沿用之前样式 */
         header {
             display: flex;
             justify-content: center;
@@ -233,7 +230,6 @@
             gap: 1.5rem;
             align-items: center;
         }
-
         .icon-wrapper {
             position: relative;
             display: inline-flex;
@@ -294,7 +290,7 @@
             visibility: visible;
         }
 
-        /* ---------- 第二页 (固定，初始隐藏) ---------- */
+        /* ---------- 第二页 ---------- */
         .page2 {
             position: fixed;
             inset: 0;
@@ -305,7 +301,7 @@
             justify-content: center;
             pointer-events: none;
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
         }
@@ -314,38 +310,40 @@
             transform: translateY(0);
             pointer-events: auto;
         }
-        .splash-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: clamp(0.8rem, 1.5vw, 1.6rem);
+
+        .splash-wrapper {
+            position: relative;
+            display: inline-block;
         }
+
         .splash-title {
-            font-size: clamp(4rem, 14vw, 12rem);
+            font-size: clamp(5rem, 16vw, 14rem);
             font-weight: 750;
             letter-spacing: 0.06em;
             color: #0a0a0a;
             line-height: 1;
             text-align: center;
             user-select: none;
-        }
-        .splash-sub {
-            font-size: clamp(0.85rem, 1.4vw, 1.1rem);
-            font-weight: 500;
-            letter-spacing: 0.25em;
-            color: #3a3a3a;
-            text-transform: uppercase;
-            text-align: center;
-            user-select: none;
-        }
-        .splash-line {
-            width: clamp(40px, 8vw, 80px);
-            height: 1px;
-            background: rgba(0, 0, 0, 0.18);
-            border-radius: 1px;
+            padding-right: 0.15em;
         }
 
-        /* 移动端适配 */
+        /* 年份标签：向下6px，总左移60px */
+        .year-tag {
+            position: absolute;
+            top: 6px;
+            left: 100%;
+            font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+            font-weight: 550;
+            letter-spacing: 0.06em;
+            color: #3a3a3a;
+            user-select: none;
+            opacity: 0.85;
+            line-height: 1;
+            white-space: nowrap;
+            margin-left: clamp(0.4rem, 1vw, 0.8rem);
+            transform: translateX(-60px);
+        }
+
         @media (max-width: 768px) {
             :root {
                 --offset: 0rem;
@@ -422,7 +420,7 @@
             .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
             .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
             .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
-            .blink-7 { animation: specialBlink 6s infinite; animation-delay: 3.5s; }
+            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
             .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
@@ -443,14 +441,16 @@
             .footer-right { justify-content: center; gap: 1.2rem; }
             .icon-wrapper svg { width: 20px; height: 20px; }
             .icon-text { font-size: 1.2rem; }
-            .splash-title { font-size: max(3rem, 12vw); letter-spacing: 0.04em; }
-            .splash-sub { font-size: max(0.7rem, 2.8vw); letter-spacing: 0.18em; }
-            .splash-line { width: max(30px, 6vw); }
+            .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
+            .year-tag {
+                font-size: max(0.85rem, 3vw);
+                margin-left: clamp(0.3rem, 1.5vw, 0.5rem);
+                transform: translateX(-48px);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 第一页：个人简介 -->
     <div class="page1" id="page1">
         <header>
             <div class="smiley-icon">
@@ -490,13 +490,10 @@
         </footer>
     </div>
 
-    <!-- 第二页：作品集满屏 -->
     <div class="page2" id="page2">
-        <div class="splash-content">
-            <div class="splash-line"></div>
+        <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
-            <div class="splash-sub">Portfolio</div>
-            <div class="splash-line"></div>
+            <div class="year-tag">©2020–2026</div>
         </div>
     </div>
 
@@ -506,7 +503,6 @@
             const page2 = document.getElementById('page2');
             const title = document.getElementById('titleMove');
 
-            // 标题视差 (第一页内)
             if (title) {
                 let tx = 0, cx = 0, raf;
                 const updateTitle = () => {
@@ -528,14 +524,12 @@
             let ticking = false;
             const updateScroll = () => {
                 const sY = window.scrollY;
-                // 第一页：逐渐缩小并淡出 (滚动进度 0 -> 1 视口高度)
                 const p1 = Math.min(1, Math.max(0, sY / vh));
                 page1.style.transform = `scale(${1 - p1 * 0.3})`;
                 page1.style.opacity = 1 - p1;
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
-                // 第二页：当滚动超过 0.8 屏时开始出现，使用渐变类控制
-                if (sY > vh * 0.8) {
+                if (sY > vh * 0.75) {
                     page2.classList.add('active');
                 } else {
                     page2.classList.remove('active');
