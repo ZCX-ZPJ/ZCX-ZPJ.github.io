@@ -10,12 +10,16 @@
             --text: #111;
             --gray: #2c2c2c;
             --accent: #ff8c42;
-            --border: rgba(0,0,0,0.06);
+            --border: rgba(0, 0, 0, 0.06);
             --w: min(1100px, 85vw);
             --offset: clamp(2.5rem, 6vw, 4rem);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: var(--bg);
@@ -23,11 +27,16 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            height: 350vh;
+            height: 400vh;
             overflow-x: hidden;
         }
 
-        a, .software-item, .icon-wrapper, .gallery-item, .profile-img, .hero-title span {
+        a,
+        .software-item,
+        .icon-wrapper,
+        .gallery-item,
+        .profile-img,
+        .hero-title span {
             cursor: pointer !important;
         }
 
@@ -41,122 +50,537 @@
             pointer-events: none;
             z-index: 10;
         }
-        .page > * { pointer-events: auto; }
-        #page1 { z-index: 20; }
-        #page2 { z-index: 18; opacity: 0; }
+        .page>* {
+            pointer-events: auto;
+        }
+        #page1 {
+            z-index: 20;
+        }
+        #page2 {
+            z-index: 18;
+            opacity: 0;
+        }
 
+        /* 作品集满屏 */
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 22;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transform: translateY(100%);
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(0.8rem, 1.5vw, 1.6rem);
+        }
+        .splash-title {
+            font-size: clamp(4rem, 14vw, 12rem);
+            font-weight: 750;
+            letter-spacing: 0.06em;
+            color: #0a0a0a;
+            line-height: 1;
+            text-align: center;
+            user-select: none;
+        }
+        .splash-sub {
+            font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            color: #3a3a3a;
+            text-transform: uppercase;
+            text-align: center;
+            user-select: none;
+        }
+        .splash-line {
+            width: clamp(40px, 8vw, 80px);
+            height: 1px;
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 1px;
+        }
+
+        /* 三竖条画廊 */
         .gallery-section {
             position: fixed;
             inset: 0;
             z-index: 12;
             opacity: 0;
             pointer-events: none;
-            background: var(--bg);        /* 与第一页背景完全一致 */
-            display: flex; align-items: center; justify-content: center;
-            padding: 4px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(6px, 1.2vw, 16px);
             transition: opacity 0.3s;
+            overflow: hidden;
         }
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 4px;
-            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: clamp(6px, 1.5vw, 14px);
+            width: 100%;
+            height: 100%;
             will-change: transform;
         }
         .gallery-item {
+            flex: 1;
+            min-width: 0;
+            aspect-ratio: 9 / 16;
             overflow: hidden;
             background: #ccc;
             border-radius: 12px;
             transition: opacity 0.2s ease;
+            cursor: pointer;
         }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         .image-wrapper {
             position: fixed;
             inset: 0;
             z-index: 21;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--bg);        /* 与第一页背景完全一致 */
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
             transform: translateY(100%);
             overflow: hidden;
             border-radius: 0;
-            transition: transform 0.05s linear, border-radius 0.1s;
+            transition: border-radius 0.1s;
             pointer-events: none;
         }
-        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-        header { display: flex; justify-content: center; align-items: center; padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative; }
-        .smiley-icon { position: absolute; left: max(1.5rem,4vw); top: 50%; transform: translateY(-50%); width: clamp(32px,5vw,44px); height: clamp(32px,5vw,44px); pointer-events: none; animation: spin 5s linear infinite; }
-        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
-        .nav-links { display: flex; gap: clamp(1.8rem,3vw,2.8rem); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em; }
-        .nav-links a { color: var(--text); text-decoration: none; transition: transform 0.25s ease; }
-        .nav-links a:hover { transform: scale(1.18); }
-        main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
-        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem); }
-        .hero-title span:first-child { font-weight: 750; }
-        .hero-title span:last-child { font-weight: 650; color: #202020; }
-        .dot-text { display: inline-block; line-height: 1; vertical-align: middle; font-weight: 650; }
-        .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; margin: 0 0.05em; }
-        .profile-img { width: clamp(70px,10vw,150px); border-radius: 8px; transform: rotate(-5deg); box-shadow: 0 6px 14px rgba(0,0,0,0.05); object-fit: cover; aspect-ratio: 1/1; background: #ccc; border: 1px solid rgba(255,255,255,0.3); }
-        .hero-desc { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,7rem); max-width: var(--w); width: 100%; margin: 0 auto; font-size: clamp(1rem,2vw,1.3rem); line-height: 1.6; color: #1e1e1e; font-weight: 550; letter-spacing: -0.01em; padding-top: clamp(1.5rem,3vw,2.8rem); position: relative; overflow: visible; }
-        .hero-desc::before { content: ''; position: absolute; top: 0; left: calc(-1*var(--offset)); width: calc(100% + 2*var(--offset)); height: 1px; background: var(--border); }
-        .hero-desc div:first-child { justify-self: start; margin-left: calc(-1*var(--offset)); }
-        .hero-desc div:last-child { justify-self: end; margin-right: calc(-1*var(--offset)); color: var(--gray); text-align: left; font-weight: 550; line-height: 1.6; }
-        .toolbox-line { display: block; margin-bottom: 0.2rem; }
-        .toolbox-line strong { font-weight: 650; }
-        .ai-line { display: block; }
-        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; }
-        .software-item:hover { color: var(--accent); transform: scale(1.05); }
-        footer { display: flex; justify-content: space-between; align-items: center; padding: clamp(1.2rem,2.5vw,1.8rem) clamp(1.5rem,4vw,3rem); width: 100%; font-size: clamp(0.7rem,1vw,0.8rem); font-weight: 450; color: #1f1f1f; letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative; }
-        .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
-        .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
-        .footer-right { display: flex; gap: 1.5rem; align-items: center; }
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
+            position: relative;
+        }
+        .smiley-icon {
+            position: absolute;
+            left: max(1.5rem, 4vw);
+            top: 50%;
+            transform: translateY(-50%);
+            width: clamp(32px, 5vw, 44px);
+            height: clamp(32px, 5vw, 44px);
+            pointer-events: none;
+            animation: spin 5s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+        .nav-links {
+            display: flex;
+            gap: clamp(1.8rem, 3vw, 2.8rem);
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: transform 0.25s ease;
+        }
+        .nav-links a:hover {
+            transform: scale(1.18);
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(4rem, 8vw, 6.5rem);
+            padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+        }
+        .hero-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1.2rem, 2.5vw, 2.2rem);
+            font-size: clamp(4rem, 13vw, 11rem);
+            font-weight: 700;
+            white-space: nowrap;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: #0a0a0a;
+            margin-top: clamp(-5rem, -6vw, -3rem);
+        }
+        .hero-title span:first-child {
+            font-weight: 750;
+        }
+        .hero-title span:last-child {
+            font-weight: 650;
+            color: #202020;
+        }
+        .dot-text {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            font-weight: 650;
+        }
+        .middle-dot {
+            font-size: 1.1em;
+            font-weight: 700;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.05em;
+        }
+        .profile-img {
+            width: clamp(70px, 10vw, 150px);
+            border-radius: 8px;
+            transform: rotate(-5deg);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            background: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+        .hero-desc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(3rem, 8vw, 7rem);
+            max-width: var(--w);
+            width: 100%;
+            margin: 0 auto;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            line-height: 1.6;
+            color: #1e1e1e;
+            font-weight: 550;
+            letter-spacing: -0.01em;
+            padding-top: clamp(1.5rem, 3vw, 2.8rem);
+            position: relative;
+            overflow: visible;
+        }
+        .hero-desc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: calc(-1 * var(--offset));
+            width: calc(100% + 2 * var(--offset));
+            height: 1px;
+            background: var(--border);
+        }
+        .hero-desc div:first-child {
+            justify-self: start;
+            margin-left: calc(-1 * var(--offset));
+        }
+        .hero-desc div:last-child {
+            justify-self: end;
+            margin-right: calc(-1 * var(--offset));
+            color: var(--gray);
+            text-align: left;
+            font-weight: 550;
+            line-height: 1.6;
+        }
+        .toolbox-line {
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .toolbox-line strong {
+            font-weight: 650;
+        }
+        .ai-line {
+            display: block;
+        }
+        .software-item {
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+        .software-item:hover {
+            color: var(--accent);
+            transform: scale(1.05);
+        }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
+            width: 100%;
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
+            font-weight: 450;
+            color: #1f1f1f;
+            letter-spacing: 0.02em;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+        .footer-left {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .footer-center {
+            font-size: 1.2rem;
+            letter-spacing: 0.3rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .footer-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
 
-        .icon-wrapper { position: relative; display: inline-flex; }
-        .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.2s ease; }
-        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.2s ease; }
-        .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
-        .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
-        .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
-        .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
+        .icon-wrapper {
+            position: relative;
+            display: inline-flex;
+            cursor: pointer;
+        }
+        .icon-wrapper svg {
+            width: 22px;
+            height: 22px;
+            fill: #1f1f1f;
+            transition: fill 0.2s ease, transform 0.2s ease;
+        }
+        .icon-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1f1f1f;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .icon-wrapper:hover svg,
+        .icon-wrapper:hover .icon-text {
+            fill: var(--accent);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .icon-wrapper::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: #1f1f1f;
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .icon-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-2px);
+            border: 5px solid transparent;
+            border-top-color: #1f1f1f;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .icon-wrapper:hover::after,
+        .icon-wrapper:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
 
         @media (max-width: 768px) {
-            :root { --offset: 0rem; }
-            header { padding: 1rem 1.5rem; }
-            .smiley-icon { width: 30px; height: 30px; min-width: 30px; min-height: 30px; }
-            .nav-links { font-size: 1rem; gap: 1.5rem; }
-            main { justify-content: space-evenly; gap: 0; padding: 0.5rem 1.5rem; }
-            .hero-title { white-space: normal; flex-wrap: wrap; text-align: center; font-size: max(2.5rem,10vw); gap: 0.6rem; margin: 0; }
-            .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
-            .profile-img { width: 65px; min-width: 65px; }
-            .hero-desc { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; font-size: max(0.95rem,3.5vw); text-align: center; }
-            .hero-desc::before { left: 0; width: 100%; }
-            .hero-desc div:first-child, .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
-            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
-            .software-item:hover { transform: none; color: inherit; }
-            .hero-desc .software-item { margin: 0 0.12rem; }
-            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
-            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
-            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
-            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
-            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
-            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
-            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
-            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
-            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
-            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
-            @keyframes softBlink { 0%,100%{color:var(--gray);transform:scale(1);text-shadow:none;} 15%,35%{color:#ff9d5c;transform:scale(1.02);text-shadow:0 0 6px rgba(255,157,92,0.3);} 25%{color:var(--accent);transform:scale(1.03);text-shadow:0 0 10px rgba(255,140,66,0.4);} }
-            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; text-align: center; }
-            .footer-left { font-size: 0.85rem; }
-            .footer-center { position: static; transform: none; font-size: 1rem; }
-            .footer-right { justify-content: center; gap: 1.2rem; }
-            .icon-wrapper svg { width: 20px; height: 20px; }
-            .icon-text { font-size: 1.2rem; }
-            .gallery-section { padding: 2px; }
-            .gallery-grid { gap: 2px; }
-            .gallery-item { border-radius: 8px; }
+            :root {
+                --offset: 0rem;
+            }
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .smiley-icon {
+                width: 30px;
+                height: 30px;
+                min-width: 30px;
+                min-height: 30px;
+            }
+            .nav-links {
+                font-size: 1rem;
+                gap: 1.5rem;
+            }
+            main {
+                justify-content: space-evenly;
+                gap: 0;
+                padding: 0.5rem 1.5rem;
+            }
+            .hero-title {
+                white-space: normal;
+                flex-wrap: wrap;
+                text-align: center;
+                font-size: max(2.5rem, 10vw);
+                gap: 0.6rem;
+                margin: 0;
+            }
+            .hero-title .dot-text {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.2rem;
+            }
+            .profile-img {
+                width: 65px;
+                min-width: 65px;
+            }
+            .hero-desc {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-top: 1rem;
+                font-size: max(0.95rem, 3.5vw);
+                text-align: center;
+            }
+            .hero-desc::before {
+                left: 0;
+                width: 100%;
+            }
+            .hero-desc div:first-child,
+            .hero-desc div:last-child {
+                margin: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-desc div:last-child {
+                gap: 0.3rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .software-item:hover {
+                transform: none;
+                color: inherit;
+            }
+            .hero-desc .software-item {
+                margin: 0 0.12rem;
+            }
+            .blink-1 {
+                animation: softBlink 6s infinite;
+                animation-delay: 0s;
+            }
+            .blink-2 {
+                animation: softBlink 6s infinite;
+                animation-delay: 4s;
+            }
+            .blink-3 {
+                animation: softBlink 6s infinite;
+                animation-delay: 1.5s;
+            }
+            .blink-4 {
+                animation: softBlink 6s infinite;
+                animation-delay: 5s;
+            }
+            .blink-5 {
+                animation: softBlink 6s infinite;
+                animation-delay: 2.5s;
+            }
+            .blink-6 {
+                animation: softBlink 6s infinite;
+                animation-delay: 0.8s;
+            }
+            .blink-7 {
+                animation: softBlink 6s infinite;
+                animation-delay: 3.5s;
+            }
+            .blink-8 {
+                animation: softBlink 6s infinite;
+                animation-delay: 1s;
+            }
+            .blink-9 {
+                animation: softBlink 6s infinite;
+                animation-delay: 3s;
+            }
+            .blink-10 {
+                animation: softBlink 6s infinite;
+                animation-delay: 4.5s;
+            }
+            @keyframes softBlink {
+                0%,
+                100% {
+                    color: var(--gray);
+                    transform: scale(1);
+                    text-shadow: none;
+                }
+                15%,
+                35% {
+                    color: #ff9d5c;
+                    transform: scale(1.02);
+                    text-shadow: 0 0 6px rgba(255, 157, 92, 0.3);
+                }
+                25% {
+                    color: var(--accent);
+                    transform: scale(1.03);
+                    text-shadow: 0 0 10px rgba(255, 140, 66, 0.4);
+                }
+            }
+            footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.8rem;
+                text-align: center;
+            }
+            .footer-left {
+                font-size: 0.85rem;
+            }
+            .footer-center {
+                position: static;
+                transform: none;
+                font-size: 1rem;
+            }
+            .footer-right {
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .icon-wrapper svg {
+                width: 20px;
+                height: 20px;
+            }
+            .icon-text {
+                font-size: 1.2rem;
+            }
+            .gallery-section {
+                padding: 4px;
+            }
+            .gallery-grid {
+                gap: 4px;
+            }
+            .gallery-item {
+                border-radius: 8px;
+            }
+            .splash-title {
+                font-size: max(3rem, 12vw);
+                letter-spacing: 0.04em;
+            }
+            .splash-sub {
+                font-size: max(0.7rem, 2.8vw);
+                letter-spacing: 0.18em;
+            }
+            .splash-line {
+                width: max(30px, 6vw);
+            }
         }
     </style>
 </head>
@@ -187,7 +611,7 @@
                         <span class="software-item blink-6">PR</span>
                         <span class="software-item blink-7">Style3D</span>
                     </span>
-                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span>
+                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span> <span class="software-item blink-10">Lovart</span>）</span>
                 </div>
             </div>
         </main>
@@ -201,7 +625,17 @@
         </footer>
     </div>
 
-    <!-- 九宫格（背景与第一页一致） -->
+    <!-- 作品集满屏 -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-line"></div>
+            <div class="splash-title">作品集</div>
+            <div class="splash-sub">Portfolio</div>
+            <div class="splash-line"></div>
+        </div>
+    </div>
+
+    <!-- 三竖条画廊（背景与第一页一致） -->
     <div class="gallery-section" id="gallerySection">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
@@ -220,17 +654,19 @@
             const mainImage = document.getElementById('mainImage');
             const gallerySection = document.getElementById('gallerySection');
             const galleryGrid = document.getElementById('galleryGrid');
+            const splashScreen = document.getElementById('splashScreen');
             const title = document.getElementById('titleMove');
 
-            // 生成九宫格
+            // 生成3个9:16竖条
             const centralUrl = mainImage.src;
             const items = [];
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 3; i++) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 const img = document.createElement('img');
-                img.src = i === 4 ? centralUrl : `https://picsum.photos/400/400?random=${i+50}`;
-                img.alt = `作品${i+1}`;
+                // 中间那个（索引1）放主图
+                img.src = i === 1 ? centralUrl : `https://picsum.photos/400/711?random=${i + 50}`;
+                img.alt = `作品${i + 1}`;
                 item.appendChild(img);
                 galleryGrid.appendChild(item);
                 items.push(item);
@@ -238,52 +674,65 @@
 
             // 标题视差
             if (title) {
-                let tx=0,cx=0,raf;
-                const updateTitle=()=>{
-                    cx+=(tx-cx)*0.25;
-                    title.style.transform=`translateX(${cx}px)`;
-                    if(Math.abs(tx-cx)>0.5)raf=requestAnimationFrame(updateTitle);
-                    else{title.style.transform=`translateX(${tx}px)`;cx=tx;raf=null;}
+                let tx = 0,
+                    cx = 0,
+                    raf;
+                const updateTitle = () => {
+                    cx += (tx - cx) * 0.25;
+                    title.style.transform = `translateX(${cx}px)`;
+                    if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle);
+                    else { title.style.transform = `translateX(${tx}px)`;
+                        cx = tx;
+                        raf = null; }
                 };
-                document.addEventListener('mousemove',e=>{
-                    tx=e.clientY<innerHeight/2?(e.clientX/innerWidth-0.5)*1600:0;
-                    if(!raf)raf=requestAnimationFrame(updateTitle);
+                document.addEventListener('mousemove', e => {
+                    tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0;
+                    if (!raf) raf = requestAnimationFrame(updateTitle);
                 });
-                document.addEventListener('mouseleave',()=>{tx=0;if(!raf)raf=requestAnimationFrame(updateTitle);});
+                document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(
+                        updateTitle); });
             }
 
-            const getCenterRect=()=>{
-                const all=document.querySelectorAll('.gallery-item');
-                return all.length>=5?all[4].getBoundingClientRect():null;
+            // 获取中间竖条（索引1）的位置
+            const getCenterRect = () => {
+                const all = document.querySelectorAll('.gallery-item');
+                return all.length >= 2 ? all[1].getBoundingClientRect() : null;
             };
 
-            let zoomScale = 1, targetZoom = 1, activeIndex = 4, isZoomMode = false, animating = false;
-            const MAX_SCALE = 4, LERP = 0.22, STEP = 0.1;
+            let zoomScale = 1,
+                targetZoom = 1,
+                activeIndex = 1,
+                isZoomMode = false,
+                animating = false;
+            const MAX_SCALE = 3.5,
+                LERP = 0.22,
+                STEP = 0.1;
             let lastCenter = null;
             let zoomLocked = false;
 
-            const getActive=(x,y)=>{
-                for(let i=0;i<items.length;i++){
-                    const r=items[i].getBoundingClientRect();
-                    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return i;
+            const getActive = (x, y) => {
+                for (let i = 0; i < items.length; i++) {
+                    const r = items[i].getBoundingClientRect();
+                    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return i;
                 }
                 return activeIndex;
             };
 
-            const getCenter=(idx)=>{
-                const ir=items[idx].getBoundingClientRect();
-                const gr=galleryGrid.getBoundingClientRect();
+            const getCenter = (idx) => {
+                const ir = items[idx].getBoundingClientRect();
+                const gr = galleryGrid.getBoundingClientRect();
                 return {
-                    x:(ir.left+ir.width/2-gr.left)/gr.width*100,
-                    y:(ir.top+ir.height/2-gr.top)/gr.height*100
+                    x: (ir.left + ir.width / 2 - gr.left) / gr.width * 100,
+                    y: (ir.top + ir.height / 2 - gr.top) / gr.height * 100
                 };
             };
 
             const applyZoom = () => {
-                if(zoomScale <= 1.001){
+                if (zoomScale <= 1.001) {
                     galleryGrid.style.transform = 'scale(1)';
                     galleryGrid.style.transformOrigin = 'center center';
-                    items.forEach(i=>{i.style.opacity='1';i.style.pointerEvents='auto';});
+                    items.forEach(i => { i.style.opacity = '1';
+                        i.style.pointerEvents = 'auto'; });
                     imageWrapper.style.opacity = '1';
                     lastCenter = null;
                     return;
@@ -297,12 +746,12 @@
 
                 galleryGrid.style.transform = `scale(${zoomScale})`;
 
-                const fadeThreshold = 1.5;
-                if(zoomScale > fadeThreshold){
+                const fadeThreshold = 1.4;
+                if (zoomScale > fadeThreshold) {
                     const raw = Math.min(1, (zoomScale - fadeThreshold) / (MAX_SCALE - fadeThreshold));
                     const p = 1 - Math.pow(1 - raw, 3);
-                    items.forEach((it,i)=>{
-                        if(i !== activeIndex){
+                    items.forEach((it, i) => {
+                        if (i !== activeIndex) {
                             it.style.opacity = Math.max(0, 1 - p).toString();
                             it.style.pointerEvents = 'none';
                         } else {
@@ -312,13 +761,16 @@
                     });
                     imageWrapper.style.opacity = '0';
                 } else {
-                    items.forEach(i=>{i.style.opacity='1';i.style.pointerEvents='auto';});
+                    items.forEach(i => { i.style.opacity = '1';
+                        i.style.pointerEvents = 'auto'; });
                     imageWrapper.style.opacity = '1';
                 }
             };
 
-            const unlockScroll = () => { if (zoomLocked) { document.body.style.overflow = ''; zoomLocked = false; } };
-            const lockScroll = () => { if (!zoomLocked) { document.body.style.overflow = 'hidden'; zoomLocked = true; } };
+            const unlockScroll = () => { if (zoomLocked) { document.body.style.overflow = '';
+                    zoomLocked = false; } };
+            const lockScroll = () => { if (!zoomLocked) { document.body.style.overflow = 'hidden';
+                    zoomLocked = true; } };
 
             const stopZoom = (finalScale) => {
                 zoomScale = finalScale;
@@ -347,7 +799,8 @@
                 }
             };
 
-            const startAnim = () => { if (!animating) { animating = true; requestAnimationFrame(animateZoom); } };
+            const startAnim = () => { if (!animating) { animating = true;
+                    requestAnimationFrame(animateZoom); } };
 
             const wheel = (e) => {
                 if (!isZoomMode) return;
@@ -357,78 +810,144 @@
                 else targetZoom = Math.max(1, targetZoom - STEP);
                 activeIndex = getActive(e.clientX, e.clientY);
                 startAnim();
-                if (targetZoom > 1.001) lockScroll(); else unlockScroll();
+                if (targetZoom > 1.001) lockScroll();
+                else unlockScroll();
             };
 
             const move = (e) => {
                 if (!isZoomMode) return;
                 const idx = getActive(e.clientX, e.clientY);
-                if (idx !== activeIndex) { activeIndex = idx; lastCenter = null; applyZoom(); }
+                if (idx !== activeIndex) { activeIndex = idx;
+                    lastCenter = null;
+                    applyZoom(); }
             };
 
-            let vw = innerWidth, vh = innerHeight;
-            window.addEventListener('resize', () => { vw = innerWidth; vh = innerHeight; lastCenter = null; });
-            const BUFFER = 0.15;
+            let vw = innerWidth,
+                vh = innerHeight;
+            window.addEventListener('resize', () => { vw = innerWidth;
+                vh = innerHeight;
+                lastCenter = null; });
             let ticking = false;
+
+            // 滚动阶段定义
+            const phase1End = vh;
+            const phase2End = 2 * vh;
+            const phase3End = 3 * vh;
 
             const updateScroll = () => {
                 const sY = window.scrollY;
-                const p1 = Math.min(1, Math.max(0, sY / vh));
+
+                // 阶段1: 第一页缩小消失，splashScreen滑入
+                const p1 = Math.min(1, Math.max(0, sY / phase1End));
                 page1.style.transform = `scale(${1 - p1 * 0.3})`;
                 page1.style.opacity = 1 - p1;
-                if (p1 >= 1) page1.style.display = 'none'; else page1.style.display = '';
+                if (p1 >= 1) page1.style.display = 'none';
+                else page1.style.display = '';
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
-                imageWrapper.style.transform = `translateY(${100 - p1 * 100}%)`;
-                imageWrapper.style.opacity = 1;
-                const startP2 = vh * (1 + BUFFER);
-                const thirdPhaseStart = startP2 + vh;
+                const splashSlideIn = Math.min(1, Math.max(0, sY / phase1End));
+                splashScreen.style.transform = `translateY(${100 - splashSlideIn * 100}%)`;
+                splashScreen.style.opacity = '1';
 
-                if (sY < thirdPhaseStart && isZoomMode) {
-                    stopZoom(1);
-                    unlockScroll();
-                    isZoomMode = false;
+                // 阶段2: splashScreen全屏
+                if (sY >= phase1End && sY < phase2End) {
+                    splashScreen.style.transform = 'translateY(0)';
+                    splashScreen.style.opacity = '1';
+                    splashScreen.style.pointerEvents = 'auto';
                 }
 
-                if (sY <= vh) {
-                    gallerySection.style.opacity = 0; gallerySection.style.zIndex = '12';
-                    imageWrapper.style.width = '100%'; imageWrapper.style.height = '100%';
-                    imageWrapper.style.left = '0'; imageWrapper.style.top = '0';
-                    imageWrapper.style.borderRadius = '0'; imageWrapper.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.3)';
-                } else if (sY > vh && sY <= startP2) {
-                    gallerySection.style.opacity = 0; gallerySection.style.zIndex = '12';
-                    imageWrapper.style.width = '100%'; imageWrapper.style.height = '100%';
-                    imageWrapper.style.left = '0'; imageWrapper.style.top = '0';
-                } else if (sY > startP2 && sY <= thirdPhaseStart) {
-                    const p2 = Math.min(1, (sY - startP2) / vh);
-                    gallerySection.style.opacity = p2; gallerySection.style.zIndex = '12';
+                // 阶段3: splashScreen淡出
+                if (sY >= phase2End && sY < phase3End) {
+                    const pFade = Math.min(1, Math.max(0, (sY - phase2End) / vh));
+                    splashScreen.style.opacity = (1 - pFade).toString();
+                    splashScreen.style.transform = `translateY(${-40 * pFade}%)`;
+                    splashScreen.style.pointerEvents = 'none';
+                }
+
+                // 阶段4: splashScreen完全隐藏
+                if (sY >= phase3End) {
+                    splashScreen.style.opacity = '0';
+                    splashScreen.style.transform = 'translateY(-40%)';
+                    splashScreen.style.pointerEvents = 'none';
+                }
+
+                // imageWrapper过渡
+                if (sY < phase2End) {
+                    imageWrapper.style.transform = 'translateY(100%)';
+                    imageWrapper.style.opacity = '1';
+                    imageWrapper.style.width = '100%';
+                    imageWrapper.style.height = '100%';
+                    imageWrapper.style.left = '0';
+                    imageWrapper.style.top = '0';
+                    imageWrapper.style.borderRadius = '0';
+                    imageWrapper.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.3)';
+                } else if (sY >= phase2End && sY < phase3End) {
+                    const pImg = Math.min(1, Math.max(0, (sY - phase2End) / vh));
                     const rect = getCenterRect();
                     if (rect && rect.width > 0) {
-                        const tw = rect.width, th = rect.height, tx = rect.left, ty = rect.top;
-                        const p = p2;
-                        imageWrapper.style.width = (vw + (tw - vw) * p) + 'px';
-                        imageWrapper.style.height = (vh + (th - vh) * p) + 'px';
-                        imageWrapper.style.left = (tx * p) + 'px';
-                        imageWrapper.style.top = (ty * p) + 'px';
+                        const tw = rect.width,
+                            th = rect.height,
+                            tx = rect.left,
+                            ty = rect.top;
+                        imageWrapper.style.width = (vw + (tw - vw) * pImg) + 'px';
+                        imageWrapper.style.height = (vh + (th - vh) * pImg) + 'px';
+                        imageWrapper.style.left = (tx * pImg) + 'px';
+                        imageWrapper.style.top = (ty * pImg) + 'px';
                         imageWrapper.style.transform = 'none';
-                        imageWrapper.style.borderRadius = p > 0.3 ? '12px' : '0';
-                        imageWrapper.style.boxShadow = `0 ${20*(1-p)}px ${40*(1-p)}px -10px rgba(0,0,0,${0.3*(1-p)})`;
+                        imageWrapper.style.borderRadius = pImg > 0.3 ? '12px' : '0';
+                        imageWrapper.style.boxShadow =
+                            `0 ${20*(1-pImg)}px ${40*(1-pImg)}px -10px rgba(0,0,0,${0.3*(1-pImg)})`;
                     }
-                    if (isZoomMode) stopZoom(1);
-                } else if (sY >= thirdPhaseStart) {
-                    gallerySection.style.opacity = 1; gallerySection.style.zIndex = '25';
-                    if (!isZoomMode) { isZoomMode = true; stopZoom(1); }
-                    imageWrapper.style.opacity = '0';
+                    imageWrapper.style.opacity = '1';
+                } else if (sY >= phase3End) {
+                    const rect = getCenterRect();
+                    if (rect && rect.width > 0 && !isZoomMode) {
+                        imageWrapper.style.width = rect.width + 'px';
+                        imageWrapper.style.height = rect.height + 'px';
+                        imageWrapper.style.left = rect.left + 'px';
+                        imageWrapper.style.top = rect.top + 'px';
+                        imageWrapper.style.transform = 'none';
+                        imageWrapper.style.borderRadius = '12px';
+                        imageWrapper.style.boxShadow = '0 0 0 0 rgba(0,0,0,0)';
+                    }
+                    imageWrapper.style.opacity = isZoomMode ? '0' : '1';
+                }
+
+                // gallerySection
+                if (sY < phase2End) {
+                    gallerySection.style.opacity = '0';
+                    gallerySection.style.zIndex = '12';
+                    gallerySection.style.pointerEvents = 'none';
+                } else if (sY >= phase2End && sY < phase3End) {
+                    const pGal = Math.min(1, Math.max(0, (sY - phase2End) / vh));
+                    gallerySection.style.opacity = pGal.toString();
+                    gallerySection.style.zIndex = '12';
+                    gallerySection.style.pointerEvents = 'none';
+                    if (isZoomMode) { stopZoom(1);
+                        unlockScroll();
+                        isZoomMode = false; }
+                } else if (sY >= phase3End) {
+                    gallerySection.style.opacity = '1';
+                    gallerySection.style.zIndex = '25';
+                    gallerySection.style.pointerEvents = 'auto';
+                    if (!isZoomMode) { isZoomMode = true;
+                        stopZoom(1); }
                 }
 
                 page2.style.opacity = Math.min(1, Math.max(0, sY / vh));
                 ticking = false;
             };
 
-            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
+            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll);
+                    ticking = true; } }, { passive: true });
             window.addEventListener('wheel', wheel, { passive: false });
             window.addEventListener('mousemove', move);
-            window.addEventListener('resize', updateScroll);
+            window.addEventListener('resize', () => {
+                vw = innerWidth;
+                vh = innerHeight;
+                lastCenter = null;
+                updateScroll();
+            });
             updateScroll();
         })();
     </script>
