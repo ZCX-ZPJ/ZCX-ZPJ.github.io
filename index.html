@@ -345,6 +345,7 @@
             z-index: 30;
             background: var(--bg);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             pointer-events: none;
@@ -359,14 +360,39 @@
             pointer-events: auto;
         }
 
+        /* 第三页顶部文案 */
+        .gallery-header {
+            width: 100%;
+            text-align: center;
+            padding: clamp(1.5rem, 4vh, 3rem) 1rem 1rem;
+            flex-shrink: 0;
+        }
+        .gallery-header h2 {
+            font-size: clamp(1.5rem, 3vw, 2.4rem);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: #0a0a0a;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .gallery-header .sub-text {
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            font-weight: 450;
+            letter-spacing: 0.08em;
+            color: #555;
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+        }
+
         .gallery-grid {
             display: flex;
             gap: var(--card-gap);
             width: calc(100vw - var(--card-gap) * 2);
-            height: 100vh;
+            flex: 1;
             align-items: center;
             justify-content: center;
             padding: var(--card-gap);
+            min-height: 0; /* 防止溢出 */
         }
 
         .gallery-item {
@@ -496,9 +522,18 @@
                 margin-top: 0.25em;
             }
 
+            .gallery-header {
+                padding: 1rem 1rem 0.5rem;
+            }
+            .gallery-header h2 {
+                font-size: max(1.3rem, 5vw);
+            }
+            .gallery-header .sub-text {
+                font-size: 0.75rem;
+            }
+
             .gallery-grid {
                 width: 100vw;
-                height: 100vh;
                 padding: 6px;
                 gap: 6px;
                 align-items: stretch;
@@ -570,12 +605,15 @@
     </div>
 
     <div class="page3" id="page3">
+        <div class="gallery-header">
+            <h2>精选作品</h2>
+            <div class="sub-text">Selected Works</div>
+        </div>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
     <script>
         (() => {
-            // 强制刷新后回到顶部
             if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'manual';
             }
@@ -589,7 +627,6 @@
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
 
-            // 点击“首页”平滑返回顶部
             if (homeLink) {
                 homeLink.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -607,12 +644,12 @@
                 galleryGrid.appendChild(item);
             }
 
-            // ==================== 老虎机滚动动效配置 ====================
+            // ==================== 老虎机滚动动效配置（极速版） ====================
             const FINAL_TEXT = '2020–2026';
-            const SPIN_DURATION = 2200;
-            const TICK_INTERVAL = 40;
-            const LOOP_DELAY = 700;
-            const SLOWDOWN_START = 0.45;
+            const SPIN_DURATION = 1000;        
+            const TICK_INTERVAL = 20;          
+            const LOOP_DELAY = 600;            
+            const SLOWDOWN_START = 0.5;        
             // ============================================================
 
             let loopActive = false;
@@ -634,7 +671,6 @@
             let slotPositions = new Array(totalChars).fill(0);
             let locked = new Array(totalChars).fill(false);
             let lockIndex = 0;
-            let slowing = new Array(totalChars).fill(false);
 
             function clearTimers() {
                 if (intervalId) clearInterval(intervalId);
@@ -670,7 +706,7 @@
                         result.push(pool[0]);
                         continue;
                     }
-                    const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.6;
+                    const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4;
                     let slotProgress;
                     if (globalProgress >= slotSlowStart) {
                         const slotDuration = 1 - slotSlowStart;
@@ -680,7 +716,7 @@
                         slotProgress = 0;
                     }
                     if (slotProgress < 1) {
-                        const speedFactor = 1 + Math.floor((1 - slotProgress) * 6);
+                        const speedFactor = 1 + Math.floor((1 - slotProgress) * 12);
                         slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length;
                     } else {
                         locked[i] = true;
@@ -707,7 +743,6 @@
                 clearTimers();
                 locked.fill(false);
                 lockIndex = 0;
-                slowing.fill(false);
                 for (let i = 0; i < totalChars; i++) {
                     slotPositions[i] = Math.floor(Math.random() * pools[i].length);
                 }
