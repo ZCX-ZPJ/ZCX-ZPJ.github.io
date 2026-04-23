@@ -39,9 +39,10 @@
             flex-direction: column;
             justify-content: space-between;
             pointer-events: none;
-            z-index: 20; /* 第一页 */
+            z-index: 10;
         }
         .page > * { pointer-events: auto; }
+        #page1 { z-index: 20; }
         #page2 { z-index: 18; opacity: 0; }
 
         .page2-icons {
@@ -49,7 +50,7 @@
             bottom: 0; left: 0; width: 100%;
             display: flex; justify-content: center; gap: 1.5rem;
             padding: 1.2rem;
-            z-index: 30; /* 最高层，显示图标 */
+            z-index: 30;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
@@ -59,7 +60,7 @@
         .gallery-section {
             position: fixed;
             inset: 0;
-            z-index: 15; /* 在 image-wrapper 下方 */
+            z-index: 12;
             opacity: 0;
             pointer-events: none;
             background: var(--bg);
@@ -73,22 +74,22 @@
             grid-template-rows: repeat(3, 1fr);
             gap: 4px;
             width: 100%; height: 100%;
-            transition: transform 0.08s linear;
+            transition: transform 0.08s linear, transform-origin 0.15s ease;
             will-change: transform, transform-origin;
         }
         .gallery-item {
             overflow: hidden;
             background: #ccc;
             border-radius: 12px;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.2s ease;
         }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 大图容器 — 提升层级覆盖第一页，使用背景色完全遮挡 */
+        /* 大图容器 — 最高层，完全不透明，遮挡第一页 */
         .image-wrapper {
             position: fixed;
             inset: 0;
-            z-index: 21; /* 高于第一页 */
+            z-index: 21;
             display: flex; align-items: center; justify-content: center;
             background: var(--bg);
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
@@ -237,6 +238,7 @@
     </style>
 </head>
 <body>
+    <!-- 第一页（个人信息） -->
     <div class="page" id="page1">
         <header>
             <div class="smiley-icon">
@@ -276,17 +278,17 @@
         </footer>
     </div>
 
-    <!-- 九宫格 (z-index 15，在 image-wrapper 下方) -->
+    <!-- 九宫格 -->
     <div class="gallery-section" id="gallerySection">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 大图容器 (z-index 21，覆盖第一页) -->
+    <!-- 大图容器（最高层，遮挡第一页） -->
     <div class="image-wrapper" id="imageWrapper">
         <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
     </div>
 
-    <!-- 第二页图标 (z-index 30，最高) -->
+    <!-- 第二页图标 -->
     <div class="page2-icons" id="page2Icons">
         <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
         <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -318,6 +320,7 @@
                 items.push(item);
             }
 
+            // 标题视差
             if (title) {
                 let tx=0,cx=0,raf;
                 const updateTitle=()=>{
@@ -338,154 +341,209 @@
                 return all.length>=5?all[4].getBoundingClientRect():null;
             };
 
-            let zoomScale=1, activeIndex=4, isZoomMode=false;
-            const MAX_SCALE=4;
+            // 缩放动画系统
+            let zoomScale = 1;
+            let targetZoomScale = 1;
+            let activeIndex = 4;
+            let isZoomMode = false;
+            let zoomAnimating = false;
+            const MAX_SCALE = 4;
+            const ZOOM_LERP = 0.18;
+            const SCROLL_STEP = 0.1;
 
-            const getActiveIndex=(mx,my)=>{
-                for(let i=0;i<items.length;i++){
-                    const r=items[i].getBoundingClientRect();
-                    if(mx>=r.left&&mx<=r.right&&my>=r.top&&my<=r.bottom)return i;
+            const getActiveIndex = (mx, my) => {
+                for (let i = 0; i < items.length; i++) {
+                    const r = items[i].getBoundingClientRect();
+                    if (mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom) return i;
                 }
                 return activeIndex;
             };
 
-            const getCellCenterPercent=(idx)=>{
-                const item=items[idx];
-                const ir=item.getBoundingClientRect();
-                const gr=galleryGrid.getBoundingClientRect();
+            const getCellCenterPercent = (idx) => {
+                const item = items[idx];
+                const ir = item.getBoundingClientRect();
+                const gr = galleryGrid.getBoundingClientRect();
                 return {
-                    x:(ir.left+ir.width/2-gr.left)/gr.width*100,
-                    y:(ir.top+ir.height/2-gr.top)/gr.height*100
+                    x: (ir.left + ir.width / 2 - gr.left) / gr.width * 100,
+                    y: (ir.top + ir.height / 2 - gr.top) / gr.height * 100
                 };
             };
 
-            const applyZoom=()=>{
-                if(zoomScale<=1.001){
-                    galleryGrid.style.transform='scale(1)';
-                    galleryGrid.style.transformOrigin='center center';
-                    items.forEach(it=>{it.style.opacity='1';it.style.pointerEvents='auto';});
-                    imageWrapper.style.opacity='1';
+            const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+            const applyZoom = () => {
+                if (zoomScale <= 1.001) {
+                    galleryGrid.style.transform = 'scale(1)';
+                    galleryGrid.style.transformOrigin = 'center center';
+                    items.forEach(it => { it.style.opacity = '1'; it.style.pointerEvents = 'auto'; });
+                    imageWrapper.style.opacity = '1';
+                    imageWrapper.style.pointerEvents = 'auto';
                     return;
                 }
-                const c=getCellCenterPercent(activeIndex);
-                galleryGrid.style.transformOrigin=`${c.x}% ${c.y}%`;
-                galleryGrid.style.transform=`scale(${zoomScale})`;
+                const c = getCellCenterPercent(activeIndex);
+                galleryGrid.style.transformOrigin = `${c.x}% ${c.y}%`;
+                galleryGrid.style.transform = `scale(${zoomScale})`;
 
-                const fadeThreshold=1.5;
-                if(zoomScale>fadeThreshold){
-                    const p=Math.min(1,(zoomScale-fadeThreshold)/(MAX_SCALE-fadeThreshold));
-                    items.forEach((it,i)=>{
-                        if(i!==activeIndex){
-                            it.style.opacity=Math.max(0,1-p).toString();
-                            it.style.pointerEvents='none';
-                        }else{
-                            it.style.opacity='1';
-                            it.style.pointerEvents='auto';
+                const fadeThreshold = 1.5;
+                if (zoomScale > fadeThreshold) {
+                    const rawProgress = Math.min(1, (zoomScale - fadeThreshold) / (MAX_SCALE - fadeThreshold));
+                    const fadeProgress = easeOutCubic(rawProgress);
+                    items.forEach((it, i) => {
+                        if (i !== activeIndex) {
+                            it.style.opacity = Math.max(0, 1 - fadeProgress).toString();
+                            it.style.pointerEvents = 'none';
+                        } else {
+                            it.style.opacity = '1';
+                            it.style.pointerEvents = 'auto';
                         }
                     });
-                    imageWrapper.style.opacity='0';
-                }else{
-                    items.forEach(it=>{it.style.opacity='1';it.style.pointerEvents='auto';});
-                    imageWrapper.style.opacity='1';
+                    imageWrapper.style.opacity = '0';
+                    imageWrapper.style.pointerEvents = 'none';
+                } else {
+                    items.forEach(it => { it.style.opacity = '1'; it.style.pointerEvents = 'auto'; });
+                    imageWrapper.style.opacity = '1';
+                    imageWrapper.style.pointerEvents = 'auto';
                 }
             };
 
-            const handleWheel=e=>{
-                if(!isZoomMode)return;
-                e.preventDefault();
-                const delta=e.deltaY>0?1:-1;
-                const step=0.06;
-                if(delta<0)zoomScale=Math.min(MAX_SCALE,zoomScale+step);
-                else zoomScale=Math.max(1,zoomScale-step);
-
-                activeIndex=getActiveIndex(e.clientX,e.clientY);
+            const animateZoom = () => {
+                zoomScale += (targetZoomScale - zoomScale) * ZOOM_LERP;
+                if (Math.abs(targetZoomScale - zoomScale) < 0.0005) {
+                    zoomScale = targetZoomScale;
+                }
                 applyZoom();
 
-                if(zoomScale<=1.001){
-                    isZoomMode=false;
-                    document.body.style.overflow='';
-                }else{
-                    document.body.style.overflow='hidden';
+                if (targetZoomScale <= 1.001 && zoomScale <= 1.002) {
+                    zoomScale = 1; targetZoomScale = 1;
+                    applyZoom();
+                    isZoomMode = false;
+                    document.body.style.overflow = '';
+                    zoomAnimating = false;
+                    return;
+                }
+                if (Math.abs(targetZoomScale - zoomScale) > 0.0005 || isZoomMode) {
+                    zoomAnimating = true;
+                    requestAnimationFrame(animateZoom);
+                } else {
+                    zoomAnimating = false;
                 }
             };
 
-            const handleMouseMove=e=>{
-                if(!isZoomMode)return;
-                const idx=getActiveIndex(e.clientX,e.clientY);
-                if(idx!==activeIndex){activeIndex=idx;applyZoom();}
+            const startZoomAnimation = () => {
+                if (!zoomAnimating) {
+                    zoomAnimating = true;
+                    requestAnimationFrame(animateZoom);
+                }
             };
 
-            let vw=innerWidth,vh=innerHeight;
-            window.addEventListener('resize',()=>{vw=innerWidth;vh=innerHeight;});
+            const handleWheel = (e) => {
+                if (!isZoomMode) return;
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 1 : -1;
+                if (delta < 0) {
+                    targetZoomScale = Math.min(MAX_SCALE, targetZoomScale + SCROLL_STEP);
+                } else {
+                    targetZoomScale = Math.max(1, targetZoomScale - SCROLL_STEP);
+                }
+                activeIndex = getActiveIndex(e.clientX, e.clientY);
+                startZoomAnimation();
+                if (targetZoomScale > 1.001) {
+                    document.body.style.overflow = 'hidden';
+                }
+            };
 
-            let ticking=false;
-            const updateScroll=()=>{
-                const scrollY=window.scrollY;
-                const phase1=Math.min(1,Math.max(0,scrollY/vh));
-                const scale1=1-phase1*0.3;
+            const handleMouseMove = (e) => {
+                if (!isZoomMode) return;
+                const idx = getActiveIndex(e.clientX, e.clientY);
+                if (idx !== activeIndex) {
+                    activeIndex = idx;
+                    applyZoom();
+                }
+            };
 
-                page1.style.transform=`scale(${scale1})`;
-                page1.style.opacity=1-phase1;
-                page1.style.pointerEvents=phase1>0.8?'none':'auto';
-                page1.style.visibility=phase1>=1?'hidden':'visible';
+            // 页面滚动逻辑
+            let vw = innerWidth, vh = innerHeight;
+            window.addEventListener('resize', () => { vw = innerWidth; vh = innerHeight; });
 
-                // 大图升起，完全覆盖第一页
-                imageWrapper.style.transform=`translateY(${100-phase1*100}%)`;
-                imageWrapper.style.opacity=1;
-                imageWrapper.style.pointerEvents=phase1>0.8?'auto':'none';
+            let ticking = false;
+            const updateScroll = () => {
+                const scrollY = window.scrollY;
+                const phase1 = Math.min(1, Math.max(0, scrollY / vh));
+                const scale1 = 1 - phase1 * 0.3;
+
+                // 第一页缩小并淡出
+                page1.style.transform = `scale(${scale1})`;
+                page1.style.opacity = 1 - phase1;
+                page1.style.pointerEvents = phase1 > 0.8 ? 'none' : 'auto';
+                page1.style.visibility = phase1 >= 1 ? 'hidden' : 'visible';
+
+                // 大图升起并遮挡第一页
+                imageWrapper.style.transform = `translateY(${100 - phase1 * 100}%)`;
+                imageWrapper.style.opacity = 1;
+                imageWrapper.style.pointerEvents = phase1 > 0.8 ? 'auto' : 'none';
 
                 // 第一阶段：九宫格完全隐藏
-                if(scrollY<=vh){
-                    gallerySection.style.opacity=0;
-                    gallerySection.style.pointerEvents='none';
+                if (scrollY <= vh) {
+                    gallerySection.style.opacity = 0;
+                    gallerySection.style.pointerEvents = 'none';
                 }
-                // 第二阶段：大图缩小，九宫格显现
-                else if(scrollY>vh && scrollY<=2*vh){
-                    const phase2=Math.min(1,(scrollY-vh)/vh);
-                    gallerySection.style.opacity=phase2;
-                    gallerySection.style.pointerEvents=phase2>0.1?'auto':'none';
+                // 第二阶段：九宫格显现，大图缩小融入
+                else if (scrollY > vh && scrollY <= 2 * vh) {
+                    const phase2 = Math.min(1, (scrollY - vh) / vh);
+                    gallerySection.style.opacity = phase2;
+                    gallerySection.style.pointerEvents = phase2 > 0.1 ? 'auto' : 'none';
 
-                    const rect=getCenterRect();
-                    if(rect&&rect.width>0){
-                        const tw=rect.width,th=rect.height,tx=rect.left,ty=rect.top;
-                        const p=phase2;
-                        imageWrapper.style.width=(vw+(tw-vw)*p)+'px';
-                        imageWrapper.style.height=(vh+(th-vh)*p)+'px';
-                        imageWrapper.style.left=(tx*p)+'px';
-                        imageWrapper.style.top=(ty*p)+'px';
-                        imageWrapper.style.transform='none';
-                        imageWrapper.style.borderRadius=p>0.3?'12px':'0';
-                        imageWrapper.style.boxShadow=`0 ${20*(1-p)}px ${40*(1-p)}px -10px rgba(0,0,0,${0.3*(1-p)})`;
+                    const rect = getCenterRect();
+                    if (rect && rect.width > 0) {
+                        const tw = rect.width, th = rect.height, tx = rect.left, ty = rect.top;
+                        const p = phase2;
+                        imageWrapper.style.width = (vw + (tw - vw) * p) + 'px';
+                        imageWrapper.style.height = (vh + (th - vh) * p) + 'px';
+                        imageWrapper.style.left = (tx * p) + 'px';
+                        imageWrapper.style.top = (ty * p) + 'px';
+                        imageWrapper.style.transform = 'none';
+                        imageWrapper.style.borderRadius = p > 0.3 ? '12px' : '0';
+                        imageWrapper.style.boxShadow = `0 ${20 * (1 - p)}px ${40 * (1 - p)}px -10px rgba(0,0,0,${0.3 * (1 - p)})`;
                     }
-                    zoomScale=1;applyZoom();isZoomMode=false;
+                    zoomScale = 1; targetZoomScale = 1;
+                    applyZoom();
+                    isZoomMode = false;
+                    document.body.style.overflow = '';
                 }
-                // 第三阶段：九宫格完全显示，激活缩放模式
-                else if(scrollY>2*vh){
-                    gallerySection.style.opacity=1;
-                    gallerySection.style.pointerEvents='auto';
-                    if(!isZoomMode){isZoomMode=true;zoomScale=1;applyZoom();}
-                    imageWrapper.style.opacity='0';
+                // 第三阶段：九宫格完全可见，激活滚轮缩放
+                else if (scrollY > 2 * vh) {
+                    gallerySection.style.opacity = 1;
+                    gallerySection.style.pointerEvents = 'auto';
+                    if (!isZoomMode) {
+                        isZoomMode = true;
+                        zoomScale = 1; targetZoomScale = 1;
+                        applyZoom();
+                    }
+                    imageWrapper.style.opacity = '0';
+                    imageWrapper.style.pointerEvents = 'none';
                 }
 
-                page2Icons.style.opacity=scrollY>vh?Math.min(1,(scrollY-vh)/vh):0;
-                page2Icons.style.pointerEvents=scrollY>vh*1.5?'auto':'none';
-                page2.style.opacity=Math.min(1,Math.max(0,scrollY/vh));
+                // 第二页图标
+                page2Icons.style.opacity = scrollY > vh ? Math.min(1, (scrollY - vh) / vh) : 0;
+                page2Icons.style.pointerEvents = scrollY > vh * 1.5 ? 'auto' : 'none';
+                page2.style.opacity = Math.min(1, Math.max(0, scrollY / vh));
 
-                if(scrollY<=vh){
-                    imageWrapper.style.width='100%';imageWrapper.style.height='100%';
-                    imageWrapper.style.left='0';imageWrapper.style.top='0';
-                    imageWrapper.style.borderRadius='0';
-                    imageWrapper.style.boxShadow='0 20px 40px -10px rgba(0,0,0,0.3)';
+                // 第一阶段重置大图
+                if (scrollY <= vh) {
+                    imageWrapper.style.width = '100%'; imageWrapper.style.height = '100%';
+                    imageWrapper.style.left = '0'; imageWrapper.style.top = '0';
+                    imageWrapper.style.borderRadius = '0';
+                    imageWrapper.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.3)';
                 }
-                ticking=false;
+                ticking = false;
             };
 
-            window.addEventListener('scroll',()=>{
-                if(!ticking){requestAnimationFrame(updateScroll);ticking=true;}
-            },{passive:true});
-            window.addEventListener('wheel',handleWheel,{passive:false});
-            window.addEventListener('mousemove',handleMouseMove);
-            window.addEventListener('resize',updateScroll);
+            window.addEventListener('scroll', () => {
+                if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
+            }, { passive: true });
+            window.addEventListener('wheel', handleWheel, { passive: false });
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('resize', updateScroll);
             updateScroll();
         })();
     </script>
