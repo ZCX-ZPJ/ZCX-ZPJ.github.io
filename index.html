@@ -500,7 +500,7 @@
                 width: calc(100vw - var(--card-gap) * 2);
                 height: 100vh;
                 padding: var(--card-gap);
-                transform: translateY(40px);
+                transform: translateY(0); /* 移动端取消下移，保证满屏 */
             }
             .gallery-item {
                 border-radius: 12px;
@@ -711,14 +711,12 @@
             const updateScroll = () => {
                 const sY = window.scrollY;
 
-                // 第一页：缩小并淡出 (0 → 0.8vh)
                 const p2Start = vh * 0.8;
                 const p1Progress = Math.min(1, Math.max(0, sY / p2Start));
                 page1.style.transform = `scale(${1 - p1Progress * 0.3})`;
                 page1.style.opacity = 1 - p1Progress;
                 page1.style.pointerEvents = p1Progress > 0.8 ? 'none' : 'auto';
 
-                // 第二页：短暂出现 (0.8vh → 1.2vh)
                 const p2End = vh * 1.2;
                 const inPage2 = sY >= p2Start && sY < p2End;
                 if (inPage2) {
@@ -739,7 +737,6 @@
                 }
                 wasPage2Active = inPage2;
 
-                // 第三页：滑入并停留 (1.2vh → 3vh)
                 const p3Start = p2End;
                 const inPage3 = sY >= p3Start;
                 if (inPage3) {
