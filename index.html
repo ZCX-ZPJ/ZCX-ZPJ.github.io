@@ -30,6 +30,7 @@
             cursor: pointer !important;
         }
 
+        /* 页面容器 */
         .page {
             position: fixed;
             inset: 0;
@@ -43,7 +44,23 @@
         #page1 { z-index: 10; }
         #page2 { z-index: 14; opacity: 0; }
 
-        /* 九宫格 — 初始隐藏，第二阶段显现 */
+        /* 第二页轻量结构：只有底部图标栏 */
+        .page2-footer-only {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            gap: 1.5rem;
+            pointer-events: auto;
+            background: transparent;
+            z-index: 20;
+        }
+
+        /* 九宫格 */
         .gallery-section {
             position: fixed;
             inset: 0;
@@ -74,7 +91,7 @@
         .gallery-item:hover { transform: scale(0.98); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 全屏遮挡层 — 遮盖第一页，第二阶段淡出 */
+        /* 全屏遮挡层 */
         .fullscreen-bg {
             position: fixed;
             inset: 0;
@@ -84,7 +101,7 @@
             pointer-events: none;
         }
 
-        /* 大图 — 背景透明，缩小后露出九宫格 */
+        /* 大图 */
         .image-wrapper {
             position: fixed;
             inset: 0;
@@ -101,6 +118,7 @@
         }
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* 第一页导航和底部等样式省略，与前版相同 */
         header {
             display: flex; justify-content: center; align-items: center;
             padding: max(1.5rem, 2.5vw) max(2rem, 4vw); position: relative;
@@ -241,6 +259,7 @@
     </style>
 </head>
 <body>
+    <!-- 第一页（完整布局） -->
     <div class="page" id="page1">
         <header>
             <div class="smiley-icon">
@@ -271,7 +290,8 @@
             </div>
         </main>
         <footer>
-            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div>
+            <div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -280,34 +300,27 @@
         </footer>
     </div>
 
-    <!-- 九宫格 (初始隐藏) -->
+    <!-- 九宫格 -->
     <div class="gallery-section" id="gallerySection">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 全屏遮挡层 (第一阶段遮盖第一页，第二阶段淡出) -->
+    <!-- 全屏遮挡层 -->
     <div class="fullscreen-bg" id="fullscreenBg"></div>
 
-    <!-- 大图 (背景透明) -->
+    <!-- 大图 -->
     <div class="image-wrapper" id="imageWrapper">
         <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
     </div>
 
-    <!-- 第二页 (最高层) -->
+    <!-- 第二页（仅底部图标栏） -->
     <div class="page" id="page2">
-        <header>
-            <div class="smiley-icon"><svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5"><circle cx="50" cy="50" r="42"/><circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/><circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/><path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/></svg></div>
-            <nav class="nav-links"><a href="#">首页</a><a href="#" aria-current="page">作品</a><a href="#">工作</a></nav>
-        </header>
-        <main style="opacity:0;"></main>
-        <footer>
-            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
-            <div class="footer-right">
-                <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
-                <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
-                <div class="icon-wrapper" data-title="13226408301"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></div>
-            </div>
-        </footer>
+        <!-- 没有 header，没有 main，只有底部图标 -->
+        <div class="page2-footer-only">
+            <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
+            <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
+            <div class="icon-wrapper" data-title="13226408301"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></div>
+        </div>
     </div>
 
     <script>
@@ -369,10 +382,7 @@
                 page1.style.pointerEvents = phase1 > 0.8 ? 'none' : 'auto';
                 page1.style.visibility = phase1 >= 1 ? 'hidden' : 'visible';
 
-                // 遮挡层：第一阶段遮盖第一页，第二阶段淡出露出九宫格
                 fullscreenBg.style.opacity = phase1;
-
-                // 大图升起
                 imageWrapper.style.transform = `translateY(${100 - phase1 * 100}%)`;
                 imageWrapper.style.opacity = 1;
                 imageWrapper.style.pointerEvents = phase1 > 0.8 ? 'auto' : 'none';
@@ -391,11 +401,9 @@
                         imageWrapper.style.borderRadius = p > 0.3 ? '12px' : '0';
                         imageWrapper.style.boxShadow = `0 ${20*(1-p)}px ${40*(1-p)}px -10px rgba(0,0,0,${0.3*(1-p)})`;
                     }
-                    // 九宫格与大图同步显现
                     gallerySection.style.opacity = phase2;
                     gallerySection.style.pointerEvents = phase2 > 0.1 ? 'auto' : 'none';
                     page2.style.opacity = phase2;
-                    // 遮挡层淡出
                     fullscreenBg.style.opacity = 1 - phase2;
                     imageWrapper.style.pointerEvents = phase2 > 0.99 ? 'none' : 'auto';
                 } else {
@@ -403,8 +411,7 @@
                     imageWrapper.style.left = '0'; imageWrapper.style.top = '0';
                     imageWrapper.style.borderRadius = '0';
                     imageWrapper.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.3)';
-                    gallerySection.style.opacity = 0;
-                    gallerySection.style.pointerEvents = 'none';
+                    gallerySection.style.opacity = 0; gallerySection.style.pointerEvents = 'none';
                     page2.style.opacity = 0;
                 }
                 ticking = false;
