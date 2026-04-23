@@ -312,8 +312,9 @@
         }
 
         .splash-wrapper {
-            position: relative;
-            display: inline-block;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .splash-title {
@@ -322,16 +323,10 @@
             letter-spacing: 0.06em;
             color: #0a0a0a;
             line-height: 1;
-            text-align: center;
             user-select: none;
-            padding-right: 0.15em;
         }
 
-        /* 年份标签：一体排版，位于作品集右上角 */
         .year-tag {
-            position: absolute;
-            top: 6px;
-            left: 100%;
             font-size: clamp(1.1rem, 1.9vw, 1.5rem);
             font-weight: 550;
             letter-spacing: 0.06em;
@@ -341,7 +336,7 @@
             line-height: 1;
             white-space: nowrap;
             margin-left: clamp(0.4rem, 1vw, 0.8rem);
-            transform: translateX(-60px);
+            margin-top: 0.35em;
         }
 
         @media (max-width: 768px) {
@@ -445,7 +440,7 @@
             .year-tag {
                 font-size: max(0.85rem, 3vw);
                 margin-left: clamp(0.3rem, 1.5vw, 0.5rem);
-                transform: translateX(-48px);
+                margin-top: 0.25em;
             }
         }
     </style>
