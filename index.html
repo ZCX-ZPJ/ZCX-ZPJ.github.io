@@ -5,53 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
     <style>
-        /* ===== 全局变量 ===== */
         :root {
-            --bg-color: #e0e0dc;
-            --text-dark: #111;
-            --text-gray: #2c2c2c;
-            --accent-orange: #ff8c42;
-            --border-light: rgba(0,0,0,0.06);
-            --container-width: min(1100px, 85vw);
+            --bg: #e0e0dc;
+            --text: #111;
+            --gray: #2c2c2c;
+            --accent: #ff8c42;
+            --border: rgba(0,0,0,0.06);
+            --w: min(1100px, 85vw);
             --offset: clamp(2.5rem, 6vw, 4rem);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background: var(--bg);
+            color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             height: 300vh;
-            position: relative;
         }
 
-        .nav-links a, .software-item, .icon-wrapper, .gallery-item, .profile-img, .hero-title span {
+        a, .software-item, .icon-wrapper, .gallery-item, .profile-img, .hero-title span {
             cursor: pointer !important;
         }
 
-        /* 页面层级 */
         .page {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; flex-direction: column; justify-content: space-between;
+            inset: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             pointer-events: none;
         }
         .page > * { pointer-events: auto; }
         #page1 { z-index: 10; }
-        #page2 { z-index: 5; opacity: 0; }
+        #page2 { z-index: 14; opacity: 0; }
 
-        /* 九宫格 — 位于下层 (z-index: 8) */
+        /* 九宫格 — 初始隐藏，第二阶段显现 */
         .gallery-section {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 8;
+            inset: 0;
+            z-index: 12;
             opacity: 0;
             pointer-events: none;
-            background-color: var(--bg-color);
-            display: flex; align-items: center; justify-content: center;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 4px;
         }
 
@@ -66,84 +68,67 @@
         .gallery-item {
             overflow: hidden;
             background: #ccc;
-            transition: transform 0.3s ease;
-            cursor: pointer;
             border-radius: 12px;
+            transition: transform 0.3s ease;
         }
         .gallery-item:hover { transform: scale(0.98); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 满屏大图 — 位于上层 (z-index: 9) */
-        .fullscreen-image {
+        /* 全屏遮挡层 — 遮盖第一页，第二阶段淡出 */
+        .fullscreen-bg {
             position: fixed;
-            bottom: 0; left: 0; width: 100%; height: 100vh;
-            z-index: 9;
+            inset: 0;
+            z-index: 11;
+            background: var(--bg);
             opacity: 0;
             pointer-events: none;
-            background-color: transparent;
-            transform: translateY(100%);
-            transition: transform 0.05s linear, opacity 0.05s linear;
         }
 
-        .fullscreen-image .image-wrapper {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
+        /* 大图 — 背景透明，缩小后露出九宫格 */
+        .image-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: 13;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
-            background-color: var(--bg-color);
-            transform-origin: center center;
-            will-change: transform, top, left, width, height;
+            transform: translateY(100%);
             overflow: hidden;
             border-radius: 0;
-            transition: border-radius 0.1s;
+            transition: transform 0.05s linear, border-radius 0.1s;
         }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        .fullscreen-image img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-
-        /* 头部导航 */
         header {
             display: flex; justify-content: center; align-items: center;
-            padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
-            width: 100%; position: relative;
+            padding: max(1.5rem, 2.5vw) max(2rem, 4vw); position: relative;
         }
-
         .smiley-icon {
-            position: absolute; left: max(1.5rem, 4vw); top: 50%;
-            transform: translateY(-50%);
+            position: absolute; left: max(1.5rem, 4vw); top: 50%; transform: translateY(-50%);
             width: clamp(32px, 5vw, 44px); height: clamp(32px, 5vw, 44px);
-            pointer-events: none;
-            animation: rotate 5s linear infinite;
+            pointer-events: none; animation: spin 5s linear infinite;
         }
-        @keyframes rotate {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            100% { transform: translateY(-50%) rotate(360deg); }
-        }
+        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
 
         .nav-links {
-            display: flex; align-items: center; gap: clamp(1.8rem, 3vw, 2.8rem);
+            display: flex; gap: clamp(1.8rem, 3vw, 2.8rem);
             font-size: clamp(1rem, 1.5vw, 1.25rem); font-weight: 500; letter-spacing: -0.01em;
         }
-        .nav-links a {
-            color: var(--text-dark); text-decoration: none;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
-        }
+        .nav-links a { color: var(--text); text-decoration: none; transition: transform 0.25s ease; }
         .nav-links a:hover { transform: scale(1.18); }
 
-        /* 主内容 */
         main {
-            flex: 1; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            gap: clamp(4rem, 8vw, 6.5rem);
-            padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+            flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: clamp(4rem, 8vw, 6.5rem); padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
         }
 
         .hero-title {
             display: flex; align-items: center; justify-content: center;
             gap: clamp(1.2rem, 2.5vw, 2.2rem);
             font-size: clamp(4rem, 13vw, 11rem); font-weight: 700; white-space: nowrap;
-            transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
-            will-change: transform;
+            transition: transform 0.25s ease; will-change: transform;
             letter-spacing: -0.02em; line-height: 1; color: #0a0a0a;
             margin-top: clamp(-5rem, -6vw, -3rem);
         }
@@ -151,52 +136,52 @@
         .hero-title span:last-child { font-weight: 650; color: #202020; }
 
         .dot-text { display: inline-block; line-height: 1; vertical-align: middle; font-weight: 650; }
-        .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; line-height: 1; margin: 0 0.05em; }
+        .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; margin: 0 0.05em; }
 
         .profile-img {
-            width: clamp(70px, 10vw, 150px); height: auto; border-radius: 8px;
-            transform: rotate(-5deg); box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-            object-fit: cover; aspect-ratio: 1/1; background: #ccc; border: 1px solid rgba(255,255,255,0.3);
+            width: clamp(70px, 10vw, 150px); border-radius: 8px; transform: rotate(-5deg);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05); object-fit: cover; aspect-ratio: 1/1;
+            background: #ccc; border: 1px solid rgba(255,255,255,0.3);
         }
 
         .hero-desc {
             display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 8vw, 7rem);
-            max-width: var(--container-width); width: 100%; margin: 0 auto;
+            max-width: var(--w); width: 100%; margin: 0 auto;
             font-size: clamp(1rem, 2vw, 1.3rem); line-height: 1.6; color: #1e1e1e; font-weight: 550;
             letter-spacing: -0.01em; padding-top: clamp(1.5rem, 3vw, 2.8rem);
             position: relative; overflow: visible;
         }
         .hero-desc::before {
             content: ''; position: absolute; top: 0; left: calc(-1 * var(--offset));
-            width: calc(100% + 2 * var(--offset)); height: 1px; background-color: var(--border-light);
+            width: calc(100% + 2 * var(--offset)); height: 1px; background: var(--border);
         }
         .hero-desc div:first-child { justify-self: start; margin-left: calc(-1 * var(--offset)); }
-        .hero-desc div:last-child { color: var(--text-gray); justify-self: end; margin-right: calc(-1 * var(--offset)); text-align: left; font-weight: 550; line-height: 1.6; }
+        .hero-desc div:last-child {
+            justify-self: end; margin-right: calc(-1 * var(--offset));
+            color: var(--gray); text-align: left; font-weight: 550; line-height: 1.6;
+        }
 
         .toolbox-line { display: block; margin-bottom: 0.2rem; }
         .toolbox-line strong { font-weight: 650; }
         .ai-line { display: block; }
 
-        .software-item {
-            display: inline-block; transition: color 0.2s ease, transform 0.2s ease;
-        }
-        .software-item:hover { color: var(--accent-orange); transform: scale(1.05); }
+        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; }
+        .software-item:hover { color: var(--accent); transform: scale(1.05); }
 
-        /* 底部 */
         footer {
             display: flex; justify-content: space-between; align-items: center;
             padding: clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
             width: 100%; font-size: clamp(0.7rem, 1vw, 0.8rem); font-weight: 450; color: #1f1f1f;
-            letter-spacing: 0.02em; border-top: 1px solid var(--border-light); position: relative;
+            letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative;
         }
         .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
-        .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); }
+        .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
         .footer-right { display: flex; gap: 1.5rem; align-items: center; }
 
         .icon-wrapper { position: relative; display: inline-flex; }
         .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.2s ease; }
-        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; transition: color 0.2s ease, transform 0.2s ease; line-height: 1; }
-        .icon-wrapper:hover .icon-text, .icon-wrapper:hover svg { color: var(--accent-orange); fill: var(--accent-orange); transform: scale(1.1); }
+        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.2s ease; }
+        .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
         .icon-wrapper::after {
             content: attr(data-title); position: absolute; bottom: 100%; left: 50%;
             transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff;
@@ -211,7 +196,6 @@
         }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
 
-        /* 移动端 */
         @media (max-width: 768px) {
             :root { --offset: 0rem; }
             header { padding: 1rem 1.5rem; }
@@ -224,8 +208,10 @@
             .hero-desc { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; font-size: max(0.95rem, 3.5vw); text-align: center; }
             .hero-desc::before { left: 0; width: 100%; }
             .hero-desc div:first-child, .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
-            .hero-desc div:last-child { gap: 0.3rem; }
+            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
             .software-item:hover { transform: none; color: inherit; }
+            .hero-desc .software-item { margin: 0 0.12rem; }
+
             .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
             .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
             .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
@@ -237,11 +223,12 @@
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink {
-                0%, 100% { color: var(--text-gray); transform: scale(1); text-shadow: none; }
+                0%, 100% { color: var(--gray); transform: scale(1); text-shadow: none; }
                 15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
-                25% { color: var(--accent-orange); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
+                25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; }
+
+            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; text-align: center; }
             .footer-left { font-size: 0.85rem; }
             .footer-center { position: static; transform: none; font-size: 1rem; }
             .footer-right { justify-content: center; gap: 1.2rem; }
@@ -257,18 +244,9 @@
     <div class="page" id="page1">
         <header>
             <div class="smiley-icon">
-                <svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5">
-                    <circle cx="50" cy="50" r="42"/>
-                    <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/>
-                    <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/>
-                    <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/>
-                </svg>
+                <svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5"><circle cx="50" cy="50" r="42"/><circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/><circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/><path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/></svg>
             </div>
-            <nav class="nav-links">
-                <a href="#" aria-current="page">首页</a>
-                <a href="#">关于</a>
-                <a href="#">工作</a>
-            </nav>
+            <nav class="nav-links"><a href="#" aria-current="page">首页</a><a href="#">关于</a><a href="#">工作</a></nav>
         </header>
         <main>
             <div class="hero-title" id="titleMove">
@@ -293,8 +271,7 @@
             </div>
         </main>
         <footer>
-            <div class="footer-left">期待合作</div>
-            <div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -303,37 +280,28 @@
         </footer>
     </div>
 
-    <!-- 九宫格 (底层) -->
+    <!-- 九宫格 (初始隐藏) -->
     <div class="gallery-section" id="gallerySection">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 满屏大图 (上层，会移动缩小) -->
-    <div class="fullscreen-image" id="fullscreenImage">
-        <div class="image-wrapper" id="imageWrapper">
-            <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
-        </div>
+    <!-- 全屏遮挡层 (第一阶段遮盖第一页，第二阶段淡出) -->
+    <div class="fullscreen-bg" id="fullscreenBg"></div>
+
+    <!-- 大图 (背景透明) -->
+    <div class="image-wrapper" id="imageWrapper">
+        <img src="https://picsum.photos/1200/800?random=100" alt="作品展示" id="mainImage">
     </div>
 
-    <!-- 第二页 (仅用于头部和底部) -->
+    <!-- 第二页 (最高层) -->
     <div class="page" id="page2">
         <header>
-            <div class="smiley-icon">
-                <svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5">
-                    <circle cx="50" cy="50" r="42"/>
-                    <circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/>
-                    <circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/>
-                    <path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/>
-                </svg>
-            </div>
-            <nav class="nav-links">
-                <a href="#">首页</a><a href="#" aria-current="page">作品</a><a href="#">工作</a>
-            </nav>
+            <div class="smiley-icon"><svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5"><circle cx="50" cy="50" r="42"/><circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/><circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/><path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/></svg></div>
+            <nav class="nav-links"><a href="#">首页</a><a href="#" aria-current="page">作品</a><a href="#">工作</a></nav>
         </header>
         <main style="opacity:0;"></main>
         <footer>
-            <div class="footer-left">期待合作</div>
-            <div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -343,125 +311,112 @@
     </div>
 
     <script>
-        (function() {
+        (() => {
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
-            const fullscreenImage = document.getElementById('fullscreenImage');
+            const fullscreenBg = document.getElementById('fullscreenBg');
             const imageWrapper = document.getElementById('imageWrapper');
             const mainImage = document.getElementById('mainImage');
             const gallerySection = document.getElementById('gallerySection');
             const galleryGrid = document.getElementById('galleryGrid');
             const title = document.getElementById('titleMove');
 
-            // 生成九宫格，中央格子使用与大图相同的图片
-            const centralImgUrl = mainImage.src;
+            // 生成九宫格，中央使用大图
+            const centralUrl = mainImage.src;
             for (let i = 0; i < 9; i++) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 const img = document.createElement('img');
-                img.src = (i === 4) ? centralImgUrl : `https://picsum.photos/400/400?random=${i+50}`;
+                img.src = i === 4 ? centralUrl : `https://picsum.photos/400/400?random=${i+50}`;
                 img.alt = `作品${i+1}`;
+                img.loading = 'lazy';
                 item.appendChild(img);
                 galleryGrid.appendChild(item);
             }
 
             // 标题视差
             if (title) {
-                let targetX = 0, currentX = 0, raf = null;
-                function update() {
-                    currentX += (targetX - currentX) * 0.25;
-                    title.style.transform = `translateX(${currentX}px)`;
-                    if (Math.abs(targetX - currentX) > 0.5) raf = requestAnimationFrame(update);
-                    else { title.style.transform = `translateX(${targetX}px)`; currentX = targetX; raf = null; }
-                }
-                document.addEventListener('mousemove', (e) => {
-                    if (e.clientY < window.innerHeight/2) targetX = (e.clientX/window.innerWidth - 0.5) * 1600;
-                    else targetX = 0;
-                    if (!raf) raf = requestAnimationFrame(update);
+                let tx = 0, cx = 0, raf;
+                const updateTitle = () => {
+                    cx += (tx - cx) * 0.25;
+                    title.style.transform = `translateX(${cx}px)`;
+                    if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle);
+                    else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; }
+                };
+                document.addEventListener('mousemove', e => {
+                    tx = e.clientY < innerHeight/2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0;
+                    if (!raf) raf = requestAnimationFrame(updateTitle);
                 });
-                document.addEventListener('mouseleave', () => { targetX = 0; if (!raf) raf = requestAnimationFrame(update); });
+                document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
             }
 
-            function getCenterCellRect() {
+            const getCenterRect = () => {
                 const items = document.querySelectorAll('.gallery-item');
                 return items.length >= 5 ? items[4].getBoundingClientRect() : null;
-            }
+            };
 
-            function updateScroll() {
+            let vw = innerWidth, vh = innerHeight;
+            window.addEventListener('resize', () => { vw = innerWidth; vh = innerHeight; });
+
+            let ticking = false;
+            const updateScroll = () => {
                 const scrollY = window.scrollY;
-                const viewportH = window.innerHeight;
-                
-                const phase1 = Math.min(1, Math.max(0, scrollY / viewportH));
+                const phase1 = Math.min(1, Math.max(0, scrollY / vh));
+                const scale1 = 1 - phase1 * 0.3;
+
+                page1.style.transform = `scale(${scale1})`;
                 page1.style.opacity = 1 - phase1;
                 page1.style.pointerEvents = phase1 > 0.8 ? 'none' : 'auto';
-                fullscreenImage.style.opacity = phase1;
-                fullscreenImage.style.transform = `translateY(${100 - phase1 * 100}%)`;
-                fullscreenImage.style.pointerEvents = phase1 > 0.8 ? 'auto' : 'none';
+                page1.style.visibility = phase1 >= 1 ? 'hidden' : 'visible';
 
-                if (scrollY > viewportH) {
-                    const phase2 = Math.min(1, (scrollY - viewportH) / viewportH);
-                    const centerRect = getCenterCellRect();
-                    
-                    if (centerRect && centerRect.width > 0) {
-                        const targetW = centerRect.width;
-                        const targetH = centerRect.height;
-                        const targetX = centerRect.left;
-                        const targetY = centerRect.top;
-                        
-                        const startW = window.innerWidth;
-                        const startH = window.innerHeight;
-                        const startX = 0;
-                        const startY = 0;
-                        
-                        // 使用缓动函数让缩放更自然
-                        const progress = phase2 < 0.5 ? 2 * phase2 * phase2 : 1 - Math.pow(-2 * phase2 + 2, 2) / 2;
-                        
-                        const currentW = startW + (targetW - startW) * progress;
-                        const currentH = startH + (targetH - startH) * progress;
-                        const currentX = startX + (targetX - startX) * progress;
-                        const currentY = startY + (targetY - startY) * progress;
-                        
-                        imageWrapper.style.width = currentW + 'px';
-                        imageWrapper.style.height = currentH + 'px';
-                        imageWrapper.style.left = currentX + 'px';
-                        imageWrapper.style.top = currentY + 'px';
+                // 遮挡层：第一阶段遮盖第一页，第二阶段淡出露出九宫格
+                fullscreenBg.style.opacity = phase1;
+
+                // 大图升起
+                imageWrapper.style.transform = `translateY(${100 - phase1 * 100}%)`;
+                imageWrapper.style.opacity = 1;
+                imageWrapper.style.pointerEvents = phase1 > 0.8 ? 'auto' : 'none';
+
+                if (scrollY > vh) {
+                    const phase2 = Math.min(1, (scrollY - vh) / vh);
+                    const rect = getCenterRect();
+                    if (rect && rect.width > 0) {
+                        const tw = rect.width, th = rect.height, tx = rect.left, ty = rect.top;
+                        const p = phase2;
+                        imageWrapper.style.width = (vw + (tw - vw) * p) + 'px';
+                        imageWrapper.style.height = (vh + (th - vh) * p) + 'px';
+                        imageWrapper.style.left = (tx * p) + 'px';
+                        imageWrapper.style.top = (ty * p) + 'px';
                         imageWrapper.style.transform = 'none';
-                        imageWrapper.style.borderRadius = progress > 0.3 ? '12px' : '0';
-                        
-                        mainImage.style.objectFit = 'cover';
-                        imageWrapper.style.boxShadow = `0 ${20 * (1-progress)}px ${40 * (1-progress)}px -10px rgba(0,0,0,${0.3 * (1-progress)})`;
+                        imageWrapper.style.borderRadius = p > 0.3 ? '12px' : '0';
+                        imageWrapper.style.boxShadow = `0 ${20*(1-p)}px ${40*(1-p)}px -10px rgba(0,0,0,${0.3*(1-p)})`;
                     }
-                    
-                    // 九宫格透明度与缩放进度关联：进度前30%几乎不可见，之后快速显现
-                    const galleryProgress = Math.max(0, (phase2 - 0.2) / 0.8);
-                    gallerySection.style.opacity = galleryProgress;
-                    gallerySection.style.pointerEvents = galleryProgress > 0.1 ? 'auto' : 'none';
+                    // 九宫格与大图同步显现
+                    gallerySection.style.opacity = phase2;
+                    gallerySection.style.pointerEvents = phase2 > 0.1 ? 'auto' : 'none';
                     page2.style.opacity = phase2;
-                    
-                    // 大图在接近融合时隐藏
-                    if (phase2 > 0.99) {
-                        fullscreenImage.style.opacity = 0;
-                        fullscreenImage.style.pointerEvents = 'none';
-                    } else {
-                        fullscreenImage.style.opacity = 1;
-                    }
+                    // 遮挡层淡出
+                    fullscreenBg.style.opacity = 1 - phase2;
+                    imageWrapper.style.pointerEvents = phase2 > 0.99 ? 'none' : 'auto';
                 } else {
-                    imageWrapper.style.width = '100%';
-                    imageWrapper.style.height = '100%';
-                    imageWrapper.style.left = '0';
-                    imageWrapper.style.top = '0';
+                    imageWrapper.style.width = '100%'; imageWrapper.style.height = '100%';
+                    imageWrapper.style.left = '0'; imageWrapper.style.top = '0';
                     imageWrapper.style.borderRadius = '0';
                     imageWrapper.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.3)';
-                    mainImage.style.objectFit = 'cover';
-                    page2.style.opacity = 0;
                     gallerySection.style.opacity = 0;
                     gallerySection.style.pointerEvents = 'none';
+                    page2.style.opacity = 0;
                 }
-            }
+                ticking = false;
+            };
 
-            window.addEventListener('scroll', updateScroll);
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
             window.addEventListener('resize', updateScroll);
-            setTimeout(updateScroll, 50);
             updateScroll();
         })();
     </script>
