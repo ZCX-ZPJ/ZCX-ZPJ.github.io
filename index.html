@@ -80,104 +80,78 @@
         .gallery-grid {
             display: flex; gap: var(--card-gap);
             width: calc(100vw - var(--card-gap)*2);
-            margin: 0 auto;
-            flex: 1; min-height: 0;
-            padding-bottom: var(--card-gap);
-            align-items: stretch;
+            margin: 0 auto; flex: 1; min-height: 0;
+            padding-bottom: var(--card-gap); align-items: stretch;
         }
-
-        .gallery-col {
-            flex: 1 1 0; min-width: 0;
-            display: flex; flex-direction: column;
-            overflow: hidden;
-        }
-
+        .gallery-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
         .col-header {
-            flex-shrink: 0;
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: clamp(1.5rem, 4vh, 2.5rem);
-            margin-bottom: 1rem;
-            background: var(--bg);
-            z-index: 2;
+            flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
+            padding-top: clamp(1.5rem,4vh,2.5rem); margin-bottom: 1rem; background: var(--bg); z-index: 2;
         }
-
-        .col-label {
-            font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-            font-weight: 650; letter-spacing: 0.08em;
-            color: #0a0a0a; text-align: center; white-space: nowrap; line-height: 1.2;
-        }
-
-        .col-sub {
-            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-            font-weight: 550; letter-spacing: 0.08em;
-            color: #3a3a3a; text-align: center; white-space: nowrap;
-            margin-top: 0.4rem; text-transform: uppercase;
-        }
-
+        .col-label { font-size: clamp(2.4rem,4.5vw,3.6rem); font-weight: 650; letter-spacing: 0.08em; color: #0a0a0a; text-align: center; white-space: nowrap; line-height: 1.2; }
+        .col-sub { font-size: clamp(1.2rem,1.8vw,1.6rem); font-weight: 550; letter-spacing: 0.08em; color: #3a3a3a; text-align: center; white-space: nowrap; margin-top: 0.4rem; text-transform: uppercase; }
         .gallery-item {
-            flex: 1; width: 100%; min-height: 0;
-            background: #ccc; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
-            display: flex;
+            flex: 1; width: 100%; min-height: 0; background: #ccc;
+            border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; display: flex;
         }
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：全屏覆盖+可滚动，无关闭按钮 */
+        /* 二级页：全屏覆盖 + 自适应铺满 + 可滚动 + 底部返回提示 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
+            display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
             transition: opacity 0.35s ease;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow-y: auto; overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            display: flex;
-            flex-direction: column;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            width: 92vw;
-            max-width: 1200px;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 10px;
+            width: 94vw; max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 0 1rem;
-            flex: 1;
+            padding: 0.6rem;
+            flex: 1; min-height: 0;
         }
         .detail-grid img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease;
-            cursor: pointer;
+            width: 100%; height: 100%;
+            object-fit: cover; border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease; cursor: pointer;
         }
         .detail-grid img:hover { transform: scale(1.03); }
 
-        /* 底部的随机文案 */
-        .detail-footer {
-            text-align: center;
-            padding: 1.5rem 1rem 2rem;
-            color: #4a4a4a;
-            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-            letter-spacing: 0.04em;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
+        /* 底部返回提示 */
+        .detail-back {
             flex-shrink: 0;
+            text-align: center;
+            padding: 1rem 1rem 2.2rem;
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.2s ease;
         }
-        .detail-footer::before {
-            content: '';
+        .detail-back:hover { opacity: 0.7; }
+        .detail-back-line {
+            width: 40px; height: 1px;
+            background: rgba(0,0,0,0.12);
+            margin: 0 auto 0.8rem;
+        }
+        .detail-back-text {
+            font-size: clamp(0.75rem,1vw,0.85rem);
+            font-weight: 500; letter-spacing: 0.06em;
+            color: #777;
+        }
+        .detail-back-arrow {
             display: block;
-            width: 40px;
-            height: 1px;
-            background: rgba(0,0,0,0.1);
-            margin: 0 auto 1rem;
+            font-size: 1.2rem; color: #999;
+            margin-bottom: 0.3rem;
         }
 
         @media (max-width: 768px) {
@@ -201,9 +175,9 @@
             .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
             .gallery-grid { width: 100vw; padding: 0 6px 6px; gap: 6px; }
-            .col-header { padding-top: clamp(1rem, 3vh, 1.8rem); margin-bottom: 0.6rem; }
-            .col-label { font-size: max(1.8rem, 7vw); letter-spacing: 0.06em; }
-            .col-sub { font-size: max(1rem, 4vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
+            .col-header { padding-top: clamp(1rem,3vh,1.8rem); margin-bottom: 0.6rem; }
+            .col-label { font-size: max(1.8rem,7vw); letter-spacing: 0.06em; }
+            .col-sub { font-size: max(1rem,4vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
             .gallery-item { border-radius: 12px; }
             .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
             .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
@@ -220,9 +194,9 @@
                 15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 94vw; padding: 1.5rem 0 0.5rem; }
+            .detail-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(9,1fr); gap: 6px; width: 96vw; padding: 0.4rem; }
             .detail-grid img { border-radius: 8px; }
-            .detail-footer { padding: 1rem 1rem 1.5rem; font-size: 0.8rem; }
+            .detail-back { padding: 0.8rem 1rem 1.8rem; }
         }
     </style>
 </head>
@@ -261,13 +235,9 @@
             <div class="footer-left">期待合作</div>
             <div class="footer-center">···</div>
             <div class="footer-right">
-                <div class="icon-wrapper" data-title="ZHOU-9-57">
-                    <svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg>
-                </div>
+                <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
-                <div class="icon-wrapper" data-title="13226408301">
-                    <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>
-                </div>
+                <div class="icon-wrapper" data-title="13226408301"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></div>
             </div>
         </footer>
     </div>
@@ -283,10 +253,13 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：主图渲染18张，全屏覆盖+可滚动，无关闭按钮 -->
+    <!-- 二级页：全屏自适应铺满 + 可滚动 + 底部返回提示 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid"></div>
-        <div class="detail-footer" id="detailFooter"></div>
+        <div class="detail-back" id="detailBack">
+            <span class="detail-back-arrow">↑</span>
+            <span class="detail-back-text">点击此处返回作品集</span>
+        </div>
     </div>
 
     <script>
@@ -303,67 +276,63 @@
             const homeLink = document.getElementById('homeLink');
             const detailOverlay = document.getElementById('detailOverlay');
             const detailGrid = document.getElementById('detailGrid');
-            const detailFooter = document.getElementById('detailFooter');
+            const detailBack = document.getElementById('detailBack');
 
-            // ==================== 二级页图片数据（替换为真实链接） ====================
+            // ========== 二级页图片数据（替换为真实链接） ==========
             const mainImages = [
-                'https://picsum.photos/400/300?random=2000',
-                'https://picsum.photos/400/300?random=2001',
-                'https://picsum.photos/400/300?random=2002',
-                'https://picsum.photos/400/300?random=2003',
-                'https://picsum.photos/400/300?random=2004',
-                'https://picsum.photos/400/300?random=2005',
-                'https://picsum.photos/400/300?random=2006',
-                'https://picsum.photos/400/300?random=2007',
-                'https://picsum.photos/400/300?random=2008',
-                'https://picsum.photos/400/300?random=2009',
-                'https://picsum.photos/400/300?random=2010',
-                'https://picsum.photos/400/300?random=2011',
-                'https://picsum.photos/400/300?random=2012',
-                'https://picsum.photos/400/300?random=2013',
-                'https://picsum.photos/400/300?random=2014',
-                'https://picsum.photos/400/300?random=2015',
-                'https://picsum.photos/400/300?random=2016',
-                'https://picsum.photos/400/300?random=2017',
+                'https://picsum.photos/400/300?random=2000', // 第01张
+                'https://picsum.photos/400/300?random=2001', // 第02张
+                'https://picsum.photos/400/300?random=2002', // 第03张
+                'https://picsum.photos/400/300?random=2003', // 第04张
+                'https://picsum.photos/400/300?random=2004', // 第05张
+                'https://picsum.photos/400/300?random=2005', // 第06张
+                'https://picsum.photos/400/300?random=2006', // 第07张
+                'https://picsum.photos/400/300?random=2007', // 第08张
+                'https://picsum.photos/400/300?random=2008', // 第09张
+                'https://picsum.photos/400/300?random=2009', // 第10张
+                'https://picsum.photos/400/300?random=2010', // 第11张
+                'https://picsum.photos/400/300?random=2011', // 第12张
+                'https://picsum.photos/400/300?random=2012', // 第13张
+                'https://picsum.photos/400/300?random=2013', // 第14张
+                'https://picsum.photos/400/300?random=2014', // 第15张
+                'https://picsum.photos/400/300?random=2015', // 第16张
+                'https://picsum.photos/400/300?random=2016', // 第17张
+                'https://picsum.photos/400/300?random=2017', // 第18张
             ];
-            // ================================================================
+            // =====================================================
 
-            // 生成二级页图片
-            mainImages.forEach((src, index) => {
+            mainImages.forEach((src, i) => {
                 const img = document.createElement('img');
                 img.src = src;
-                img.alt = `主图${index + 1}`;
+                img.alt = `主图${i + 1}`;
                 detailGrid.appendChild(img);
             });
 
-            // 随机文案池
-            const randomTexts = [
-                "以光影构筑空间，用材质叙述故事。每一帧渲染都是对真实世界的细腻转译。",
-                "从概念草图到最终成像，高精度3D渲染让创意在数字维度中无限接近理想形态。",
-                "探索材质、光线与构图的极限，主图渲染作品集呈现视觉叙事的多种可能性。",
-                "细节决定质感，氛围传递情绪——这些渲染作品见证着对视觉品质的执着追求。",
-                "在真实与虚拟的边界上行走，用C4D与Redshift描绘出令人驻足的视觉风景。"
-            ];
-            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-            detailFooter.textContent = randomText;
+            // 关闭二级页并回到第三页
+            function closeDetail() {
+                detailOverlay.classList.remove('active');
+                const vh = window.innerHeight;
+                window.scrollTo({ top: 2 * vh, behavior: 'auto' });
+                page3.classList.add('active');
+            }
 
-            // 点击遮罩空白处关闭（保留）
+            // 底部返回提示点击关闭
+            detailBack.addEventListener('click', closeDetail);
+            // 点击背景遮罩关闭
             detailOverlay.addEventListener('click', (e) => {
-                if (e.target === detailOverlay) {
-                    detailOverlay.classList.remove('active');
-                    const vh = window.innerHeight;
-                    window.scrollTo({ top: 2 * vh, behavior: 'auto' });
-                    page3.classList.add('active');
-                }
+                if (e.target === detailOverlay) closeDetail();
             });
 
             if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
 
+            // ========== 第三页卡片封面（替换为真实链接） ==========
             const cardImages = [
-                'https://picsum.photos/400/711?random=50',
-                'https://picsum.photos/400/711?random=51',
-                'https://picsum.photos/400/711?random=52',
+                'https://picsum.photos/400/711?random=50',  // 主图渲染封面
+                'https://picsum.photos/400/711?random=51',  // 详情展示封面
+                'https://picsum.photos/400/711?random=52',  // AI辅助封面
             ];
+            // =====================================================
+
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
@@ -400,7 +369,7 @@
             const LOOP_DELAY = 600; const SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''); const totalChars = chars.length;
-            function getRandomPool(char) { if (char >= '0' && char <= '9') return '0123456789'.split(''); if (char === '–' || char === '-') return ['–', '—', '·', '-']; if (char === '©') return ['©', '®', '℗']; return [char]; }
+            function getRandomPool(char) { if (char >= '0' && char <= '9') return '0123456789'.split(''); if (char === '–' || char === '-') return ['–','—','·','-']; if (char === '©') return ['©','®','℗']; return [char]; }
             const pools = chars.map(ch => getRandomPool(ch));
             let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
             function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
@@ -410,14 +379,12 @@
                 const targetLockCount = Math.floor(globalProgress * totalChars);
                 while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
                 const result = [];
-                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
+                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i/totalChars)*(1-SLOWDOWN_START)*0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
                 yearDigits.textContent = result.join('');
                 if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
-
-            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
-
+            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight/2 ? (e.clientX/innerWidth - 0.5)*1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
             let vh = window.innerHeight; window.addEventListener('resize', () => { vh = window.innerHeight; });
             let ticking = false, wasPage2Active = false;
             const updateScroll = () => {
