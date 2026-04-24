@@ -236,7 +236,7 @@
             transform: translateY(40px);
             transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
-            padding: 4vh 0 2vh;  /* 上下留白，上方更大 */
+            padding: 7vh 0 2vh;  /* 上方留白增大至7vh */
         }
         .page3.active {
             opacity: 1;
@@ -263,11 +263,11 @@
         }
 
         .col-label {
-            font-size: clamp(0.9rem, 1.4vw, 1.1rem);
-            font-weight: 550;
-            letter-spacing: 0.06em;
+            font-size: clamp(1.1rem, 1.8vw, 1.4rem);  /* 文案字号显著放大 */
+            font-weight: 600;
+            letter-spacing: 0.08em;
             color: #0a0a0a;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;  /* 与卡片的间距加大 */
             text-align: center;
             white-space: nowrap;
             flex-shrink: 0;
@@ -323,9 +323,9 @@
             .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem, 3vw); margin-left: clamp(0.2rem, 0.8vw, 0.4rem); margin-top: 0.25em; }
-            .page3 { padding: 3vh 0 1.5vh; }
+            .page3 { padding: 5vh 0 1.5vh; }
             .gallery-grid { width: 100vw; padding: 0 6px; gap: 6px; }
-            .col-label { font-size: max(0.75rem, 3vw); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+            .col-label { font-size: max(1rem, 4vw); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
             .gallery-item { border-radius: 12px; }
         }
     </style>
