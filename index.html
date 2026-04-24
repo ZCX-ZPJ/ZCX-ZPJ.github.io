@@ -275,7 +275,7 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：全屏覆盖+可滚动 -->
+    <!-- 二级页：主图渲染18张，全屏覆盖+可滚动 -->
     <div class="detail-overlay" id="detailOverlay">
         <button class="detail-close" id="detailClose">✕</button>
         <div class="detail-grid" id="detailGrid"></div>
@@ -297,17 +297,40 @@
             const detailGrid = document.getElementById('detailGrid');
             const detailClose = document.getElementById('detailClose');
 
-            // 生成18张图片
-            for (let i = 0; i < 18; i++) {
+            // ==================== 二级页图片数据（替换为真实链接） ====================
+            // 18张主图渲染作品，请将每张图片的链接替换为您的真实图片地址
+            const mainImages = [
+                'https://picsum.photos/400/300?random=2000',  // 第01张
+                'https://picsum.photos/400/300?random=2001',  // 第02张
+                'https://picsum.photos/400/300?random=2002',  // 第03张
+                'https://picsum.photos/400/300?random=2003',  // 第04张
+                'https://picsum.photos/400/300?random=2004',  // 第05张
+                'https://picsum.photos/400/300?random=2005',  // 第06张
+                'https://picsum.photos/400/300?random=2006',  // 第07张
+                'https://picsum.photos/400/300?random=2007',  // 第08张
+                'https://picsum.photos/400/300?random=2008',  // 第09张
+                'https://picsum.photos/400/300?random=2009',  // 第10张
+                'https://picsum.photos/400/300?random=2010',  // 第11张
+                'https://picsum.photos/400/300?random=2011',  // 第12张
+                'https://picsum.photos/400/300?random=2012',  // 第13张
+                'https://picsum.photos/400/300?random=2013',  // 第14张
+                'https://picsum.photos/400/300?random=2014',  // 第15张
+                'https://picsum.photos/400/300?random=2015',  // 第16张
+                'https://picsum.photos/400/300?random=2016',  // 第17张
+                'https://picsum.photos/400/300?random=2017',  // 第18张
+            ];
+            // ================================================================
+
+            // 生成二级页图片
+            mainImages.forEach((src, index) => {
                 const img = document.createElement('img');
-                img.src = `https://picsum.photos/400/300?random=200${i}`;
-                img.alt = `主图${i + 1}`;
+                img.src = src;
+                img.alt = `主图${index + 1}`;
                 detailGrid.appendChild(img);
-            }
+            });
 
             function closeDetail() {
                 detailOverlay.classList.remove('active');
-                // 关闭后定位到第三页
                 const vh = window.innerHeight;
                 window.scrollTo({ top: 2 * vh, behavior: 'auto' });
                 page3.classList.add('active');
@@ -316,6 +339,15 @@
             detailClose.addEventListener('click', closeDetail);
 
             if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
+
+            // ==================== 第三页卡片数据（替换为真实链接） ====================
+            // 三张卡片封面图，请替换为您的真实图片地址
+            const cardImages = [
+                'https://picsum.photos/400/711?random=50',  // 主图渲染 封面
+                'https://picsum.photos/400/711?random=51',  // 详情展示 封面
+                'https://picsum.photos/400/711?random=52',  // AI辅助 封面
+            ];
+            // ===============================================================
 
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
@@ -340,7 +372,7 @@
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 const img = document.createElement('img');
-                img.src = `https://picsum.photos/400/711?random=${i + 50}`;
+                img.src = cardImages[i];
                 img.alt = captions[i].zh;
                 item.appendChild(img);
                 if (i === 0) {
