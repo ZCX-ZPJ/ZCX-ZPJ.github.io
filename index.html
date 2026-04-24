@@ -27,7 +27,6 @@
 
         a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
 
-        /* ---------- 第一页 ---------- */
         .page1 {
             position: fixed; inset: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -63,14 +62,12 @@
         .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
 
-        /* ---------- 第二页 ---------- */
         .page2 { position: fixed; inset: 0; z-index: 25; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; will-change: opacity; }
         .splash-wrapper { display: flex; align-items: flex-start; justify-content: center; }
         .splash-title { font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em; color: #0a0a0a; line-height: 1; user-select: none; }
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ---------- 第三页 ---------- */
         .page3 {
             position: fixed; inset: 0; z-index: 30; background: var(--bg);
             display: flex; flex-direction: column;
@@ -127,38 +124,42 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ---------- 二级页（可滚动，退出定位第三页） ---------- */
+        /* 二级页：全屏覆盖+可滚动 */
         .detail-overlay {
-            position: fixed; inset: 0; z-index: 40;
+            position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
-            display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 0.8rem 1.2rem;
+            transition: opacity 0.35s ease;
             overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
         .detail-close {
-            align-self: flex-end;
-            background: none; border: none;
-            font-size: 2rem; color: #0a0a0a;
-            cursor: pointer; flex-shrink: 0;
+            position: sticky; top: 0.8rem; float: right;
+            background: rgba(224,224,220,0.92);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: none; border-radius: 50%;
+            width: 42px; height: 42px;
+            font-size: 1.6rem; color: #0a0a0a;
+            cursor: pointer; z-index: 10;
+            display: flex; align-items: center; justify-content: center;
             transition: transform 0.2s ease;
-            z-index: 5; margin-bottom: 0.5rem;
-            position: sticky; top: 0;
+            margin-right: 0.5rem;
         }
-        .detail-close:hover { transform: scale(1.2); }
+        .detail-close:hover { transform: scale(1.15); }
 
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
+            gap: 12px;
+            width: 92vw;
             max-width: 1200px;
             margin: 0 auto;
-            padding-bottom: 2rem;
+            padding: 1rem 0 3rem;
+            clear: both;
         }
         .detail-grid img {
             width: 100%;
@@ -171,7 +172,6 @@
         }
         .detail-grid img:hover { transform: scale(1.03); }
 
-        /* 移动端调整 */
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -197,7 +197,6 @@
             .col-label { font-size: max(1.8rem, 7vw); letter-spacing: 0.06em; }
             .col-sub { font-size: max(1rem, 4vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
             .gallery-item { border-radius: 12px; }
-
             .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
             .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
             .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
@@ -213,10 +212,8 @@
                 15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-
-            .detail-overlay { padding: 0.4rem 0.6rem; }
-            .detail-close { margin-bottom: 0.3rem; }
-            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .detail-close { width: 36px; height: 36px; font-size: 1.4rem; top: 0.5rem; }
+            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 94vw; }
             .detail-grid img { border-radius: 8px; }
         }
     </style>
@@ -278,7 +275,7 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：主图渲染18张，可滚动 -->
+    <!-- 二级页：全屏覆盖+可滚动 -->
     <div class="detail-overlay" id="detailOverlay">
         <button class="detail-close" id="detailClose">✕</button>
         <div class="detail-grid" id="detailGrid"></div>
@@ -300,7 +297,7 @@
             const detailGrid = document.getElementById('detailGrid');
             const detailClose = document.getElementById('detailClose');
 
-            // 生成18张二级页图片
+            // 生成18张图片
             for (let i = 0; i < 18; i++) {
                 const img = document.createElement('img');
                 img.src = `https://picsum.photos/400/300?random=200${i}`;
@@ -308,13 +305,11 @@
                 detailGrid.appendChild(img);
             }
 
-            // 关闭二级页，并定位回第三页
             function closeDetail() {
                 detailOverlay.classList.remove('active');
-                // 滚动到第三页位置
+                // 关闭后定位到第三页
                 const vh = window.innerHeight;
                 window.scrollTo({ top: 2 * vh, behavior: 'auto' });
-                // 确保第三页 active
                 page3.classList.add('active');
             }
 
@@ -349,9 +344,7 @@
                 img.alt = captions[i].zh;
                 item.appendChild(img);
                 if (i === 0) {
-                    item.addEventListener('click', () => {
-                        detailOverlay.classList.add('active');
-                    });
+                    item.addEventListener('click', () => { detailOverlay.classList.add('active'); });
                 }
                 col.appendChild(item);
                 galleryGrid.appendChild(col);
