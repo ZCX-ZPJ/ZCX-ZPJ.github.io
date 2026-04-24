@@ -236,7 +236,7 @@
             transform: translateY(40px);
             transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
-            padding: 7vh 0 2vh;  /* 上方留白增大至7vh */
+            padding: 4.5vh 0 1.5vh;
         }
         .page3.active {
             opacity: 1;
@@ -262,15 +262,33 @@
             height: 100%;
         }
 
+        .col-header {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
         .col-label {
-            font-size: clamp(1.1rem, 1.8vw, 1.4rem);  /* 文案字号显著放大 */
-            font-weight: 600;
+            font-size: clamp(1.35rem, 2.1vw, 1.7rem);
+            font-weight: 650;
             letter-spacing: 0.08em;
             color: #0a0a0a;
-            margin-bottom: 1rem;  /* 与卡片的间距加大 */
             text-align: center;
             white-space: nowrap;
-            flex-shrink: 0;
+            line-height: 1.2;
+        }
+
+        .col-sub {
+            font-size: clamp(0.75rem, 1vw, 0.85rem);
+            font-weight: 450;
+            letter-spacing: 0.12em;
+            color: #6a6a6a;
+            text-align: center;
+            white-space: nowrap;
+            margin-top: 0.35rem;
+            text-transform: uppercase;
         }
 
         .gallery-item {
@@ -323,9 +341,11 @@
             .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem, 3vw); margin-left: clamp(0.2rem, 0.8vw, 0.4rem); margin-top: 0.25em; }
-            .page3 { padding: 5vh 0 1.5vh; }
+            .page3 { padding: 3.5vh 0 1.5vh; }
             .gallery-grid { width: 100vw; padding: 0 6px; gap: 6px; }
-            .col-label { font-size: max(1rem, 4vw); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+            .col-header { margin-bottom: 0.8rem; }
+            .col-label { font-size: max(1.2rem, 4.5vw); letter-spacing: 0.06em; }
+            .col-sub { font-size: max(0.7rem, 2.5vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
             .gallery-item { border-radius: 12px; }
         }
     </style>
@@ -409,22 +429,36 @@
                 });
             }
 
-            const captions = ["主图渲染", "详情展示", "AI辅助"];
+            const captions = [
+                { zh: "主图渲染", en: "Main Render" },
+                { zh: "详情展示", en: "Detail Display" },
+                { zh: "AI辅助", en: "AI Assisted" }
+            ];
 
             for (let i = 0; i < 3; i++) {
                 const col = document.createElement('div');
                 col.className = 'gallery-col';
 
+                const header = document.createElement('div');
+                header.className = 'col-header';
+
                 const label = document.createElement('div');
                 label.className = 'col-label';
-                label.textContent = captions[i];
-                col.appendChild(label);
+                label.textContent = captions[i].zh;
+                header.appendChild(label);
+
+                const sub = document.createElement('div');
+                sub.className = 'col-sub';
+                sub.textContent = captions[i].en;
+                header.appendChild(sub);
+
+                col.appendChild(header);
 
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 const img = document.createElement('img');
                 img.src = `https://picsum.photos/400/711?random=${i + 50}`;
-                img.alt = captions[i];
+                img.alt = captions[i].zh;
                 item.appendChild(img);
                 col.appendChild(item);
 
