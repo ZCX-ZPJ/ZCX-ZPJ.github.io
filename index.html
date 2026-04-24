@@ -327,7 +327,6 @@
             z-index: 30;
             background: var(--bg);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             pointer-events: none;
@@ -341,38 +340,17 @@
             transform: translateY(0);
             pointer-events: auto;
         }
-        .gallery-header {
-            width: 100%;
-            text-align: center;
-            padding: clamp(1.5rem, 4vh, 3rem) 1rem 1rem;
-            flex-shrink: 0;
-        }
-        .gallery-header h2 {
-            font-size: clamp(1.5rem, 3vw, 2.4rem);
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            color: #0a0a0a;
-            margin: 0;
-            line-height: 1.2;
-        }
-        .gallery-header .sub-text {
-            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-            font-weight: 450;
-            letter-spacing: 0.08em;
-            color: #555;
-            margin-top: 0.3rem;
-            text-transform: uppercase;
-        }
+
         .gallery-grid {
             display: flex;
             gap: var(--card-gap);
             width: calc(100vw - var(--card-gap) * 2);
-            flex: 1;
+            height: 100vh;
             align-items: center;
             justify-content: center;
             padding: var(--card-gap);
-            min-height: 0;
         }
+
         .gallery-item {
             flex: 1 1 0;
             min-width: 0;
@@ -384,6 +362,7 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
         .gallery-item:hover {
             transform: translateY(-8px);
@@ -393,6 +372,23 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+        }
+
+        /* 卡片内文字 */
+        .item-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-align: center;
+            white-space: nowrap;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
         }
 
         @media (max-width: 768px) {
@@ -495,17 +491,9 @@
                 margin-left: clamp(0.2rem, 0.8vw, 0.4rem);
                 margin-top: 0.25em;
             }
-            .gallery-header {
-                padding: 1rem 1rem 0.5rem;
-            }
-            .gallery-header h2 {
-                font-size: max(1.3rem, 5vw);
-            }
-            .gallery-header .sub-text {
-                font-size: 0.75rem;
-            }
             .gallery-grid {
                 width: 100vw;
+                height: 100vh;
                 padding: 6px;
                 gap: 6px;
                 align-items: stretch;
@@ -521,6 +509,10 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+            .item-caption {
+                font-size: max(0.85rem, 3.5vw);
+                letter-spacing: 0.04em;
             }
         }
     </style>
@@ -579,10 +571,6 @@
     </div>
 
     <div class="page3" id="page3">
-        <div class="gallery-header">
-            <h2>精选作品</h2>
-            <div class="sub-text">Selected Works</div>
-        </div>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
@@ -608,13 +596,24 @@
                 });
             }
 
+            // 三个矩形的文案
+            const captions = ["主图渲染", "详情展示", "AI辅助"];
+
             for (let i = 0; i < 3; i++) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
+
                 const img = document.createElement('img');
                 img.src = `https://picsum.photos/400/711?random=${i + 50}`;
-                img.alt = `作品${i + 1}`;
+                img.alt = captions[i];
                 item.appendChild(img);
+
+                // 添加居中文字层
+                const caption = document.createElement('div');
+                caption.className = 'item-caption';
+                caption.textContent = captions[i];
+                item.appendChild(caption);
+
                 galleryGrid.appendChild(item);
             }
 
