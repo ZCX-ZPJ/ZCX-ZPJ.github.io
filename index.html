@@ -127,7 +127,7 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ---------- 二级页（全屏自适应，退出定位第三页） ---------- */
+        /* ---------- 二级页（可滚动，退出定位第三页） ---------- */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 40;
             background: var(--bg);
@@ -135,6 +135,8 @@
             opacity: 0; pointer-events: none;
             transition: opacity 0.4s ease;
             padding: 0.8rem 1.2rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
@@ -145,20 +147,22 @@
             cursor: pointer; flex-shrink: 0;
             transition: transform 0.2s ease;
             z-index: 5; margin-bottom: 0.5rem;
+            position: sticky; top: 0;
         }
         .detail-close:hover { transform: scale(1.2); }
 
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            flex: 1; min-height: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 2rem;
         }
         .detail-grid img {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -212,11 +216,7 @@
 
             .detail-overlay { padding: 0.4rem 0.6rem; }
             .detail-close { margin-bottom: 0.3rem; }
-            .detail-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(9, 1fr);
-                gap: 4px;
-            }
+            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
             .detail-grid img { border-radius: 8px; }
         }
     </style>
@@ -278,7 +278,7 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：主图渲染18张，全屏自适应 -->
+    <!-- 二级页：主图渲染18张，可滚动 -->
     <div class="detail-overlay" id="detailOverlay">
         <button class="detail-close" id="detailClose">✕</button>
         <div class="detail-grid" id="detailGrid"></div>
@@ -319,9 +319,6 @@
             }
 
             detailClose.addEventListener('click', closeDetail);
-            detailOverlay.addEventListener('click', (e) => {
-                if (e.target === detailOverlay) closeDetail();
-            });
 
             if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
 
