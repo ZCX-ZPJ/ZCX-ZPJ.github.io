@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
 
-    <!-- DNS预解析：提前建立CDN连接，加快图片加载 -->
+    <!-- DNS 预解析与预连接，提升 CDN 加载速度 -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- 第三页卡片封面图预加载：进页面就开始下载 -->
+    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=50">
+    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=51">
+    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=52">
 
     <style>
         :root {
@@ -450,7 +455,6 @@
             aspect-ratio: 1 / 1;
         }
 
-        /* full-img 类样式（附加） */
         .full-img {
             display: block;
             width: 100%;
@@ -599,64 +603,20 @@
             .gallery-item {
                 border-radius: 12px;
             }
-            .blink-1 {
-                animation: softBlink 6s infinite;
-                animation-delay: 0s;
-            }
-            .blink-2 {
-                animation: softBlink 6s infinite;
-                animation-delay: 4s;
-            }
-            .blink-3 {
-                animation: softBlink 6s infinite;
-                animation-delay: 1.5s;
-            }
-            .blink-4 {
-                animation: softBlink 6s infinite;
-                animation-delay: 5s;
-            }
-            .blink-5 {
-                animation: softBlink 6s infinite;
-                animation-delay: 2.5s;
-            }
-            .blink-6 {
-                animation: softBlink 6s infinite;
-                animation-delay: 0.8s;
-            }
-            .blink-7 {
-                animation: softBlink 6s infinite;
-                animation-delay: 3.5s;
-            }
-            .blink-8 {
-                animation: softBlink 6s infinite;
-                animation-delay: 1s;
-            }
-            .blink-9 {
-                animation: softBlink 6s infinite;
-                animation-delay: 3s;
-            }
-            .blink-10 {
-                animation: softBlink 6s infinite;
-                animation-delay: 4.5s;
-            }
+            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
+            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
+            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
+            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
+            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
+            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
+            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
+            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
+            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
+            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink {
-                0%,
-                100% {
-                    color: var(--gray);
-                    transform: scale(1);
-                    text-shadow: none;
-                }
-                15%,
-                35% {
-                    color: #ff9d5c;
-                    transform: scale(1.02);
-                    text-shadow: 0 0 6px rgba(255, 157, 92, 0.3);
-                }
-                25% {
-                    color: var(--accent);
-                    transform: scale(1.03);
-                    text-shadow: 0 0 10px rgba(255, 140, 66, 0.4);
-                }
+                0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; }
+                15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
+                25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
             .detail-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -731,28 +691,28 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：全屏覆盖 + 可滚动 + 所有图片直接写死实现秒开 + 底部固定返回 -->
+    <!-- 二级页：全屏覆盖 + 可滚动 + 所有图片立即加载 + 底部固定返回 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid">
-            <!-- 所有图片直接写死，格式简洁 -->
-            <img src="主图1.webp" class="full-img" alt="展示图1" loading="lazy">
-            <img src="主图2.webp" class="full-img" alt="展示图2" loading="lazy">
-            <img src="主图3.webp" class="full-img" alt="展示图3" loading="lazy">
-            <img src="4.webp" class="full-img" alt="展示图4" loading="lazy">
-            <img src="主图5.webp" class="full-img" alt="展示图5" loading="lazy">
-            <img src="主图6.webp" class="full-img" alt="展示图6" loading="lazy">
-            <img src="7.webp" class="full-img" alt="展示图7" loading="lazy">
-            <img src="8.webp" class="full-img" alt="展示图8" loading="lazy">
-            <img src="9.webp" class="full-img" alt="展示图9" loading="lazy">
-            <img src="10.webp" class="full-img" alt="展示图10" loading="lazy">
-            <img src="11.webp" class="full-img" alt="展示图11" loading="lazy">
-            <img src="12.webp" class="full-img" alt="展示图12" loading="lazy">
-            <img src="13.webp" class="full-img" alt="展示图13" loading="lazy">
-            <img src="14.webp" class="full-img" alt="展示图14" loading="lazy">
-            <img src="15.webp" class="full-img" alt="展示图15" loading="lazy">
-            <img src="16.webp" class="full-img" alt="展示图16" loading="lazy">
-            <img src="17.webp" class="full-img" alt="展示图17" loading="lazy">
-            <img src="18.webp" class="full-img" alt="展示图18" loading="lazy">
+            <!-- 全部图片已移除 loading="lazy"，进页面就同时开始加载 -->
+            <img src="主图1.webp" class="full-img" alt="展示图1">
+            <img src="主图2.webp" class="full-img" alt="展示图2">
+            <img src="主图3.webp" class="full-img" alt="展示图3">
+            <img src="4.webp" class="full-img" alt="展示图4">
+            <img src="5.webp" class="full-img" alt="展示图5">
+            <img src="6.webp" class="full-img" alt="展示图6">
+            <img src="7.webp" class="full-img" alt="展示图7">
+            <img src="8.webp" class="full-img" alt="展示图8">
+            <img src="9.webp" class="full-img" alt="展示图9">
+            <img src="10.webp" class="full-img" alt="展示图10">
+            <img src="11.webp" class="full-img" alt="展示图11">
+            <img src="12.webp" class="full-img" alt="展示图12">
+            <img src="13.webp" class="full-img" alt="展示图13">
+            <img src="14.webp" class="full-img" alt="展示图14">
+            <img src="15.webp" class="full-img" alt="展示图15">
+            <img src="16.webp" class="full-img" alt="展示图16">
+            <img src="17.webp" class="full-img" alt="展示图17">
+            <img src="18.webp" class="full-img" alt="展示图18">
         </div>
         <div class="detail-footer" id="detailFooter" onclick="document.getElementById('detailOverlay').classList.remove('active');window.scrollTo({top:2*window.innerHeight,behavior:'auto'});document.getElementById('page3').classList.add('active');">
             <span class="detail-footer-text">↑ 点击返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
@@ -825,11 +785,9 @@
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
-
             function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
             const pools = chars.map(getRandomPool);
             let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
-
             function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
             function updateSlotChars() {
