@@ -236,7 +236,7 @@
             transform: translateY(40px);
             transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
-            padding: 4.5vh 0 1.5vh;
+            padding: 2.5vh 0 1.5vh;
         }
         .page3.active {
             opacity: 1;
@@ -267,11 +267,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .col-label {
-            font-size: clamp(1.35rem, 2.1vw, 1.7rem);
+            font-size: clamp(1.5rem, 2.3vw, 1.9rem);
             font-weight: 650;
             letter-spacing: 0.08em;
             color: #0a0a0a;
@@ -281,7 +281,7 @@
         }
 
         .col-sub {
-            font-size: clamp(0.75rem, 1vw, 0.85rem);
+            font-size: clamp(0.8rem, 1.05vw, 0.95rem);
             font-weight: 450;
             letter-spacing: 0.12em;
             color: #6a6a6a;
@@ -296,7 +296,7 @@
             width: 100%;
             min-height: 0;
             aspect-ratio: 9 / 16;
-            max-height: 100%;
+            max-height: 75vh;
             background: #ccc;
             border-radius: 20px;
             overflow: hidden;
@@ -341,12 +341,12 @@
             .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem, 3vw); margin-left: clamp(0.2rem, 0.8vw, 0.4rem); margin-top: 0.25em; }
-            .page3 { padding: 3.5vh 0 1.5vh; }
+            .page3 { padding: 2.5vh 0 1.2vh; }
             .gallery-grid { width: 100vw; padding: 0 6px; gap: 6px; }
-            .col-header { margin-bottom: 0.8rem; }
+            .col-header { margin-bottom: 0.6rem; }
             .col-label { font-size: max(1.2rem, 4.5vw); letter-spacing: 0.06em; }
             .col-sub { font-size: max(0.7rem, 2.5vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
-            .gallery-item { border-radius: 12px; }
+            .gallery-item { max-height: 68vh; border-radius: 12px; }
         }
     </style>
 </head>
