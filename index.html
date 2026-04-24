@@ -31,7 +31,6 @@
             height: 300vh;
             overflow-x: hidden;
             cursor: default;
-            transition: cursor 0.2s ease;
         }
 
         a,
@@ -40,29 +39,6 @@
         .profile-img,
         .hero-title span {
             cursor: pointer !important;
-        }
-
-        /* ---------- 自定义旋转笑脸光标（加大至72px、纯黄色、镂空、逆时针、无阴影） ---------- */
-        #customCursor {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            width: 72px;
-            height: 72px;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        #customCursor.active {
-            opacity: 1;
-        }
-        #customCursor svg {
-            width: 100%;
-            height: 100%;
-            animation: spinCursorReverse 1.8s linear infinite;
-        }
-        @keyframes spinCursorReverse {
-            to { transform: rotate(-360deg); }
         }
 
         /* ---------- 第一页 ---------- */
@@ -84,21 +60,6 @@
             align-items: center;
             padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
             position: relative;
-        }
-        .smiley-icon {
-            position: absolute;
-            left: max(1.5rem, 4vw);
-            top: 50%;
-            transform: translateY(-50%);
-            width: clamp(32px, 5vw, 44px);
-            height: clamp(32px, 5vw, 44px);
-            pointer-events: none;
-            animation: spin 5s linear infinite;
-        }
-        @keyframes spin {
-            to {
-                transform: translateY(-50%) rotate(360deg);
-            }
         }
         .nav-links {
             display: flex;
@@ -280,6 +241,41 @@
             color: var(--accent);
             transform: scale(1.1);
         }
+        .icon-wrapper::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: #1f1f1f;
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .icon-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-2px);
+            border: 5px solid transparent;
+            border-top-color: #1f1f1f;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .icon-wrapper:hover::after,
+        .icon-wrapper:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
 
         /* ---------- 第二页 ---------- */
         .page2 {
@@ -295,13 +291,11 @@
             transition: opacity 0.3s ease;
             will-change: opacity;
         }
-
         .splash-wrapper {
             display: flex;
             align-items: flex-start;
             justify-content: center;
         }
-
         .splash-title {
             font-size: clamp(5rem, 16vw, 14rem);
             font-weight: 750;
@@ -310,7 +304,6 @@
             line-height: 1;
             user-select: none;
         }
-
         .year-tag {
             font-size: clamp(1.1rem, 1.9vw, 1.5rem);
             font-weight: 550;
@@ -323,7 +316,6 @@
             margin-left: clamp(0.3rem, 0.8vw, 0.6rem);
             margin-top: 0.35em;
         }
-
         .year-digits {
             display: inline-block;
         }
@@ -349,7 +341,6 @@
             transform: translateY(0);
             pointer-events: auto;
         }
-
         .gallery-header {
             width: 100%;
             text-align: center;
@@ -372,7 +363,6 @@
             margin-top: 0.3rem;
             text-transform: uppercase;
         }
-
         .gallery-grid {
             display: flex;
             gap: var(--card-gap);
@@ -383,7 +373,6 @@
             padding: var(--card-gap);
             min-height: 0;
         }
-
         .gallery-item {
             flex: 1 1 0;
             min-width: 0;
@@ -413,12 +402,6 @@
             }
             header {
                 padding: 1rem 1.5rem;
-            }
-            .smiley-icon {
-                width: 30px;
-                height: 30px;
-                min-width: 30px;
-                min-height: 30px;
             }
             .nav-links {
                 font-size: 1rem;
@@ -484,18 +467,34 @@
                 font-size: 0.8rem;
                 text-align: center;
             }
-            .footer-left { font-size: 0.85rem; }
-            .footer-center { position: static; transform: none; font-size: 1rem; }
-            .footer-right { justify-content: center; gap: 1.2rem; }
-            .icon-wrapper svg { width: 20px; height: 20px; }
-            .icon-text { font-size: 1.2rem; }
-            .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
+            .footer-left {
+                font-size: 0.85rem;
+            }
+            .footer-center {
+                position: static;
+                transform: none;
+                font-size: 1rem;
+            }
+            .footer-right {
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .icon-wrapper svg {
+                width: 20px;
+                height: 20px;
+            }
+            .icon-text {
+                font-size: 1.2rem;
+            }
+            .splash-title {
+                font-size: max(3.5rem, 14vw);
+                letter-spacing: 0.04em;
+            }
             .year-tag {
                 font-size: max(0.85rem, 3vw);
                 margin-left: clamp(0.2rem, 0.8vw, 0.4rem);
                 margin-top: 0.25em;
             }
-
             .gallery-header {
                 padding: 1rem 1rem 0.5rem;
             }
@@ -505,7 +504,6 @@
             .gallery-header .sub-text {
                 font-size: 0.75rem;
             }
-
             .gallery-grid {
                 width: 100vw;
                 padding: 6px;
@@ -524,19 +522,12 @@
                 height: 100%;
                 object-fit: cover;
             }
-            
-            #customCursor {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
     <div class="page1" id="page1">
         <header>
-            <div class="smiley-icon">
-                <svg viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="5"><circle cx="50" cy="50" r="42"/><circle cx="34" cy="38" r="6" fill="#1a1a1a" stroke="none"/><circle cx="66" cy="38" r="6" fill="#1a1a1a" stroke="none"/><path d="M32 62 Q50 78, 68 62" stroke="#1a1a1a" fill="none" stroke-width="6"/></svg>
-            </div>
             <nav class="nav-links">
                 <a href="#" id="homeLink">首页</a>
                 <a href="#">关于</a>
@@ -566,11 +557,16 @@
             </div>
         </main>
         <footer>
-            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div>
+            <div class="footer-center">···</div>
             <div class="footer-right">
-                <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
+                <div class="icon-wrapper" data-title="ZHOU-9-57">
+                    <svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg>
+                </div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
-                <div class="icon-wrapper" data-title="13226408301"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></div>
+                <div class="icon-wrapper" data-title="13226408301">
+                    <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>
+                </div>
             </div>
         </footer>
     </div>
@@ -590,21 +586,6 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 自定义纯黄色镂空旋转笑脸光标（72px、逆时针、无阴影） -->
-    <div id="customCursor">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <mask id="smileyMask">
-                    <circle cx="50" cy="50" r="45" fill="white"/>
-                    <circle cx="34" cy="40" r="9" fill="black"/>
-                    <circle cx="66" cy="40" r="9" fill="black"/>
-                    <path d="M 26 66 Q 50 86 74 66" fill="none" stroke="black" stroke-width="8" stroke-linecap="round"/>
-                </mask>
-            </defs>
-            <circle cx="50" cy="50" r="45" fill="#FFFF00" mask="url(#smileyMask)"/>
-        </svg>
-    </div>
-
     <script>
         (() => {
             if ('scrollRestoration' in history) {
@@ -619,7 +600,6 @@
             const title = document.getElementById('titleMove');
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
-            const customCursor = document.getElementById('customCursor');
 
             if (homeLink) {
                 homeLink.addEventListener('click', (e) => {
@@ -638,11 +618,12 @@
                 galleryGrid.appendChild(item);
             }
 
+            // ==================== 老虎机滚动动效配置 ====================
             const FINAL_TEXT = '2020–2026';
-            const SPIN_DURATION = 1000;        
-            const TICK_INTERVAL = 20;          
-            const LOOP_DELAY = 600;            
-            const SLOWDOWN_START = 0.5;        
+            const SPIN_DURATION = 1000;
+            const TICK_INTERVAL = 20;
+            const LOOP_DELAY = 600;
+            const SLOWDOWN_START = 0.5;
 
             let loopActive = false;
             let intervalId = null;
@@ -671,9 +652,7 @@
                 loopTimeout = null;
             }
 
-            function easeOutCubic(t) {
-                return 1 - Math.pow(1 - t, 3);
-            }
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
             function updateSlotChars() {
                 const elapsed = performance.now() - startTime;
@@ -689,24 +668,16 @@
 
                 const result = [];
                 for (let i = 0; i < totalChars; i++) {
-                    if (locked[i]) {
-                        result.push(chars[i]);
-                        continue;
-                    }
+                    if (locked[i]) { result.push(chars[i]); continue; }
                     const pool = pools[i];
-                    if (pool.length <= 1) {
-                        result.push(pool[0]);
-                        continue;
-                    }
+                    if (pool.length <= 1) { result.push(pool[0]); continue; }
                     const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4;
                     let slotProgress;
                     if (globalProgress >= slotSlowStart) {
                         const slotDuration = 1 - slotSlowStart;
                         slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration);
                         slotProgress = easeOutCubic(slotProgress);
-                    } else {
-                        slotProgress = 0;
-                    }
+                    } else { slotProgress = 0; }
                     if (slotProgress < 1) {
                         const speedFactor = 1 + Math.floor((1 - slotProgress) * 12);
                         slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length;
@@ -724,9 +695,7 @@
                     yearDigits.textContent = FINAL_TEXT;
                     clearTimers();
                     if (loopActive) {
-                        loopTimeout = setTimeout(() => {
-                            if (loopActive) startSlotSpin();
-                        }, LOOP_DELAY);
+                        loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY);
                     }
                 }
             }
@@ -758,13 +727,6 @@
                 document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
             }
 
-            let cursorActive = false;
-            document.addEventListener('mousemove', (e) => {
-                if (!customCursor) return;
-                customCursor.style.left = e.clientX + 'px';
-                customCursor.style.top = e.clientY + 'px';
-            });
-
             let vh = window.innerHeight;
             window.addEventListener('resize', () => { vh = window.innerHeight; });
 
@@ -782,13 +744,8 @@
 
                 const p2End = vh * 1.6;
                 const inPage2 = sY >= p2Start && sY < p2End;
-                
+
                 if (inPage2) {
-                    if (!cursorActive) {
-                        customCursor.classList.add('active');
-                        document.body.style.cursor = 'none';
-                        cursorActive = true;
-                    }
                     page2.style.opacity = 1;
                     page2.style.pointerEvents = 'auto';
                     if (!wasPage2Active) {
@@ -796,11 +753,6 @@
                         startSlotSpin();
                     }
                 } else {
-                    if (cursorActive) {
-                        customCursor.classList.remove('active');
-                        document.body.style.cursor = 'default';
-                        cursorActive = false;
-                    }
                     page2.style.opacity = 0;
                     page2.style.pointerEvents = 'none';
                     if (wasPage2Active) {
@@ -813,20 +765,13 @@
 
                 const p3Start = p2End;
                 const inPage3 = sY >= p3Start;
-                if (inPage3) {
-                    page3.classList.add('active');
-                } else {
-                    page3.classList.remove('active');
-                }
+                if (inPage3) { page3.classList.add('active'); } else { page3.classList.remove('active'); }
 
                 ticking = false;
             };
 
             window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(updateScroll);
-                    ticking = true;
-                }
+                if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
             }, { passive: true });
             window.addEventListener('resize', updateScroll);
             updateScroll();
