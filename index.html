@@ -354,7 +354,6 @@
         .gallery-item {
             flex: 1 1 0;
             min-width: 0;
-            aspect-ratio: 9 / 16;
             max-height: 100%;
             background: #ccc;
             border-radius: 20px;
@@ -362,11 +361,17 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .gallery-item:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        .gallery-item .img-box {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
         }
         .gallery-item img {
             width: 100%;
@@ -374,21 +379,16 @@
             object-fit: cover;
             display: block;
         }
-
-        /* 卡片内文字 */
         .item-caption {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-            font-weight: 600;
-            letter-spacing: 0.06em;
+            flex-shrink: 0;
             text-align: center;
+            color: #0a0a0a;
+            font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+            font-weight: 550;
+            letter-spacing: 0.06em;
+            padding: 0.8rem 0.5rem;
+            background: var(--bg);
             white-space: nowrap;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
         }
 
         @media (max-width: 768px) {
@@ -511,8 +511,9 @@
                 object-fit: cover;
             }
             .item-caption {
-                font-size: max(0.85rem, 3.5vw);
+                font-size: max(0.75rem, 3vw);
                 letter-spacing: 0.04em;
+                padding: 0.6rem 0.3rem;
             }
         }
     </style>
@@ -596,19 +597,20 @@
                 });
             }
 
-            // 三个矩形的文案
             const captions = ["主图渲染", "详情展示", "AI辅助"];
 
             for (let i = 0; i < 3; i++) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
 
+                const imgBox = document.createElement('div');
+                imgBox.className = 'img-box';
                 const img = document.createElement('img');
                 img.src = `https://picsum.photos/400/711?random=${i + 50}`;
                 img.alt = captions[i];
-                item.appendChild(img);
+                imgBox.appendChild(img);
+                item.appendChild(imgBox);
 
-                // 添加居中文字层
                 const caption = document.createElement('div');
                 caption.className = 'item-caption';
                 caption.textContent = captions[i];
@@ -617,7 +619,6 @@
                 galleryGrid.appendChild(item);
             }
 
-            // ==================== 老虎机滚动动效配置 ====================
             const FINAL_TEXT = '2020–2026';
             const SPIN_DURATION = 1000;
             const TICK_INTERVAL = 20;
