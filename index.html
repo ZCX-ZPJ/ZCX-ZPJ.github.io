@@ -76,37 +76,23 @@
             will-change: transform, opacity;
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-        .gallery-grid {
-            display: flex; gap: var(--card-gap);
-            width: calc(100vw - var(--card-gap)*2);
-            margin: 0 auto; flex: 1; min-height: 0;
-            padding-bottom: var(--card-gap); align-items: stretch;
-        }
+        .gallery-grid { display: flex; gap: var(--card-gap); width: calc(100vw - var(--card-gap)*2); margin: 0 auto; flex: 1; min-height: 0; padding-bottom: var(--card-gap); align-items: stretch; }
         .gallery-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
-        .col-header {
-            flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
-            padding-top: clamp(1.5rem,4vh,2.5rem); margin-bottom: 1rem; background: var(--bg); z-index: 2;
-        }
+        .col-header { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: clamp(1.5rem,4vh,2.5rem); margin-bottom: 1rem; background: var(--bg); z-index: 2; }
         .col-label { font-size: clamp(2.4rem,4.5vw,3.6rem); font-weight: 650; letter-spacing: 0.08em; color: #0a0a0a; text-align: center; white-space: nowrap; line-height: 1.2; }
         .col-sub { font-size: clamp(1.2rem,1.8vw,1.6rem); font-weight: 550; letter-spacing: 0.08em; color: #3a3a3a; text-align: center; white-space: nowrap; margin-top: 0.4rem; text-transform: uppercase; }
-        .gallery-item {
-            flex: 1; width: 100%; min-height: 0; background: #ccc;
-            border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; display: flex;
-        }
+        .gallery-item { flex: 1; width: 100%; min-height: 0; background: #ccc; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; display: flex; }
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：全屏覆盖 + 自适应铺满 + 可滚动 + 底部返回提示 */
+        /* 二级页：全屏铺满，不可滚动，底部固定文案 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
             transition: opacity 0.35s ease;
-            overflow-y: auto; overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
+            overflow: hidden;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
@@ -115,10 +101,9 @@
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(6, 1fr);
             gap: 10px;
-            width: 94vw; max-width: 1200px;
-            margin: 0 auto;
             padding: 0.6rem;
-            flex: 1; min-height: 0;
+            flex: 1;
+            min-height: 0;
         }
         .detail-grid img {
             width: 100%; height: 100%;
@@ -128,30 +113,31 @@
         }
         .detail-grid img:hover { transform: scale(1.03); }
 
-        /* 底部返回提示 */
-        .detail-back {
+        /* 底部固定文案（约60px高度，包含30px内容区域） */
+        .detail-footer {
             flex-shrink: 0;
-            text-align: center;
-            padding: 1rem 1rem 2.2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             user-select: none;
-            transition: opacity 0.2s ease;
+            background: var(--bg);
+            position: relative;
         }
-        .detail-back:hover { opacity: 0.7; }
-        .detail-back-line {
-            width: 40px; height: 1px;
-            background: rgba(0,0,0,0.12);
-            margin: 0 auto 0.8rem;
+        .detail-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 1px;
+            background: rgba(0,0,0,0.08);
         }
-        .detail-back-text {
+        .detail-footer-text {
             font-size: clamp(0.75rem,1vw,0.85rem);
-            font-weight: 500; letter-spacing: 0.06em;
+            font-weight: 500;
+            letter-spacing: 0.06em;
             color: #777;
-        }
-        .detail-back-arrow {
-            display: block;
-            font-size: 1.2rem; color: #999;
-            margin-bottom: 0.3rem;
+            padding: 0 1rem;
         }
 
         @media (max-width: 768px) {
@@ -189,25 +175,17 @@
             .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
-            @keyframes softBlink {
-                0%, 100% { color: var(--gray); transform: scale(1); text-shadow: none; }
-                15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
-                25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
-            }
-            .detail-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(9,1fr); gap: 6px; width: 96vw; padding: 0.4rem; }
+            @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
+            .detail-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(9,1fr); gap: 6px; padding: 0.4rem; }
             .detail-grid img { border-radius: 8px; }
-            .detail-back { padding: 0.8rem 1rem 1.8rem; }
+            .detail-footer { height: 50px; }
         }
     </style>
 </head>
 <body>
     <div class="page1" id="page1">
         <header>
-            <nav class="nav-links">
-                <a href="#" id="homeLink">首页</a>
-                <a href="#">关于</a>
-                <a href="#">工作</a>
-            </nav>
+            <nav class="nav-links"><a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a></nav>
         </header>
         <main>
             <div class="hero-title" id="titleMove">
@@ -217,23 +195,11 @@
             </div>
             <div class="hero-desc">
                 <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
-                <div>
-                    <span class="toolbox-line"><strong>日常工具箱：</strong>
-                        <span class="software-item blink-1">C4D/Redshift</span>
-                        <span class="software-item blink-2">Rhino</span>
-                        <span class="software-item blink-3">PS</span>
-                        <span class="software-item blink-4">AI</span>
-                        <span class="software-item blink-5">AE</span>
-                        <span class="software-item blink-6">PR</span>
-                        <span class="software-item blink-7">Style3D</span>
-                    </span>
-                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span>
-                </div>
+                <div><span class="toolbox-line"><strong>日常工具箱：</strong> <span class="software-item blink-1">C4D/Redshift</span> <span class="software-item blink-2">Rhino</span> <span class="software-item blink-3">PS</span> <span class="software-item blink-4">AI</span> <span class="software-item blink-5">AE</span> <span class="software-item blink-6">PR</span> <span class="software-item blink-7">Style3D</span> </span> <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span></div>
             </div>
         </main>
         <footer>
-            <div class="footer-left">期待合作</div>
-            <div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -241,24 +207,14 @@
             </div>
         </footer>
     </div>
+    <div class="page2" id="page2"><div class="splash-wrapper"><div class="splash-title">作品集</div><div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div></div></div>
+    <div class="page3" id="page3"><div class="gallery-grid" id="galleryGrid"></div></div>
 
-    <div class="page2" id="page2">
-        <div class="splash-wrapper">
-            <div class="splash-title">作品集</div>
-            <div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div>
-        </div>
-    </div>
-
-    <div class="page3" id="page3">
-        <div class="gallery-grid" id="galleryGrid"></div>
-    </div>
-
-    <!-- 二级页：全屏自适应铺满 + 可滚动 + 底部返回提示 -->
+    <!-- 二级页：全屏铺满，不可滚动，底部固定文案 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid"></div>
-        <div class="detail-back" id="detailBack">
-            <span class="detail-back-arrow">↑</span>
-            <span class="detail-back-text">点击此处返回作品集</span>
+        <div class="detail-footer" id="detailFooter">
+            <span class="detail-footer-text" id="footerText"></span>
         </div>
     </div>
 
@@ -266,141 +222,92 @@
         (() => {
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
-
-            const page1 = document.getElementById('page1');
-            const page2 = document.getElementById('page2');
-            const page3 = document.getElementById('page3');
-            const galleryGrid = document.getElementById('galleryGrid');
-            const title = document.getElementById('titleMove');
-            const yearDigits = document.getElementById('yearDigits');
-            const homeLink = document.getElementById('homeLink');
-            const detailOverlay = document.getElementById('detailOverlay');
-            const detailGrid = document.getElementById('detailGrid');
-            const detailBack = document.getElementById('detailBack');
+            const page1 = document.getElementById('page1'), page2 = document.getElementById('page2'), page3 = document.getElementById('page3');
+            const galleryGrid = document.getElementById('galleryGrid'), title = document.getElementById('titleMove');
+            const yearDigits = document.getElementById('yearDigits'), homeLink = document.getElementById('homeLink');
+            const detailOverlay = document.getElementById('detailOverlay'), detailGrid = document.getElementById('detailGrid');
+            const detailFooter = document.getElementById('detailFooter'), footerText = document.getElementById('footerText');
 
             // ========== 二级页图片数据（替换为真实链接） ==========
-            const mainImages = [
-                'https://picsum.photos/400/300?random=2000', // 第01张
-                'https://picsum.photos/400/300?random=2001', // 第02张
-                'https://picsum.photos/400/300?random=2002', // 第03张
-                'https://picsum.photos/400/300?random=2003', // 第04张
-                'https://picsum.photos/400/300?random=2004', // 第05张
-                'https://picsum.photos/400/300?random=2005', // 第06张
-                'https://picsum.photos/400/300?random=2006', // 第07张
-                'https://picsum.photos/400/300?random=2007', // 第08张
-                'https://picsum.photos/400/300?random=2008', // 第09张
-                'https://picsum.photos/400/300?random=2009', // 第10张
-                'https://picsum.photos/400/300?random=2010', // 第11张
-                'https://picsum.photos/400/300?random=2011', // 第12张
-                'https://picsum.photos/400/300?random=2012', // 第13张
-                'https://picsum.photos/400/300?random=2013', // 第14张
-                'https://picsum.photos/400/300?random=2014', // 第15张
-                'https://picsum.photos/400/300?random=2015', // 第16张
-                'https://picsum.photos/400/300?random=2016', // 第17张
-                'https://picsum.photos/400/300?random=2017', // 第18张
-            ];
-            // =====================================================
-
-            mainImages.forEach((src, i) => {
+            const mainImages = Array.from({length:18}, (_,i) => `https://picsum.photos/400/300?random=200${i}`);
+            mainImages.forEach((src,i) => {
                 const img = document.createElement('img');
-                img.src = src;
-                img.alt = `主图${i + 1}`;
+                img.src = src; img.alt = `主图${i+1}`;
                 detailGrid.appendChild(img);
             });
 
-            // 关闭二级页并回到第三页
+            // 底部随机文案
+            const quotes = [
+                "每一帧渲染都是对真实世界的细腻转译",
+                "让创意在数字维度中无限接近理想形态",
+                "探索材质、光线与构图的极限",
+                "细节决定质感，氛围传递情绪",
+                "用视觉语言讲述产品的故事"
+            ];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            footerText.textContent = `↑ 点击返回作品集  ·  ${randomQuote}`;
+
             function closeDetail() {
                 detailOverlay.classList.remove('active');
-                const vh = window.innerHeight;
-                window.scrollTo({ top: 2 * vh, behavior: 'auto' });
+                window.scrollTo({ top: 2*window.innerHeight, behavior: 'auto' });
                 page3.classList.add('active');
             }
+            detailFooter.addEventListener('click', closeDetail);
+            detailOverlay.addEventListener('click', (e) => { if (e.target === detailOverlay) closeDetail(); });
 
-            // 底部返回提示点击关闭
-            detailBack.addEventListener('click', closeDetail);
-            // 点击背景遮罩关闭
-            detailOverlay.addEventListener('click', (e) => {
-                if (e.target === detailOverlay) closeDetail();
-            });
-
-            if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
-
-            // ========== 第三页卡片封面（替换为真实链接） ==========
-            const cardImages = [
-                'https://picsum.photos/400/711?random=50',  // 主图渲染封面
-                'https://picsum.photos/400/711?random=51',  // 详情展示封面
-                'https://picsum.photos/400/711?random=52',  // AI辅助封面
-            ];
-            // =====================================================
+            if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
-            for (let i = 0; i < 3; i++) {
-                const col = document.createElement('div');
-                col.className = 'gallery-col';
-                const header = document.createElement('div');
-                header.className = 'col-header';
-                const label = document.createElement('div');
-                label.className = 'col-label';
-                label.textContent = captions[i].zh;
-                header.appendChild(label);
-                const sub = document.createElement('div');
-                sub.className = 'col-sub';
-                sub.textContent = captions[i].en;
-                header.appendChild(sub);
+            const cardImages = ['https://picsum.photos/400/711?random=50','https://picsum.photos/400/711?random=51','https://picsum.photos/400/711?random=52'];
+            for (let i=0; i<3; i++) {
+                const col = document.createElement('div'); col.className = 'gallery-col';
+                const header = document.createElement('div'); header.className = 'col-header';
+                const label = document.createElement('div'); label.className = 'col-label'; label.textContent = captions[i].zh; header.appendChild(label);
+                const sub = document.createElement('div'); sub.className = 'col-sub'; sub.textContent = captions[i].en; header.appendChild(sub);
                 col.appendChild(header);
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                const img = document.createElement('img');
-                img.src = cardImages[i];
-                img.alt = captions[i].zh;
-                item.appendChild(img);
-                if (i === 0) {
-                    item.addEventListener('click', () => { detailOverlay.classList.add('active'); });
-                }
-                col.appendChild(item);
-                galleryGrid.appendChild(col);
+                const item = document.createElement('div'); item.className = 'gallery-item';
+                const img = document.createElement('img'); img.src = cardImages[i]; img.alt = captions[i].zh; item.appendChild(img);
+                if (i===0) item.addEventListener('click', () => detailOverlay.classList.add('active'));
+                col.appendChild(item); galleryGrid.appendChild(col);
             }
 
-            const FINAL_TEXT = '2020–2026'; const SPIN_DURATION = 1000; const TICK_INTERVAL = 20;
-            const LOOP_DELAY = 600; const SLOWDOWN_START = 0.5;
-            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
-            const chars = FINAL_TEXT.split(''); const totalChars = chars.length;
-            function getRandomPool(char) { if (char >= '0' && char <= '9') return '0123456789'.split(''); if (char === '–' || char === '-') return ['–','—','·','-']; if (char === '©') return ['©','®','℗']; return [char]; }
-            const pools = chars.map(ch => getRandomPool(ch));
-            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
-            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
-            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-            function updateSlotChars() {
-                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
-                const targetLockCount = Math.floor(globalProgress * totalChars);
-                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
-                const result = [];
-                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i/totalChars)*(1-SLOWDOWN_START)*0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
-                yearDigits.textContent = result.join('');
-                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
+            const FINAL_TEXT='2020–2026',SPIN_DURATION=1000,TICK_INTERVAL=20,LOOP_DELAY=600,SLOWDOWN_START=0.5;
+            let loopActive=false,intervalId=null,loopTimeout=null,startTime=0;
+            const chars=FINAL_TEXT.split(''),totalChars=chars.length;
+            function getRandomPool(c){if(c>='0'&&c<='9')return'0123456789'.split('');if(c==='–'||c==='-')return['–','—','·','-'];if(c==='©')return['©','®','℗'];return[c];}
+            const pools=chars.map(getRandomPool);
+            let slotPositions=new Array(totalChars).fill(0),locked=new Array(totalChars).fill(false),lockIndex=0;
+            function clearTimers(){if(intervalId)clearInterval(intervalId);if(loopTimeout)clearTimeout(loopTimeout);intervalId=null;loopTimeout=null;}
+            function easeOutCubic(t){return 1-Math.pow(1-t,3);}
+            function updateSlotChars(){
+                const elapsed=performance.now()-startTime,globalProgress=Math.min(1,elapsed/SPIN_DURATION);
+                const targetLockCount=Math.floor(globalProgress*totalChars);
+                while(lockIndex<targetLockCount&&lockIndex<totalChars){const idx=lockIndex;locked[idx]=true;slotPositions[idx]=pools[idx].indexOf(chars[idx]);lockIndex++;}
+                const result=[];
+                for(let i=0;i<totalChars;i++){if(locked[i]){result.push(chars[i]);continue;}const pool=pools[i];if(pool.length<=1){result.push(pool[0]);continue;}const slotSlowStart=SLOWDOWN_START+(i/totalChars)*(1-SLOWDOWN_START)*0.4;let slotProgress;if(globalProgress>=slotSlowStart){const slotDuration=1-slotSlowStart;slotProgress=Math.min(1,(globalProgress-slotSlowStart)/slotDuration);slotProgress=easeOutCubic(slotProgress);}else{slotProgress=0;}if(slotProgress<1){const speedFactor=1+Math.floor((1-slotProgress)*12);slotPositions[i]=(slotPositions[i]+speedFactor)%pool.length;}else{locked[i]=true;const finalIdx=pool.indexOf(chars[i]);if(finalIdx>=0)slotPositions[i]=finalIdx;}result.push(pool[slotPositions[i]%pool.length]);}
+                yearDigits.textContent=result.join('');
+                if(locked.every(v=>v)){yearDigits.textContent=FINAL_TEXT;clearTimers();if(loopActive){loopTimeout=setTimeout(()=>{if(loopActive)startSlotSpin();},LOOP_DELAY);}}
             }
-            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
-            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight/2 ? (e.clientX/innerWidth - 0.5)*1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
-            let vh = window.innerHeight; window.addEventListener('resize', () => { vh = window.innerHeight; });
-            let ticking = false, wasPage2Active = false;
-            const updateScroll = () => {
-                const sY = window.scrollY;
-                const p1 = Math.min(1, Math.max(0, sY / vh));
-                page1.style.transform = `scale(${1 - p1 * 0.3})`; page1.style.opacity = 1 - p1; page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
-                const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) { page2.style.opacity = 1; page2.style.pointerEvents = 'auto'; if (!wasPage2Active) { loopActive = true; startSlotSpin(); } }
-                else { page2.style.opacity = 0; page2.style.pointerEvents = 'none'; if (wasPage2Active) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
-                wasPage2Active = inPage2;
-                const inPage3 = sY >= 2 * vh;
-                if (inPage3) { page3.classList.add('active'); } else { page3.classList.remove('active'); }
-                ticking = false;
+            function startSlotSpin(){clearTimers();locked.fill(false);lockIndex=0;for(let i=0;i<totalChars;i++){slotPositions[i]=Math.floor(Math.random()*pools[i].length);}startTime=performance.now();yearDigits.textContent=FINAL_TEXT;intervalId=setInterval(updateSlotChars,TICK_INTERVAL);}
+            if(title){let tx=0,cx=0,raf;const updateTitle=()=>{cx+=(tx-cx)*0.25;title.style.transform=`translateX(${cx}px)`;if(Math.abs(tx-cx)>0.5)raf=requestAnimationFrame(updateTitle);else{title.style.transform=`translateX(${tx}px)`;cx=tx;raf=null;}};document.addEventListener('mousemove',e=>{tx=e.clientY<innerHeight/2?(e.clientX/innerWidth-0.5)*1600:0;if(!raf)raf=requestAnimationFrame(updateTitle);});document.addEventListener('mouseleave',()=>{tx=0;if(!raf)raf=requestAnimationFrame(updateTitle);});}
+            let vh=window.innerHeight;window.addEventListener('resize',()=>{vh=window.innerHeight;});
+            let ticking=false,wasPage2Active=false;
+            const updateScroll=()=>{
+                const sY=window.scrollY,p1=Math.min(1,Math.max(0,sY/vh));
+                page1.style.transform=`scale(${1-p1*0.3})`;page1.style.opacity=1-p1;page1.style.pointerEvents=p1>0.8?'none':'auto';
+                const inPage2=sY>=vh&&sY<2*vh;
+                if(inPage2){page2.style.opacity=1;page2.style.pointerEvents='auto';if(!wasPage2Active){loopActive=true;startSlotSpin();}}
+                else{page2.style.opacity=0;page2.style.pointerEvents='none';if(wasPage2Active){loopActive=false;clearTimers();yearDigits.textContent=FINAL_TEXT;}}
+                wasPage2Active=inPage2;
+                if(sY>=2*vh)page3.classList.add('active');else page3.classList.remove('active');
+                ticking=false;
             };
-            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
-            window.addEventListener('resize', updateScroll); updateScroll();
+            window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateScroll);ticking=true;}},{passive:true});
+            window.addEventListener('resize',updateScroll);updateScroll();
         })();
     </script>
 </body>
