@@ -85,35 +85,37 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：全屏铺满，不可滚动，底部固定文案 */
+        /* 二级页：全屏覆盖 + 可滚动 + 底部固定文案 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
             transition: opacity 0.35s ease;
-            overflow: hidden;
+            overflow-y: auto; overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(6, 1fr);
             gap: 10px;
             padding: 0.6rem;
             flex: 1;
-            min-height: 0;
         }
         .detail-grid img {
-            width: 100%; height: 100%;
-            object-fit: cover; border-radius: 10px;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: transform 0.2s ease; cursor: pointer;
+            transition: transform 0.2s ease;
+            cursor: pointer;
         }
         .detail-grid img:hover { transform: scale(1.03); }
 
-        /* 底部固定文案（约60px高度，包含30px内容区域） */
+        /* 底部固定返回文案 */
         .detail-footer {
             flex-shrink: 0;
             height: 60px;
@@ -123,14 +125,9 @@
             cursor: pointer;
             user-select: none;
             background: var(--bg);
-            position: relative;
-        }
-        .detail-footer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 10%; right: 10%;
-            height: 1px;
-            background: rgba(0,0,0,0.08);
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
         }
         .detail-footer-text {
             font-size: clamp(0.75rem,1vw,0.85rem);
@@ -176,7 +173,7 @@
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
-            .detail-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(9,1fr); gap: 6px; padding: 0.4rem; }
+            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0.4rem; }
             .detail-grid img { border-radius: 8px; }
             .detail-footer { height: 50px; }
         }
@@ -210,7 +207,7 @@
     <div class="page2" id="page2"><div class="splash-wrapper"><div class="splash-title">作品集</div><div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div></div></div>
     <div class="page3" id="page3"><div class="gallery-grid" id="galleryGrid"></div></div>
 
-    <!-- 二级页：全屏铺满，不可滚动，底部固定文案 -->
+    <!-- 二级页：可滚动，底部固定文案 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid"></div>
         <div class="detail-footer" id="detailFooter">
