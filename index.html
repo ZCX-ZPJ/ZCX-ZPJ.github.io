@@ -27,6 +27,7 @@
 
         a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
 
+        /* 第一页 */
         .page1 {
             position: fixed; inset: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -62,12 +63,14 @@
         .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
 
+        /* 第二页 */
         .page2 { position: fixed; inset: 0; z-index: 25; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; will-change: opacity; }
         .splash-wrapper { display: flex; align-items: flex-start; justify-content: center; }
         .splash-title { font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em; color: #0a0a0a; line-height: 1; user-select: none; }
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
+        /* 第三页 */
         .page3 {
             position: fixed; inset: 0; z-index: 30; background: var(--bg);
             display: flex; flex-direction: column;
@@ -85,7 +88,7 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：全屏覆盖 + 可滚动 + 底部固定文案 */
+        /* 二级页：全屏覆盖 + 可滚动 + 懒加载 + 底部固定文案 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
@@ -114,34 +117,25 @@
             cursor: pointer;
         }
         .detail-grid img:hover { transform: scale(1.02); }
+        /* 第一排1:1 */
+        .detail-grid img:nth-child(-n+3) { aspect-ratio: 1 / 1; }
 
-        /* 第一排：1:1 比例（桌面端前3张） */
-        .detail-grid img:nth-child(-n+3) {
-            aspect-ratio: 1 / 1;
-        }
-
-        /* 底部固定返回文案 */
         .detail-footer {
             flex-shrink: 0;
             height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; user-select: none;
             background: var(--bg);
-            position: sticky;
-            bottom: 0;
+            position: sticky; bottom: 0;
             box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
         }
         .detail-footer-text {
             font-size: clamp(0.75rem,1vw,0.85rem);
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            color: #777;
-            padding: 0 1rem;
+            font-weight: 500; letter-spacing: 0.06em;
+            color: #777; padding: 0 1rem;
         }
 
+        /* 移动端 */
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -180,14 +174,8 @@
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0.4rem; }
             .detail-grid img { border-radius: 8px; }
-            /* 移动端第一排：前2张 1:1 */
-            .detail-grid img:nth-child(-n+2) {
-                aspect-ratio: 1 / 1;
-            }
-            /* 移动端第3张恢复4:3 */
-            .detail-grid img:nth-child(3) {
-                aspect-ratio: 4 / 3;
-            }
+            .detail-grid img:nth-child(-n+2) { aspect-ratio: 1 / 1; }
+            .detail-grid img:nth-child(3) { aspect-ratio: 4 / 3; }
             .detail-footer { height: 50px; }
         }
     </style>
@@ -195,7 +183,9 @@
 <body>
     <div class="page1" id="page1">
         <header>
-            <nav class="nav-links"><a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a></nav>
+            <nav class="nav-links">
+                <a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a>
+            </nav>
         </header>
         <main>
             <div class="hero-title" id="titleMove">
@@ -205,7 +195,18 @@
             </div>
             <div class="hero-desc">
                 <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
-                <div><span class="toolbox-line"><strong>日常工具箱：</strong> <span class="software-item blink-1">C4D/Redshift</span> <span class="software-item blink-2">Rhino</span> <span class="software-item blink-3">PS</span> <span class="software-item blink-4">AI</span> <span class="software-item blink-5">AE</span> <span class="software-item blink-6">PR</span> <span class="software-item blink-7">Style3D</span> </span> <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span></div>
+                <div>
+                    <span class="toolbox-line"><strong>日常工具箱：</strong>
+                        <span class="software-item blink-1">C4D/Redshift</span>
+                        <span class="software-item blink-2">Rhino</span>
+                        <span class="software-item blink-3">PS</span>
+                        <span class="software-item blink-4">AI</span>
+                        <span class="software-item blink-5">AE</span>
+                        <span class="software-item blink-6">PR</span>
+                        <span class="software-item blink-7">Style3D</span>
+                    </span>
+                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span>
+                </div>
             </div>
         </main>
         <footer>
@@ -217,10 +218,19 @@
             </div>
         </footer>
     </div>
-    <div class="page2" id="page2"><div class="splash-wrapper"><div class="splash-title">作品集</div><div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div></div></div>
-    <div class="page3" id="page3"><div class="gallery-grid" id="galleryGrid"></div></div>
 
-    <!-- 二级页：可滚动，底部固定文案 -->
+    <div class="page2" id="page2">
+        <div class="splash-wrapper">
+            <div class="splash-title">作品集</div>
+            <div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div>
+        </div>
+    </div>
+
+    <div class="page3" id="page3">
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+
+    <!-- 二级页：全屏覆盖 + 可滚动 + 懒加载 + 底部固定返回 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid"></div>
         <div class="detail-footer" id="detailFooter">
@@ -232,17 +242,49 @@
         (() => {
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
-            const page1 = document.getElementById('page1'), page2 = document.getElementById('page2'), page3 = document.getElementById('page3');
-            const galleryGrid = document.getElementById('galleryGrid'), title = document.getElementById('titleMove');
-            const yearDigits = document.getElementById('yearDigits'), homeLink = document.getElementById('homeLink');
-            const detailOverlay = document.getElementById('detailOverlay'), detailGrid = document.getElementById('detailGrid');
-            const detailFooter = document.getElementById('detailFooter'), footerText = document.getElementById('footerText');
 
-            // ========== 二级页图片数据（替换为真实链接） ==========
-            const mainImages = Array.from({length:18}, (_,i) => `https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/main/%E4%B8%BB%E5%9B%BE6.webp?raw=true${i}`);
-            mainImages.forEach((src,i) => {
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
+            const galleryGrid = document.getElementById('galleryGrid');
+            const title = document.getElementById('titleMove');
+            const yearDigits = document.getElementById('yearDigits');
+            const homeLink = document.getElementById('homeLink');
+            const detailOverlay = document.getElementById('detailOverlay');
+            const detailGrid = document.getElementById('detailGrid');
+            const detailFooter = document.getElementById('detailFooter');
+            const footerText = document.getElementById('footerText');
+
+            // ==================== 二级页图片数据（替换为您的真实链接） ====================
+            const mainImages = [
+                // 前3张为1:1正方形图，其余为4:3矩形图
+                'https://picsum.photos/1800/1800?random=2000', // 第1张 (1:1)
+                'https://picsum.photos/1800/1800?random=2001', // 第2张 (1:1)
+                'https://picsum.photos/1800/1800?random=2002', // 第3张 (1:1)
+                'https://picsum.photos/2000/1500?random=2003', // 第4张 (4:3)
+                'https://picsum.photos/2000/1500?random=2004', // 第5张
+                'https://picsum.photos/2000/1500?random=2005', // 第6张
+                'https://picsum.photos/2000/1500?random=2006', // 第7张
+                'https://picsum.photos/2000/1500?random=2007', // 第8张
+                'https://picsum.photos/2000/1500?random=2008', // 第9张
+                'https://picsum.photos/2000/1500?random=2009', // 第10张
+                'https://picsum.photos/2000/1500?random=2010', // 第11张
+                'https://picsum.photos/2000/1500?random=2011', // 第12张
+                'https://picsum.photos/2000/1500?random=2012', // 第13张
+                'https://picsum.photos/2000/1500?random=2013', // 第14张
+                'https://picsum.photos/2000/1500?random=2014', // 第15张
+                'https://picsum.photos/2000/1500?random=2015', // 第16张
+                'https://picsum.photos/2000/1500?random=2016', // 第17张
+                'https://picsum.photos/2000/1500?random=2017'  // 第18张
+            ];
+            // =====================================================================
+
+            // 生成图片并应用懒加载
+            mainImages.forEach((src, i) => {
                 const img = document.createElement('img');
-                img.src = src; img.alt = `主图${i+1}`;
+                img.src = src;
+                img.alt = `主图${i + 1}`;
+                img.loading = 'lazy';  // 原生懒加载
                 detailGrid.appendChild(img);
             });
 
@@ -257,23 +299,30 @@
             const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             footerText.textContent = `↑ 点击返回作品集  ·  ${randomQuote}`;
 
+            // 关闭二级页并回到第三页
             function closeDetail() {
                 detailOverlay.classList.remove('active');
-                window.scrollTo({ top: 2*window.innerHeight, behavior: 'auto' });
+                window.scrollTo({ top: 2 * window.innerHeight, behavior: 'auto' });
                 page3.classList.add('active');
             }
             detailFooter.addEventListener('click', closeDetail);
             detailOverlay.addEventListener('click', (e) => { if (e.target === detailOverlay) closeDetail(); });
 
+            // 首页按钮
             if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
+            // 第三页卡片
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
-            const cardImages = ['https://picsum.photos/400/711?random=50','https://picsum.photos/400/711?random=51','https://picsum.photos/400/711?random=52'];
-            for (let i=0; i<3; i++) {
+            const cardImages = [
+                'https://picsum.photos/400/711?random=50',
+                'https://picsum.photos/400/711?random=51',
+                'https://picsum.photos/400/711?random=52'
+            ];
+            for (let i = 0; i < 3; i++) {
                 const col = document.createElement('div'); col.className = 'gallery-col';
                 const header = document.createElement('div'); header.className = 'col-header';
                 const label = document.createElement('div'); label.className = 'col-label'; label.textContent = captions[i].zh; header.appendChild(label);
@@ -281,43 +330,51 @@
                 col.appendChild(header);
                 const item = document.createElement('div'); item.className = 'gallery-item';
                 const img = document.createElement('img'); img.src = cardImages[i]; img.alt = captions[i].zh; item.appendChild(img);
-                if (i===0) item.addEventListener('click', () => detailOverlay.classList.add('active'));
-                col.appendChild(item); galleryGrid.appendChild(col);
+                if (i === 0) item.addEventListener('click', () => detailOverlay.classList.add('active'));
+                col.appendChild(item);
+                galleryGrid.appendChild(col);
             }
 
-            const FINAL_TEXT='2020–2026',SPIN_DURATION=1000,TICK_INTERVAL=20,LOOP_DELAY=600,SLOWDOWN_START=0.5;
-            let loopActive=false,intervalId=null,loopTimeout=null,startTime=0;
-            const chars=FINAL_TEXT.split(''),totalChars=chars.length;
-            function getRandomPool(c){if(c>='0'&&c<='9')return'0123456789'.split('');if(c==='–'||c==='-')return['–','—','·','-'];if(c==='©')return['©','®','℗'];return[c];}
-            const pools=chars.map(getRandomPool);
-            let slotPositions=new Array(totalChars).fill(0),locked=new Array(totalChars).fill(false),lockIndex=0;
-            function clearTimers(){if(intervalId)clearInterval(intervalId);if(loopTimeout)clearTimeout(loopTimeout);intervalId=null;loopTimeout=null;}
-            function easeOutCubic(t){return 1-Math.pow(1-t,3);}
-            function updateSlotChars(){
-                const elapsed=performance.now()-startTime,globalProgress=Math.min(1,elapsed/SPIN_DURATION);
-                const targetLockCount=Math.floor(globalProgress*totalChars);
-                while(lockIndex<targetLockCount&&lockIndex<totalChars){const idx=lockIndex;locked[idx]=true;slotPositions[idx]=pools[idx].indexOf(chars[idx]);lockIndex++;}
-                const result=[];
-                for(let i=0;i<totalChars;i++){if(locked[i]){result.push(chars[i]);continue;}const pool=pools[i];if(pool.length<=1){result.push(pool[0]);continue;}const slotSlowStart=SLOWDOWN_START+(i/totalChars)*(1-SLOWDOWN_START)*0.4;let slotProgress;if(globalProgress>=slotSlowStart){const slotDuration=1-slotSlowStart;slotProgress=Math.min(1,(globalProgress-slotSlowStart)/slotDuration);slotProgress=easeOutCubic(slotProgress);}else{slotProgress=0;}if(slotProgress<1){const speedFactor=1+Math.floor((1-slotProgress)*12);slotPositions[i]=(slotPositions[i]+speedFactor)%pool.length;}else{locked[i]=true;const finalIdx=pool.indexOf(chars[i]);if(finalIdx>=0)slotPositions[i]=finalIdx;}result.push(pool[slotPositions[i]%pool.length]);}
-                yearDigits.textContent=result.join('');
-                if(locked.every(v=>v)){yearDigits.textContent=FINAL_TEXT;clearTimers();if(loopActive){loopTimeout=setTimeout(()=>{if(loopActive)startSlotSpin();},LOOP_DELAY);}}
+            // 第二页老虎机动画
+            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
+            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
+            const chars = FINAL_TEXT.split(''), totalChars = chars.length;
+            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
+            const pools = chars.map(getRandomPool);
+            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
+            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+            function updateSlotChars() {
+                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const targetLockCount = Math.floor(globalProgress * totalChars);
+                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
+                const result = [];
+                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
+                yearDigits.textContent = result.join('');
+                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
             }
-            function startSlotSpin(){clearTimers();locked.fill(false);lockIndex=0;for(let i=0;i<totalChars;i++){slotPositions[i]=Math.floor(Math.random()*pools[i].length);}startTime=performance.now();yearDigits.textContent=FINAL_TEXT;intervalId=setInterval(updateSlotChars,TICK_INTERVAL);}
-            if(title){let tx=0,cx=0,raf;const updateTitle=()=>{cx+=(tx-cx)*0.25;title.style.transform=`translateX(${cx}px)`;if(Math.abs(tx-cx)>0.5)raf=requestAnimationFrame(updateTitle);else{title.style.transform=`translateX(${tx}px)`;cx=tx;raf=null;}};document.addEventListener('mousemove',e=>{tx=e.clientY<innerHeight/2?(e.clientX/innerWidth-0.5)*1600:0;if(!raf)raf=requestAnimationFrame(updateTitle);});document.addEventListener('mouseleave',()=>{tx=0;if(!raf)raf=requestAnimationFrame(updateTitle);});}
-            let vh=window.innerHeight;window.addEventListener('resize',()=>{vh=window.innerHeight;});
-            let ticking=false,wasPage2Active=false;
-            const updateScroll=()=>{
-                const sY=window.scrollY,p1=Math.min(1,Math.max(0,sY/vh));
-                page1.style.transform=`scale(${1-p1*0.3})`;page1.style.opacity=1-p1;page1.style.pointerEvents=p1>0.8?'none':'auto';
-                const inPage2=sY>=vh&&sY<2*vh;
-                if(inPage2){page2.style.opacity=1;page2.style.pointerEvents='auto';if(!wasPage2Active){loopActive=true;startSlotSpin();}}
-                else{page2.style.opacity=0;page2.style.pointerEvents='none';if(wasPage2Active){loopActive=false;clearTimers();yearDigits.textContent=FINAL_TEXT;}}
-                wasPage2Active=inPage2;
-                if(sY>=2*vh)page3.classList.add('active');else page3.classList.remove('active');
-                ticking=false;
+            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
+
+            // 第一页标题视差
+            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
+
+            let vh = window.innerHeight;
+            window.addEventListener('resize', () => { vh = window.innerHeight; });
+            let ticking = false, wasPage2Active = false;
+            const updateScroll = () => {
+                const sY = window.scrollY;
+                const p1 = Math.min(1, Math.max(0, sY / vh));
+                page1.style.transform = `scale(${1 - p1 * 0.3})`; page1.style.opacity = 1 - p1; page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
+                const inPage2 = sY >= vh && sY < 2 * vh;
+                if (inPage2) { page2.style.opacity = 1; page2.style.pointerEvents = 'auto'; if (!wasPage2Active) { loopActive = true; startSlotSpin(); } }
+                else { page2.style.opacity = 0; page2.style.pointerEvents = 'none'; if (wasPage2Active) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
+                wasPage2Active = inPage2;
+                if (sY >= 2 * vh) page3.classList.add('active'); else page3.classList.remove('active');
+                ticking = false;
             };
-            window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateScroll);ticking=true;}},{passive:true});
-            window.addEventListener('resize',updateScroll);updateScroll();
+            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
+            window.addEventListener('resize', updateScroll);
+            updateScroll();
         })();
     </script>
 </body>
