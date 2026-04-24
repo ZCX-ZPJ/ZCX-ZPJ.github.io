@@ -70,7 +70,7 @@
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ---------- 第三页（文案再放大一倍，字体与第一页统一） ---------- */
+        /* ---------- 第三页（英文副标题加粗） ---------- */
         .page3 {
             position: fixed; inset: 0; z-index: 30; background: var(--bg);
             display: flex; flex-direction: column;
@@ -99,21 +99,21 @@
             flex-shrink: 0;
             display: flex; flex-direction: column; align-items: center;
             padding-top: clamp(1.5rem, 4vh, 2.5rem);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             background: var(--bg);
             z-index: 2;
         }
 
         .col-label {
-            font-size: clamp(3.6rem, 6vw, 4.8rem);
+            font-size: clamp(2.4rem, 4.5vw, 3.6rem);
             font-weight: 650; letter-spacing: 0.08em;
             color: #0a0a0a; text-align: center; white-space: nowrap; line-height: 1.2;
         }
 
         .col-sub {
-            font-size: clamp(1.8rem, 2.6vw, 2.2rem);
-            font-weight: 450; letter-spacing: 0.12em;
-            color: #6a6a6a; text-align: center; white-space: nowrap;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            font-weight: 550; letter-spacing: 0.08em;
+            color: #3a3a3a; text-align: center; white-space: nowrap;
             margin-top: 0.4rem; text-transform: uppercase;
         }
 
@@ -149,9 +149,9 @@
             .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
             .gallery-grid { width: 100vw; padding: 0 6px 6px; gap: 6px; }
-            .col-header { padding-top: clamp(1rem, 3vh, 1.8rem); margin-bottom: 0.8rem; }
-            .col-label { font-size: max(2.8rem, 10vw); letter-spacing: 0.06em; }
-            .col-sub { font-size: max(1.6rem, 6vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
+            .col-header { padding-top: clamp(1rem, 3vh, 1.8rem); margin-bottom: 0.6rem; }
+            .col-label { font-size: max(1.8rem, 7vw); letter-spacing: 0.06em; }
+            .col-sub { font-size: max(1rem, 4vw); letter-spacing: 0.08em; margin-top: 0.25rem; }
             .gallery-item { border-radius: 12px; }
 
             .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
