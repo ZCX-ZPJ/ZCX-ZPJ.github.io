@@ -93,7 +93,7 @@
             font-size: clamp(4rem, 13vw, 11rem);
             font-weight: 700;
             white-space: nowrap;
-            transition: transform 0.25s ease;
+            transition: transform 0.15s ease-out;
             will-change: transform;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -715,13 +715,13 @@
             if (title) {
                 let tx = 0, cx = 0, raf;
                 const updateTitle = () => {
-                    cx += (tx - cx) * 0.25;
+                    cx += (tx - cx) * 0.45;
                     title.style.transform = `translateX(${cx}px)`;
                     if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle);
                     else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; }
                 };
                 document.addEventListener('mousemove', e => {
-                    tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0;
+                    tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 2000 : 0;
                     if (!raf) raf = requestAnimationFrame(updateTitle);
                 });
                 document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
