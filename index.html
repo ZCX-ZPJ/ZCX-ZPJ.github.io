@@ -115,6 +115,11 @@
         }
         .detail-grid img:hover { transform: scale(1.02); }
 
+        /* 第一排：1:1 比例（桌面端前3张） */
+        .detail-grid img:nth-child(-n+3) {
+            aspect-ratio: 1 / 1;
+        }
+
         /* 底部固定返回文案 */
         .detail-footer {
             flex-shrink: 0;
@@ -175,6 +180,14 @@
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0.4rem; }
             .detail-grid img { border-radius: 8px; }
+            /* 移动端第一排：前2张 1:1 */
+            .detail-grid img:nth-child(-n+2) {
+                aspect-ratio: 1 / 1;
+            }
+            /* 移动端第3张恢复4:3 */
+            .detail-grid img:nth-child(3) {
+                aspect-ratio: 4 / 3;
+            }
             .detail-footer { height: 50px; }
         }
     </style>
