@@ -9,10 +9,13 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-    <!-- 第三页卡片封面图预加载：进页面就开始下载 -->
-    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=50">
-    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=51">
-    <link rel="preload" as="image" href="https://picsum.photos/400/711?random=52">
+    <!-- 第一页头像图片预加载 (WebP) -->
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/TX.webp">
+
+    <!-- 第三页卡片封面图预加载 (WebP) -->
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp">
 
     <style>
         :root {
@@ -650,7 +653,8 @@
         <main>
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span><span>—</span>
-                <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/main/1.png" class="profile-img" alt="头像" onerror="this.src='https://picsum.photos/200/200?random=1'">
+                <!-- 头像已改为 WebP 格式的 CDN 链接 -->
+                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp" class="profile-img" alt="头像">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
@@ -745,16 +749,16 @@
             // 首页按钮
             if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-            // 第三页卡片
+            // 第三页卡片封面（WebP 格式，预加载已配置）
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
             const cardImages = [
-                'https://picsum.photos/400/711?random=50',
-                'https://picsum.photos/400/711?random=51',
-                'https://picsum.photos/400/711?random=52'
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp'
             ];
             for (let i = 0; i < 3; i++) {
                 const col = document.createElement('div');
