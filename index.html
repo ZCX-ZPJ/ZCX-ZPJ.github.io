@@ -124,7 +124,7 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：全屏覆盖+可滚动 */
+        /* 二级页：全屏覆盖+可滚动，无关闭按钮 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
@@ -133,23 +133,10 @@
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .detail-close {
-            position: sticky; top: 0.8rem; float: right;
-            background: rgba(224,224,220,0.92);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: none; border-radius: 50%;
-            width: 42px; height: 42px;
-            font-size: 1.6rem; color: #0a0a0a;
-            cursor: pointer; z-index: 10;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.2s ease;
-            margin-right: 0.5rem;
-        }
-        .detail-close:hover { transform: scale(1.15); }
 
         .detail-grid {
             display: grid;
@@ -158,8 +145,8 @@
             width: 92vw;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 0 3rem;
-            clear: both;
+            padding: 2rem 0 1rem;
+            flex: 1;
         }
         .detail-grid img {
             width: 100%;
@@ -171,6 +158,27 @@
             cursor: pointer;
         }
         .detail-grid img:hover { transform: scale(1.03); }
+
+        /* 底部的随机文案 */
+        .detail-footer {
+            text-align: center;
+            padding: 1.5rem 1rem 2rem;
+            color: #4a4a4a;
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            letter-spacing: 0.04em;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+        .detail-footer::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: rgba(0,0,0,0.1);
+            margin: 0 auto 1rem;
+        }
 
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 6px; }
@@ -212,9 +220,9 @@
                 15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-            .detail-close { width: 36px; height: 36px; font-size: 1.4rem; top: 0.5rem; }
-            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 94vw; }
+            .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 94vw; padding: 1.5rem 0 0.5rem; }
             .detail-grid img { border-radius: 8px; }
+            .detail-footer { padding: 1rem 1rem 1.5rem; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -275,10 +283,10 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：主图渲染18张，全屏覆盖+可滚动 -->
+    <!-- 二级页：主图渲染18张，全屏覆盖+可滚动，无关闭按钮 -->
     <div class="detail-overlay" id="detailOverlay">
-        <button class="detail-close" id="detailClose">✕</button>
         <div class="detail-grid" id="detailGrid"></div>
+        <div class="detail-footer" id="detailFooter"></div>
     </div>
 
     <script>
@@ -295,29 +303,28 @@
             const homeLink = document.getElementById('homeLink');
             const detailOverlay = document.getElementById('detailOverlay');
             const detailGrid = document.getElementById('detailGrid');
-            const detailClose = document.getElementById('detailClose');
+            const detailFooter = document.getElementById('detailFooter');
 
             // ==================== 二级页图片数据（替换为真实链接） ====================
-            // 18张主图渲染作品，请将每张图片的链接替换为您的真实图片地址
             const mainImages = [
-                'https://picsum.photos/400/300?random=2000',  // 第01张
-                'https://picsum.photos/400/300?random=2001',  // 第02张
-                'https://picsum.photos/400/300?random=2002',  // 第03张
-                'https://picsum.photos/400/300?random=2003',  // 第04张
-                'https://picsum.photos/400/300?random=2004',  // 第05张
-                'https://picsum.photos/400/300?random=2005',  // 第06张
-                'https://picsum.photos/400/300?random=2006',  // 第07张
-                'https://picsum.photos/400/300?random=2007',  // 第08张
-                'https://picsum.photos/400/300?random=2008',  // 第09张
-                'https://picsum.photos/400/300?random=2009',  // 第10张
-                'https://picsum.photos/400/300?random=2010',  // 第11张
-                'https://picsum.photos/400/300?random=2011',  // 第12张
-                'https://picsum.photos/400/300?random=2012',  // 第13张
-                'https://picsum.photos/400/300?random=2013',  // 第14张
-                'https://picsum.photos/400/300?random=2014',  // 第15张
-                'https://picsum.photos/400/300?random=2015',  // 第16张
-                'https://picsum.photos/400/300?random=2016',  // 第17张
-                'https://picsum.photos/400/300?random=2017',  // 第18张
+                'https://picsum.photos/400/300?random=2000',
+                'https://picsum.photos/400/300?random=2001',
+                'https://picsum.photos/400/300?random=2002',
+                'https://picsum.photos/400/300?random=2003',
+                'https://picsum.photos/400/300?random=2004',
+                'https://picsum.photos/400/300?random=2005',
+                'https://picsum.photos/400/300?random=2006',
+                'https://picsum.photos/400/300?random=2007',
+                'https://picsum.photos/400/300?random=2008',
+                'https://picsum.photos/400/300?random=2009',
+                'https://picsum.photos/400/300?random=2010',
+                'https://picsum.photos/400/300?random=2011',
+                'https://picsum.photos/400/300?random=2012',
+                'https://picsum.photos/400/300?random=2013',
+                'https://picsum.photos/400/300?random=2014',
+                'https://picsum.photos/400/300?random=2015',
+                'https://picsum.photos/400/300?random=2016',
+                'https://picsum.photos/400/300?random=2017',
             ];
             // ================================================================
 
@@ -329,32 +336,39 @@
                 detailGrid.appendChild(img);
             });
 
-            function closeDetail() {
-                detailOverlay.classList.remove('active');
-                const vh = window.innerHeight;
-                window.scrollTo({ top: 2 * vh, behavior: 'auto' });
-                page3.classList.add('active');
-            }
+            // 随机文案池
+            const randomTexts = [
+                "以光影构筑空间，用材质叙述故事。每一帧渲染都是对真实世界的细腻转译。",
+                "从概念草图到最终成像，高精度3D渲染让创意在数字维度中无限接近理想形态。",
+                "探索材质、光线与构图的极限，主图渲染作品集呈现视觉叙事的多种可能性。",
+                "细节决定质感，氛围传递情绪——这些渲染作品见证着对视觉品质的执着追求。",
+                "在真实与虚拟的边界上行走，用C4D与Redshift描绘出令人驻足的视觉风景。"
+            ];
+            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+            detailFooter.textContent = randomText;
 
-            detailClose.addEventListener('click', closeDetail);
+            // 点击遮罩空白处关闭（保留）
+            detailOverlay.addEventListener('click', (e) => {
+                if (e.target === detailOverlay) {
+                    detailOverlay.classList.remove('active');
+                    const vh = window.innerHeight;
+                    window.scrollTo({ top: 2 * vh, behavior: 'auto' });
+                    page3.classList.add('active');
+                }
+            });
 
             if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
 
-            // ==================== 第三页卡片数据（替换为真实链接） ====================
-            // 三张卡片封面图，请替换为您的真实图片地址
             const cardImages = [
-                'https://picsum.photos/400/711?random=50',  // 主图渲染 封面
-                'https://picsum.photos/400/711?random=51',  // 详情展示 封面
-                'https://picsum.photos/400/711?random=52',  // AI辅助 封面
+                'https://picsum.photos/400/711?random=50',
+                'https://picsum.photos/400/711?random=51',
+                'https://picsum.photos/400/711?random=52',
             ];
-            // ===============================================================
-
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
-
             for (let i = 0; i < 3; i++) {
                 const col = document.createElement('div');
                 col.className = 'gallery-col';
