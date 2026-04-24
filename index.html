@@ -327,13 +327,14 @@
             z-index: 30;
             background: var(--bg);
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             pointer-events: none;
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
+            padding-bottom: 0;
         }
         .page3.active {
             opacity: 1;
@@ -345,13 +346,11 @@
             display: flex;
             gap: var(--card-gap);
             width: calc(100vw - var(--card-gap) * 2);
-            height: 100vh;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: var(--card-gap);
+            padding: var(--card-gap) var(--card-gap) 0;
         }
 
-        /* 每一列 */
         .gallery-col {
             flex: 1 1 0;
             min-width: 0;
@@ -360,7 +359,6 @@
             align-items: center;
         }
 
-        /* 卡片上方的文字标签 */
         .col-label {
             font-size: clamp(0.9rem, 1.4vw, 1.1rem);
             font-weight: 550;
@@ -372,13 +370,11 @@
             flex-shrink: 0;
         }
 
-        /* 图片卡片（向下剪短了一部分） */
         .gallery-item {
             flex: 1 1 auto;
             width: 100%;
             min-height: 0;
             aspect-ratio: 9 / 16;
-            max-height: 78vh;          /* 向下剪短约 2vh，给上方文字留空间的同时保持紧凑 */
             background: #ccc;
             border-radius: 20px;
             overflow: hidden;
@@ -499,10 +495,8 @@
             }
             .gallery-grid {
                 width: 100vw;
-                height: 100vh;
-                padding: 6px;
+                padding: 6px 6px 0;
                 gap: 6px;
-                align-items: stretch;
             }
             .col-label {
                 font-size: max(0.75rem, 3vw);
@@ -510,11 +504,7 @@
                 margin-bottom: 0.4rem;
             }
             .gallery-item {
-                aspect-ratio: auto;
-                max-height: 75vh;
                 border-radius: 12px;
-                flex: 1 1 0;
-                min-width: 0;
             }
             .gallery-item img {
                 width: 100%;
