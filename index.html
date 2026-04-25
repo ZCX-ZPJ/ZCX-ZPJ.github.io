@@ -167,8 +167,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--card-gap);
-            width: 100%;                /* 占满整个宽度 */
-            /* 不再限制 max-width，完全自适应 */
+            width: 100%;
             margin: 0;
         }
 
@@ -178,7 +177,7 @@
             align-items: center;
             text-decoration: none;
             color: inherit;
-            gap: 1.2rem;
+            gap: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s ease;
             background: none;
@@ -189,7 +188,7 @@
 
         .entry-card-image {
             width: 100%;
-            aspect-ratio: 4/5;          /* 保持卡片比例 */
+            aspect-ratio: 4/5;
             border-radius: 20px;
             overflow: hidden;
             background: #ccc;
@@ -202,16 +201,18 @@
         .entry-card-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;         /* 填充卡片区域 */
+            object-fit: cover;
             display: block;
         }
+        /* 增大文案字号，并增加响应式控制 */
         .entry-card-label {
-            font-size: 1.3rem;
+            font-size: clamp(1.8rem, 3vw, 3rem); /* 原为 1.3rem，现显著放大 */
             font-weight: 600;
             letter-spacing: 0.04em;
             color: #1a1a1a;
             text-align: center;
             transition: color 0.2s ease;
+            line-height: 1.2;
         }
         .entry-card:hover .entry-card-label { color: var(--accent); }
 
@@ -220,7 +221,7 @@
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
             display: flex; flex-direction: column;
-            padding: 4vh 2vw;
+            padding: 4vh 2vw 2vh;
             overflow-y: auto;
             opacity: 0; pointer-events: none;
             transition: opacity 0.5s ease;
@@ -229,15 +230,17 @@
 
         .back-btn {
             display: inline-block;
-            color: #555; text-decoration: none; font-size: 0.95rem;
+            color: #555; text-decoration: none; font-size: 1rem;
             border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-            margin-bottom: 1.5rem;
+            transition: border-color 0.2s, color 0.2s;
             cursor: pointer;
             background: none; border: none; outline: none;
-            align-self: flex-start;
+            align-self: center;
+            margin-top: auto;            /* 撑到底部 */
+            padding: 1rem 0;
+            letter-spacing: 0.05em;
         }
-        .back-btn:hover { border-color: #555; }
+        .back-btn:hover { border-color: #555; color: var(--accent); }
 
         .cards-grid {
             display: grid;
@@ -268,11 +271,11 @@
             background: inherit;
         }
 
-        /* 响应式：平板两列，手机单列 */
+        /* 响应式 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
-            .cards-row { grid-template-columns: repeat(2, 1fr); } /* 第三页也变为两列 */
+            .cards-row { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -327,9 +330,11 @@
                 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-            .cards-row { grid-template-columns: 1fr; }   /* 手机单列 */
+            .cards-row { grid-template-columns: 1fr; }
             .cards-grid { grid-template-columns: 1fr; }
             .entry-card-image { aspect-ratio: 1/1; }
+            .entry-card-label { font-size: 2rem; }  /* 移动端也保持较大字号 */
+            .back-btn { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -421,7 +426,6 @@
 
     <!-- ==================== 详情页1：主图渲染 ==================== -->
     <div class="detail-page" id="detail1">
-        <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT2.webp" alt="2"></div>
@@ -439,26 +443,27 @@
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT14.webp" alt="14"></div>
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT15.webp" alt="15"></div>
         </div>
+        <button class="back-btn" onclick="goBack()">← 返回首页</button>
     </div>
 
     <!-- ==================== 详情页2：详情页 ==================== -->
     <div class="detail-page" id="detail2">
-        <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/DT1.webp" alt="详情1"></div>
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/DT2.webp" alt="详情2"></div>
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/DT3.webp" alt="详情3"></div>
         </div>
+        <button class="back-btn" onclick="goBack()">← 返回首页</button>
     </div>
 
     <!-- ==================== 详情页3：AI辅助 ==================== -->
     <div class="detail-page" id="detail3">
-        <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
             <div class="card-box"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' fill='%23cccccc'%3E%3Crect width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-size='20'%3EAI1%3C/text%3E%3C/svg%3E" alt="AI1"></div>
             <div class="card-box"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' fill='%23cccccc'%3E%3Crect width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-size='20'%3EAI2%3C/text%3E%3C/svg%3E" alt="AI2"></div>
             <div class="card-box"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' fill='%23cccccc'%3E%3Crect width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-size='20'%3EAI3%3C/text%3E%3C/svg%3E" alt="AI3"></div>
         </div>
+        <button class="back-btn" onclick="goBack()">← 返回首页</button>
     </div>
 
     <script>
