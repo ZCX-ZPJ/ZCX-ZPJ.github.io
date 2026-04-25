@@ -26,7 +26,7 @@
             background: var(--bg); color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            height: 300vh; overflow-x: hidden; cursor: default;
+            height: 400vh; overflow-x: hidden; cursor: default;
         }
 
         a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
@@ -81,7 +81,7 @@
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ---------- 第三页：完全自适应卡片 ---------- */
+        /* ---------- 第三页 ---------- */
         .page3 {
             position: fixed; inset: 0; z-index: 30;
             background: var(--bg);
@@ -95,6 +95,21 @@
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
+        /* ---------- 第四页（新增） ---------- */
+        .page4 {
+            position: fixed; inset: 0; z-index: 35;
+            background: var(--bg);
+            display: flex; flex-direction: column;
+            pointer-events: none; opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
+            will-change: transform, opacity;
+            padding: 4vh 2vw;
+            overflow-y: auto;
+        }
+        .page4.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        /* 通用区块头 */
         .section-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -136,17 +151,13 @@
             opacity: 0.8;
         }
 
-        /* 网格：三列，行高自动适应图片 */
+        /* 卡片网格 */
         .cards-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--card-gap);
             width: 100%;
-            align-items: start;        /* 顶部对齐，避免拉伸 */
-        }
-
-        .card-col {
-            /* 直接占据网格单元格，不需要额外flex */
+            align-items: start;
         }
 
         .card-box {
@@ -157,7 +168,7 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            line-height: 0;            /* 消除图片下方的空白间隙 */
+            line-height: 0;
         }
         .card-box:hover {
             transform: translateY(-4px);
@@ -165,18 +176,18 @@
         }
         .card-box img {
             width: 100%;
-            height: auto;              /* 高度自动，保持图片原始宽高比 */
+            height: auto;
             display: block;
-            object-fit: contain;       /* 完整显示图片，不裁剪，背景色会填充空白 */
+            object-fit: contain;
             background: inherit;
             opacity: 1;
             transition: opacity 0.6s ease;
         }
 
-        /* 移动端适配 */
+        /* 响应式调整 */
         @media (max-width: 1024px) {
             .cards-row {
-                grid-template-columns: repeat(2, 1fr);  /* 平板两列 */
+                grid-template-columns: repeat(2, 1fr);
             }
             .card-box {
                 border-radius: 16px;
@@ -185,14 +196,14 @@
 
         @media (max-width: 600px) {
             .cards-row {
-                grid-template-columns: 1fr;             /* 手机单列 */
+                grid-template-columns: 1fr;
             }
             .card-box {
                 border-radius: 12px;
             }
         }
 
-        /* 原有的移动端小屏调整 */
+        /* 原有移动端调整 (768px) */
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 8px; }
             header { padding: 1rem 1.5rem; }
@@ -273,7 +284,7 @@
         </div>
     </div>
 
-    <!-- 第三页：15张卡片，完全自适应图片宽高比 -->
+    <!-- 第三页：主图渲染（15张卡片） -->
     <div class="page3" id="page3">
         <div class="section-header">
             <div class="section-title">主图渲染</div>
@@ -286,111 +297,115 @@
         </div>
 
         <div class="cards-row">
-            <!-- 卡片 1 – 15，请替换 data-src 为你的图片链接 -->
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT1.webp"
-                         alt="渲染作品1" loading="lazy">
-                </div>
+            <!-- 卡片 1 - 15（保留原有） -->
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT1.webp"
+                     alt="渲染作品1" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT2.webp"
-                         alt="渲染作品2" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT2.webp"
+                     alt="渲染作品2" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT3.webp"
-                         alt="渲染作品3" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT3.webp"
+                     alt="渲染作品3" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT4.webp"
-                         alt="渲染作品4" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT4.webp"
+                     alt="渲染作品4" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT5.webp"
-                         alt="渲染作品5" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT5.webp"
+                     alt="渲染作品5" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT6.webp"
-                         alt="渲染作品6" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT6.webp"
+                     alt="渲染作品6" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT7.webp"
-                         alt="渲染作品7" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT7.webp"
+                     alt="渲染作品7" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT8.webp"
-                         alt="渲染作品8" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT8.webp"
+                     alt="渲染作品8" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT9.webp"
-                         alt="渲染作品9" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT9.webp"
+                     alt="渲染作品9" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT10.webp"
-                         alt="渲染作品10" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT10.webp"
+                     alt="渲染作品10" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT11.webp"
-                         alt="渲染作品11" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT11.webp"
+                     alt="渲染作品11" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT12.webp"
-                         alt="渲染作品12" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT12.webp"
+                     alt="渲染作品12" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT13.webp"
-                         alt="渲染作品13" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT13.webp"
+                     alt="渲染作品13" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT14.webp"
-                         alt="渲染作品14" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT14.webp"
+                     alt="渲染作品14" loading="lazy">
             </div>
-            <div class="card-col">
-                <div class="card-box">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT15.webp"
-                         alt="渲染作品15" loading="lazy">
-                </div>
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT15.webp"
+                     alt="渲染作品15" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <!-- 第四页：详情页（3张卡片） -->
+    <div class="page4" id="page4">
+        <div class="section-header">
+            <div class="section-title">详情页</div>
+            <div class="section-subtitle">Detail</div>
+            <div class="ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-dot"></span>
+                <span class="ornament-line"></span>
+            </div>
+        </div>
+
+        <div class="cards-row">
+            <!-- 详情卡片 1 -->
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/DT1.webp"
+                     alt="详情1" loading="lazy">
+            </div>
+            <!-- 详情卡片 2 -->
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/DT2.webp"
+                     alt="详情2" loading="lazy">
+            </div>
+            <!-- 详情卡片 3 -->
+            <div class="card-box">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/DT3.webp"
+                     alt="详情3" loading="lazy">
             </div>
         </div>
     </div>
@@ -403,11 +418,13 @@
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const page3 = document.getElementById('page3');
+            const page4 = document.getElementById('page4');
             const title = document.getElementById('titleMove');
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
 
             let page3ImagesLoaded = false;
+            let page4ImagesLoaded = false;
 
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
@@ -453,7 +470,8 @@
                 }
                 wasPage2Active = inPage2;
 
-                if (sY >= 2 * vh) {
+                // 第三页
+                if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
                     if (!page3ImagesLoaded) {
                         document.querySelectorAll('.page3 .card-box img[data-src]').forEach(img => {
@@ -464,6 +482,20 @@
                     }
                 } else {
                     page3.classList.remove('active');
+                }
+
+                // 第四页
+                if (sY >= 3 * vh) {
+                    page4.classList.add('active');
+                    if (!page4ImagesLoaded) {
+                        document.querySelectorAll('.page4 .card-box img[data-src]').forEach(img => {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        });
+                        page4ImagesLoaded = true;
+                    }
+                } else {
+                    page4.classList.remove('active');
                 }
 
                 ticking = false;
