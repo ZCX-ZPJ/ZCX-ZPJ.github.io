@@ -94,7 +94,7 @@
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 二级页：底色统一，悬停缩小 */
+        /* 二级页：无滚动条 + 自适应卡片 + 悬停缩小 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
@@ -103,7 +103,13 @@
             transition: opacity 0.35s ease;
             overflow-y: auto; overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+
+            /* 隐藏滚动条 */
+            scrollbar-width: none;          /* Firefox */
+            -ms-overflow-style: none;      /* IE/Edge */
         }
+        .detail-overlay::-webkit-scrollbar { display: none; } /* Chrome/Safari/Webkit */
+
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
 
         .detail-grid {
@@ -122,8 +128,6 @@
             transition: transform 0.2s ease;
             cursor: pointer;
         }
-
-        /* 悬停改为缩小效果 */
         .detail-grid img:hover { transform: scale(0.98); }
 
         .full-img { display: block; width: 100%; height: auto; }
@@ -229,7 +233,7 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：底色统一，悬停缩小 -->
+    <!-- 二级页：无滚动条 + 自适应卡片 + 悬停缩小 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid">
             <img src="主图1.webp" class="full-img" alt="展示图1">
@@ -332,7 +336,8 @@
                 ticking = false;
             };
             window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
-            window.addEventListener('resize', updateScroll); updateScroll();
+            window.addEventListener('resize', updateScroll);
+            updateScroll();
         })();
     </script>
 </body>
