@@ -89,7 +89,6 @@
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        /* 单个卡片容器 */
         .single-card {
             width: 100%;
             max-width: 1000px;
@@ -109,7 +108,6 @@
             object-fit: contain;
         }
 
-        /* 移动端适配 */
         @media (max-width: 768px) {
             :root { --offset: 0rem; }
             header { padding: 1rem 1.5rem; }
@@ -146,7 +144,6 @@
     </style>
 </head>
 <body>
-    <!-- 第一页 -->
     <div class="page1" id="page1">
         <header>
             <nav class="nav-links">
@@ -185,7 +182,6 @@
         </footer>
     </div>
 
-    <!-- 第二页 -->
     <div class="page2" id="page2">
         <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
@@ -193,11 +189,9 @@
         </div>
     </div>
 
-    <!-- 第三页：单个自适应卡片 -->
     <div class="page3" id="page3">
         <div class="single-card">
-            <!-- 替换 src 为你的图片地址，也可以继续添加更多 <img> 标签 -->
-            <img src="https://picsum.photos/1000/800?random=1"https://github.com/ZCX-ZPJ/ZCX-ZPJ.github.io/blob/dec95a86c0cdee694005386746a1e383982dfb66/ZP.jpg="展示作品">
+            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@dec95a86c0cdee694005386746a1e383982dfb66/ZP.jpg" alt="展示作品">
         </div>
     </div>
 
@@ -213,7 +207,6 @@
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
 
-            // 第二页老虎机动画
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
@@ -233,7 +226,6 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // 第一页视差
             if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
 
             if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
