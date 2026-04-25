@@ -68,8 +68,7 @@
         .nav-links a:hover { transform: scale(1.18); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
-        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem);
-            /* 强制开启 GPU 加速 */
+        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem);
             transform: translateX(0px) translateZ(0);
             backface-visibility: hidden;
         }
@@ -343,7 +342,6 @@
             let vh = window.innerHeight;
             let ticking = false;
 
-            // 导航链接
             const homeLink = document.getElementById('homeLink');
             const aboutLink = document.getElementById('aboutLink');
             const workLink = document.getElementById('workLink');
@@ -362,18 +360,9 @@
                 setTimeout(() => updateScroll(), 50);
             }
 
-            homeLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo(0);
-            });
-            aboutLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo(3 * vh);
-            });
-            workLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                navigateTo(2 * vh);
-            });
+            homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
+            aboutLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(3 * vh); });
+            workLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(2 * vh); });
 
             document.addEventListener('mousemove', (e) => {
                 if (currentPage === 'home' && window.scrollY >= 3 * vh) {
@@ -403,29 +392,30 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // 标题跟随鼠标（已反转方向，并采用更大缓动因子 + GPU 加速）
+            // 标题动画：鼠标跟随（方向反转）+ 自动左右滑动
             const title = document.getElementById('titleMove');
             if (title) {
-                let tx = 0, cx = 0, raf;
-                const updateTitle = () => {
-                    cx += (tx - cx) * 0.45;           // 因子提高到 0.45，跟随更快更丝滑
-                    title.style.transform = `translateX(${cx}px) translateZ(0)`;
-                    if (Math.abs(tx - cx) > 0.1) {    // 阈值降低，确保平滑停止
-                        raf = requestAnimationFrame(updateTitle);
-                    } else {
-                        title.style.transform = `translateX(${tx}px) translateZ(0)`;
-                        cx = tx;
-                        raf = null;
-                    }
-                };
+                let mouseTarget = 0;           // 鼠标目标位置
+                let autoSwingRaf = null;       // 自动滑动的 RAF ID
+                let autoSwingStart = performance.now();
+
+                // 持续自动左右滑动循环
+                function autoSwingLoop(now) {
+                    const elapsed = (now - autoSwingStart) / 1000;  // 秒
+                    // 正弦波：幅度 60px，周期约 3.5 秒
+                    const swing = Math.sin(elapsed * Math.PI * 2 / 3.5) * 60;
+                    // 最终位置 = 鼠标目标 + 自动摆动
+                    title.style.transform = `translateX(${mouseTarget + swing}px) translateZ(0)`;
+                    autoSwingRaf = requestAnimationFrame(autoSwingLoop);
+                }
+                autoSwingRaf = requestAnimationFrame(autoSwingLoop);
+
+                // 鼠标移动：更新鼠标目标，方向反转
                 document.addEventListener('mousemove', e => {
-                    // 方向反转：鼠标越往左，标题越往右
-                    tx = e.clientY < innerHeight / 2 ? -(e.clientX / innerWidth - 0.5) * 1600 : 0;
-                    if (!raf) raf = requestAnimationFrame(updateTitle);
+                    mouseTarget = e.clientY < innerHeight / 2 ? -(e.clientX / innerWidth - 0.5) * 2400 : 0;
                 });
                 document.addEventListener('mouseleave', () => {
-                    tx = 0;
-                    if (!raf) raf = requestAnimationFrame(updateTitle);
+                    mouseTarget = 0;
                 });
             }
 
@@ -461,24 +451,14 @@
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
                 const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) {
-                    page2.classList.add('active');
-                    if (!loopActive) { loopActive = true; startSlotSpin(); }
-                } else {
-                    page2.classList.remove('active');
-                    if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; }
-                }
+                if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } }
+                else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
 
                 if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active');
                 else page3.classList.remove('active');
 
-                if (sY >= 3 * vh) {
-                    page4.classList.add('active');
-                    document.body.classList.add('smile-cursor');
-                } else {
-                    page4.classList.remove('active');
-                    document.body.classList.remove('smile-cursor');
-                }
+                if (sY >= 3 * vh) { page4.classList.add('active'); document.body.classList.add('smile-cursor'); }
+                else { page4.classList.remove('active'); document.body.classList.remove('smile-cursor'); }
             }
 
             window.addEventListener('scroll', () => {
