@@ -150,7 +150,7 @@
         }
         .year-digits { display: inline-block; }
 
-        /* ========== 第三页：三个入口卡片（只保留卡片，无标题） ========== */
+        /* ========== 第三页：全屏自适应三个卡片 ========== */
         .page3 {
             position: fixed; inset: 0; z-index: 30;
             background: var(--bg);
@@ -167,9 +167,9 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--card-gap);
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
+            width: 100%;                /* 占满整个宽度 */
+            /* 不再限制 max-width，完全自适应 */
+            margin: 0;
         }
 
         .entry-card {
@@ -189,7 +189,7 @@
 
         .entry-card-image {
             width: 100%;
-            aspect-ratio: 4/5;
+            aspect-ratio: 4/5;          /* 保持卡片比例 */
             border-radius: 20px;
             overflow: hidden;
             background: #ccc;
@@ -202,7 +202,7 @@
         .entry-card-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover;         /* 填充卡片区域 */
             display: block;
         }
         .entry-card-label {
@@ -215,7 +215,7 @@
         }
         .entry-card:hover .entry-card-label { color: var(--accent); }
 
-        /* ========== 详情页通用样式（删除顶部标题，只保留返回按钮和卡片网格） ========== */
+        /* ========== 详情页通用样式 ========== */
         .detail-page {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
@@ -268,11 +268,13 @@
             background: inherit;
         }
 
-        /* 响应式 */
+        /* 响应式：平板两列，手机单列 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
+            .cards-row { grid-template-columns: repeat(2, 1fr); } /* 第三页也变为两列 */
         }
+
         @media (max-width: 768px) {
             :root { --card-gap: 8px; }
             header { padding: 1rem 1.5rem; }
@@ -325,7 +327,7 @@
                 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
-            .cards-row { grid-template-columns: 1fr; }
+            .cards-row { grid-template-columns: 1fr; }   /* 手机单列 */
             .cards-grid { grid-template-columns: 1fr; }
             .entry-card-image { aspect-ratio: 1/1; }
         }
@@ -388,7 +390,7 @@
         </div>
     </div>
 
-    <!-- ==================== 第三页：三个作品集入口（无标题） ==================== -->
+    <!-- ==================== 第三页：全屏自适应三卡片 ==================== -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 主图渲染 -->
@@ -417,7 +419,7 @@
         </div>
     </div>
 
-    <!-- ==================== 详情页1：主图渲染（无标题） ==================== -->
+    <!-- ==================== 详情页1：主图渲染 ==================== -->
     <div class="detail-page" id="detail1">
         <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
@@ -439,7 +441,7 @@
         </div>
     </div>
 
-    <!-- ==================== 详情页2：详情页（无标题） ==================== -->
+    <!-- ==================== 详情页2：详情页 ==================== -->
     <div class="detail-page" id="detail2">
         <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
@@ -449,7 +451,7 @@
         </div>
     </div>
 
-    <!-- ==================== 详情页3：AI辅助（无标题） ==================== -->
+    <!-- ==================== 详情页3：AI辅助 ==================== -->
     <div class="detail-page" id="detail3">
         <button class="back-btn" onclick="goBack()">← 返回首页</button>
         <div class="cards-grid">
