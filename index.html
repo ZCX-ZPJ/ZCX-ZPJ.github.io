@@ -68,7 +68,11 @@
         .nav-links a:hover { transform: scale(1.18); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
-        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem); }
+        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem);
+            /* 强制开启 GPU 加速 */
+            transform: translateX(0px) translateZ(0);
+            backface-visibility: hidden;
+        }
         .hero-title span:first-child { font-weight: 750; } .hero-title span:last-child { font-weight: 650; color: #202020; }
         .dot-text { display: inline-block; line-height: 1; vertical-align: middle; font-weight: 650; }
         .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; margin: 0 0.05em; }
@@ -344,47 +348,33 @@
             const aboutLink = document.getElementById('aboutLink');
             const workLink = document.getElementById('workLink');
 
-            // 导航函数：关闭详情页（如果有）并滚动到指定垂直位置
             function navigateTo(targetY) {
-                // 如果正在详情页，先关闭它并恢复首页模式
                 if (currentPage !== 'home') {
                     detailPages.forEach(p => p.classList.remove('active'));
                     page1.classList.remove('hidden');
                     currentPage = 'home';
                     document.body.style.overflow = '';
-                    // 重启数字动画
                     loopActive = true;
                     startSlotSpin();
                 }
-                // 移除笑脸光标（如果滚动不进入第四页就移除）
                 document.body.classList.remove('smile-cursor');
-                // 滚动到目标位置
                 window.scrollTo({ top: targetY, behavior: 'smooth' });
-                // 更新页面显示状态
-                setTimeout(() => {
-                    updateScroll();
-                }, 50);
+                setTimeout(() => updateScroll(), 50);
             }
 
-            // 首页链接：回到顶部
             homeLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 navigateTo(0);
             });
-
-            // 关于链接：跳转到第四页
             aboutLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 navigateTo(3 * vh);
             });
-
-            // 工作链接：跳转到第三页
             workLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 navigateTo(2 * vh);
             });
 
-            // 笑脸随鼠标移动
             document.addEventListener('mousemove', (e) => {
                 if (currentPage === 'home' && window.scrollY >= 3 * vh) {
                     smileCursor.style.left = e.clientX + 'px';
@@ -392,7 +382,7 @@
                 }
             });
 
-            // 数字动画相关
+            // 数字动画
             const yearDigits = document.getElementById('yearDigits');
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
@@ -413,13 +403,30 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // 标题随鼠标移动
+            // 标题跟随鼠标（已反转方向，并采用更大缓动因子 + GPU 加速）
             const title = document.getElementById('titleMove');
             if (title) {
                 let tx = 0, cx = 0, raf;
-                const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) { raf = requestAnimationFrame(updateTitle); } else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } };
-                document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
-                document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
+                const updateTitle = () => {
+                    cx += (tx - cx) * 0.45;           // 因子提高到 0.45，跟随更快更丝滑
+                    title.style.transform = `translateX(${cx}px) translateZ(0)`;
+                    if (Math.abs(tx - cx) > 0.1) {    // 阈值降低，确保平滑停止
+                        raf = requestAnimationFrame(updateTitle);
+                    } else {
+                        title.style.transform = `translateX(${tx}px) translateZ(0)`;
+                        cx = tx;
+                        raf = null;
+                    }
+                };
+                document.addEventListener('mousemove', e => {
+                    // 方向反转：鼠标越往左，标题越往右
+                    tx = e.clientY < innerHeight / 2 ? -(e.clientX / innerWidth - 0.5) * 1600 : 0;
+                    if (!raf) raf = requestAnimationFrame(updateTitle);
+                });
+                document.addEventListener('mouseleave', () => {
+                    tx = 0;
+                    if (!raf) raf = requestAnimationFrame(updateTitle);
+                });
             }
 
             window.showDetail = function(detailId) {
