@@ -115,12 +115,11 @@
         .entry-card-label { font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 600; letter-spacing: 0.04em; color: #1a1a1a; text-align: center; transition: color 0.2s ease; line-height: 1.2; }
         .entry-card:hover .entry-card-label { color: var(--accent); }
 
-        /* ========== 第四页：文案再放大一倍 ========== */
+        /* ========== 第四页 ========== */
         .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; will-change: opacity; }
         .page4.active { opacity: 1; pointer-events: auto; }
-
         .page4-text {
-            font-size: clamp(8rem, 16vw, 14rem);  /* 已放大一倍，原为 clamp(4rem, 8vw, 7rem) */
+            font-size: clamp(8rem, 16vw, 14rem);
             font-weight: 700;
             letter-spacing: 0.04em;
             color: #0a0a0a;
@@ -180,12 +179,12 @@
             .cards-grid { grid-template-columns: 1fr; }
             .entry-card-image { aspect-ratio: 1/1; }
             .entry-card-label { font-size: 2rem; }
-            .page4-text { font-size: 6rem; }   /* 移动端也放大一倍 (原 3rem) */
+            .page4-text { font-size: 6rem; }
         }
     </style>
 </head>
 <body>
-    <!-- ==================== 自定义笑脸光标（130px，镂空透明，无描边） ==================== -->
+    <!-- 笑脸光标 -->
     <div id="smile-cursor">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
             <defs>
@@ -200,13 +199,13 @@
         </svg>
     </div>
 
-    <!-- ==================== 第一页 ==================== -->
+    <!-- 第一页 -->
     <div class="page1" id="page1">
         <header>
             <nav class="nav-links">
                 <a href="#" id="homeLink">首页</a>
-                <a href="#">关于</a>
-                <a href="#">工作</a>
+                <a href="#" id="aboutLink">关于</a>
+                <a href="#" id="workLink">工作</a>
             </nav>
         </header>
         <main>
@@ -248,7 +247,7 @@
         </footer>
     </div>
 
-    <!-- ==================== 第二页 ==================== -->
+    <!-- 第二页 -->
     <div class="page2" id="page2">
         <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
@@ -256,7 +255,7 @@
         </div>
     </div>
 
-    <!-- ==================== 第三页 ==================== -->
+    <!-- 第三页 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="entry-card" onclick="showDetail('detail1')">
@@ -280,12 +279,12 @@
         </div>
     </div>
 
-    <!-- ==================== 第四页 ==================== -->
+    <!-- 第四页 -->
     <div class="page4" id="page4">
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 保持不变 -->
+    <!-- 详情页 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -327,6 +326,9 @@
 
     <script>
         (() => {
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const page3 = document.getElementById('page3');
@@ -334,10 +336,55 @@
             const detailPages = document.querySelectorAll('.detail-page');
             const smileCursor = document.getElementById('smile-cursor');
             let currentPage = 'home';
-            let savedScrollY = 0;
             let vh = window.innerHeight;
             let ticking = false;
 
+            // 导航链接
+            const homeLink = document.getElementById('homeLink');
+            const aboutLink = document.getElementById('aboutLink');
+            const workLink = document.getElementById('workLink');
+
+            // 导航函数：关闭详情页（如果有）并滚动到指定垂直位置
+            function navigateTo(targetY) {
+                // 如果正在详情页，先关闭它并恢复首页模式
+                if (currentPage !== 'home') {
+                    detailPages.forEach(p => p.classList.remove('active'));
+                    page1.classList.remove('hidden');
+                    currentPage = 'home';
+                    document.body.style.overflow = '';
+                    // 重启数字动画
+                    loopActive = true;
+                    startSlotSpin();
+                }
+                // 移除笑脸光标（如果滚动不进入第四页就移除）
+                document.body.classList.remove('smile-cursor');
+                // 滚动到目标位置
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+                // 更新页面显示状态
+                setTimeout(() => {
+                    updateScroll();
+                }, 50);
+            }
+
+            // 首页链接：回到顶部
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(0);
+            });
+
+            // 关于链接：跳转到第四页
+            aboutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(3 * vh);
+            });
+
+            // 工作链接：跳转到第三页
+            workLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(2 * vh);
+            });
+
+            // 笑脸随鼠标移动
             document.addEventListener('mousemove', (e) => {
                 if (currentPage === 'home' && window.scrollY >= 3 * vh) {
                     smileCursor.style.left = e.clientX + 'px';
@@ -345,6 +392,7 @@
                 }
             });
 
+            // 数字动画相关
             const yearDigits = document.getElementById('yearDigits');
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
@@ -365,23 +413,36 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
+            // 标题随鼠标移动
             const title = document.getElementById('titleMove');
-            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) { raf = requestAnimationFrame(updateTitle); } else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
+            if (title) {
+                let tx = 0, cx = 0, raf;
+                const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) { raf = requestAnimationFrame(updateTitle); } else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } };
+                document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
+                document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); });
+            }
 
             window.showDetail = function(detailId) {
-                savedScrollY = window.scrollY;
-                page1.classList.add('hidden'); page2.classList.remove('active'); page3.classList.remove('active'); page4.classList.remove('active');
+                page1.classList.add('hidden');
+                page2.classList.remove('active');
+                page3.classList.remove('active');
+                page4.classList.remove('active');
                 document.body.classList.remove('smile-cursor');
                 document.getElementById(detailId).classList.add('active');
-                currentPage = detailId; loopActive = false; clearTimers();
+                currentPage = detailId;
+                loopActive = false;
+                clearTimers();
                 document.body.style.overflow = 'hidden';
             };
 
             window.goBack = function() {
                 detailPages.forEach(p => p.classList.remove('active'));
                 page1.classList.remove('hidden');
-                currentPage = 'home'; document.body.style.overflow = '';
-                window.scrollTo(0, savedScrollY); loopActive = true; startSlotSpin(); updateScroll();
+                currentPage = 'home';
+                document.body.style.overflow = '';
+                loopActive = true;
+                startSlotSpin();
+                updateScroll();
             };
 
             function updateScroll() {
@@ -393,17 +454,39 @@
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
                 const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } }
-                else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
+                if (inPage2) {
+                    page2.classList.add('active');
+                    if (!loopActive) { loopActive = true; startSlotSpin(); }
+                } else {
+                    page2.classList.remove('active');
+                    if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; }
+                }
 
-                if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active'); else page3.classList.remove('active');
+                if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active');
+                else page3.classList.remove('active');
 
-                if (sY >= 3 * vh) { page4.classList.add('active'); document.body.classList.add('smile-cursor'); }
-                else { page4.classList.remove('active'); document.body.classList.remove('smile-cursor'); }
+                if (sY >= 3 * vh) {
+                    page4.classList.add('active');
+                    document.body.classList.add('smile-cursor');
+                } else {
+                    page4.classList.remove('active');
+                    document.body.classList.remove('smile-cursor');
+                }
             }
 
-            window.addEventListener('scroll', () => { if (currentPage !== 'home') return; if (!ticking) { requestAnimationFrame(() => { updateScroll(); ticking = false; }); ticking = true; } }, { passive: true });
-            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
+            window.addEventListener('scroll', () => {
+                if (currentPage !== 'home') return;
+                if (!ticking) {
+                    requestAnimationFrame(() => { updateScroll(); ticking = false; });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                vh = window.innerHeight;
+                if (currentPage === 'home') updateScroll();
+            });
+
             updateScroll();
         })();
     </script>
