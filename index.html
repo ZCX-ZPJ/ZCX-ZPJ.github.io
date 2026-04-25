@@ -31,27 +31,17 @@
             cursor: default;
         }
 
-        /* 第四页激活时隐藏默认光标 */
-        body.smile-cursor {
-            cursor: none;
-        }
-        body.smile-cursor a, body.smile-cursor button {
-            cursor: none;
-        }
+        body.smile-cursor { cursor: none; }
+        body.smile-cursor a, body.smile-cursor button { cursor: none; }
 
         a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
 
-        /* ========== 自定义笑脸光标（跟随鼠标） ========== */
         #smile-cursor {
-            position: fixed;
-            top: 0; left: 0;
-            width: 130px;            /* 尺寸增大至 130px */
-            height: 130px;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0;
+            width: 130px; height: 130px;
+            pointer-events: none; z-index: 9999;
             transform: translate(-50%, -50%);
-            will-change: transform;
-            opacity: 0;
+            will-change: transform; opacity: 0;
             transition: opacity 0.2s ease;
         }
         body.smile-cursor #smile-cursor {
@@ -72,70 +62,27 @@
         }
         .page1.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
 
-        header {
-            display: flex; justify-content: center; align-items: center;
-            padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative;
-        }
-        .nav-links {
-            display: flex; gap: clamp(1.8rem,3vw,2.8rem);
-            font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em;
-        }
+        header { display: flex; justify-content: center; align-items: center; padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative; }
+        .nav-links { display: flex; gap: clamp(1.8rem,3vw,2.8rem); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em; }
         .nav-links a { color: var(--text); text-decoration: none; transition: transform 0.25s ease; }
         .nav-links a:hover { transform: scale(1.18); }
 
-        main {
-            flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem);
-        }
-        .hero-title {
-            display: flex; align-items: center; justify-content: center;
-            gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700;
-            white-space: nowrap; transition: transform 0.25s ease; will-change: transform;
-            letter-spacing: -0.02em; line-height: 1; color: #0a0a0a;
-            margin-top: clamp(-5rem,-6vw,-3rem);
-        }
-        .hero-title span:first-child { font-weight: 750; }
-        .hero-title span:last-child { font-weight: 650; color: #202020; }
+        main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
+        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem); }
+        .hero-title span:first-child { font-weight: 750; } .hero-title span:last-child { font-weight: 650; color: #202020; }
         .dot-text { display: inline-block; line-height: 1; vertical-align: middle; font-weight: 650; }
-        .middle-dot {
-            font-size: 1.1em; font-weight: 700; display: inline-block;
-            vertical-align: middle; margin: 0 0.05em;
-        }
-        .profile-img {
-            width: clamp(70px,10vw,150px); border-radius: 8px; transform: rotate(-5deg);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.05); object-fit: cover; aspect-ratio: 1/1;
-            background: #ccc; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
-        }
-        .hero-desc {
-            display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,7rem);
-            max-width: var(--w); width: 100%; margin: 0 auto;
-            font-size: clamp(1rem,2vw,1.3rem); line-height: 1.6; color: #1e1e1e;
-            font-weight: 550; letter-spacing: -0.01em; padding-top: clamp(1.5rem,3vw,2.8rem);
-            position: relative; overflow: visible;
-        }
-        .hero-desc::before {
-            content: ''; position: absolute; top: 0; left: calc(-1*var(--offset));
-            width: calc(100% + 2*var(--offset)); height: 1px; background: var(--border);
-        }
+        .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; margin: 0 0.05em; }
+        .profile-img { width: clamp(70px,10vw,150px); border-radius: 8px; transform: rotate(-5deg); box-shadow: 0 6px 14px rgba(0,0,0,0.05); object-fit: cover; aspect-ratio: 1/1; background: #ccc; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; }
+        .hero-desc { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,7rem); max-width: var(--w); width: 100%; margin: 0 auto; font-size: clamp(1rem,2vw,1.3rem); line-height: 1.6; color: #1e1e1e; font-weight: 550; letter-spacing: -0.01em; padding-top: clamp(1.5rem,3vw,2.8rem); position: relative; overflow: visible; }
+        .hero-desc::before { content: ''; position: absolute; top: 0; left: calc(-1*var(--offset)); width: calc(100% + 2*var(--offset)); height: 1px; background: var(--border); }
         .hero-desc div:first-child { justify-self: start; margin-left: calc(-1*var(--offset)); }
-        .hero-desc div:last-child {
-            justify-self: end; margin-right: calc(-1*var(--offset)); color: var(--gray);
-            text-align: left; font-weight: 550; line-height: 1.6;
-        }
-        .toolbox-line { display: block; margin-bottom: 0.2rem; }
-        .toolbox-line strong { font-weight: 650; }
+        .hero-desc div:last-child { justify-self: end; margin-right: calc(-1*var(--offset)); color: var(--gray); text-align: left; font-weight: 550; line-height: 1.6; }
+        .toolbox-line { display: block; margin-bottom: 0.2rem; } .toolbox-line strong { font-weight: 650; }
         .ai-line { display: block; }
-        .software-item {
-            display: inline-block; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer;
-        }
+        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer; }
         .software-item:hover { color: var(--accent); transform: scale(1.05); }
 
-        footer {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: clamp(1.2rem,2.5vw,1.8rem) clamp(1.5rem,4vw,3rem); width: 100%;
-            font-size: clamp(0.7rem,1vw,0.8rem); font-weight: 450; color: #1f1f1f;
-            letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative;
-        }
+        footer { display: flex; justify-content: space-between; align-items: center; padding: clamp(1.2rem,2.5vw,1.8rem) clamp(1.5rem,4vw,3rem); width: 100%; font-size: clamp(0.7rem,1vw,0.8rem); font-weight: 450; color: #1f1f1f; letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative; }
         .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
         .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
         .footer-right { display: flex; gap: 1.5rem; align-items: center; }
@@ -143,121 +90,37 @@
         .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.2s ease; }
         .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.2s ease; }
         .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
-        .icon-wrapper::after {
-            content: attr(data-title); position: absolute; bottom: 100%; left: 50%;
-            transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff;
-            font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap;
-            opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
-            pointer-events: none; z-index: 100;
-        }
-        .icon-wrapper::before {
-            content: ''; position: absolute; bottom: 100%; left: 50%;
-            transform: translateX(-50%) translateY(-2px); border: 5px solid transparent;
-            border-top-color: #1f1f1f; opacity: 0; visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
-        }
+        .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
+        .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
 
         /* ========== 第二页 ========== */
-        .page2 {
-            position: fixed; inset: 0; z-index: 25;
-            background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            pointer-events: none; opacity: 0;
-            transition: opacity 0.3s ease;
-            will-change: opacity;
-        }
+        .page2 { position: fixed; inset: 0; z-index: 25; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; will-change: opacity; }
         .page2.active { opacity: 1; pointer-events: auto; }
         .splash-wrapper { display: flex; align-items: flex-start; justify-content: center; }
-        .splash-title {
-            font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em;
-            color: #0a0a0a; line-height: 1; user-select: none;
-        }
-        .year-tag {
-            font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em;
-            color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1;
-            white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em;
-        }
+        .splash-title { font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em; color: #0a0a0a; line-height: 1; user-select: none; }
+        .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ========== 第三页：全屏自适应三个卡片 ========== */
-        .page3 {
-            position: fixed; inset: 0; z-index: 30;
-            background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            pointer-events: none; opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
-            will-change: transform, opacity;
-            padding: 4vh 2vw;
-        }
+        /* ========== 第三页 ========== */
+        .page3 { position: fixed; inset: 0; z-index: 30; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1); will-change: transform, opacity; padding: 4vh 2vw; }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        .cards-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--card-gap);
-            width: 100%;
-            margin: 0;
-        }
-
-        .entry-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: inherit;
-            gap: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background: none;
-            border: none;
-            outline: none;
-        }
+        .cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); width: 100%; margin: 0; }
+        .entry-card { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; gap: 1.5rem; cursor: pointer; transition: transform 0.3s ease; background: none; border: none; outline: none; }
         .entry-card:hover { transform: translateY(-6px); }
-
-        .entry-card-image {
-            width: 100%;
-            aspect-ratio: 4/5;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #ccc;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-        }
-        .entry-card:hover .entry-card-image {
-            box-shadow: 0 16px 36px rgba(0,0,0,0.15);
-        }
-        .entry-card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .entry-card-label {
-            font-size: clamp(1.8rem, 3vw, 3rem);
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            color: #1a1a1a;
-            text-align: center;
-            transition: color 0.2s ease;
-            line-height: 1.2;
-        }
+        .entry-card-image { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease; }
+        .entry-card:hover .entry-card-image { box-shadow: 0 16px 36px rgba(0,0,0,0.15); }
+        .entry-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .entry-card-label { font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 600; letter-spacing: 0.04em; color: #1a1a1a; text-align: center; transition: color 0.2s ease; line-height: 1.2; }
         .entry-card:hover .entry-card-label { color: var(--accent); }
 
-        /* ========== 第四页：文案加大 + 自定义笑脸光标 ========== */
-        .page4 {
-            position: fixed; inset: 0; z-index: 35;
-            background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            pointer-events: none; opacity: 0;
-            transition: opacity 0.5s ease;
-            will-change: opacity;
-        }
+        /* ========== 第四页：文案再放大一倍 ========== */
+        .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; will-change: opacity; }
         .page4.active { opacity: 1; pointer-events: auto; }
 
         .page4-text {
-            font-size: clamp(4rem, 8vw, 7rem);
+            font-size: clamp(8rem, 16vw, 14rem);  /* 已放大一倍，原为 clamp(4rem, 8vw, 7rem) */
             font-weight: 700;
             letter-spacing: 0.04em;
             color: #0a0a0a;
@@ -267,59 +130,14 @@
         }
 
         /* ========== 详情页通用样式 ========== */
-        .detail-page {
-            position: fixed; inset: 0; z-index: 50;
-            background: var(--bg);
-            display: flex; flex-direction: column;
-            padding: 4vh 2vw 2vh;
-            overflow-y: auto;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
+        .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
         .detail-page.active { opacity: 1; pointer-events: auto; }
-
-        .back-btn {
-            display: inline-block;
-            color: #555; text-decoration: none; font-size: 1rem;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s, color 0.2s;
-            cursor: pointer;
-            background: none; border: none; outline: none;
-            align-self: center;
-            margin-top: auto;
-            padding: 1rem 0;
-            letter-spacing: 0.05em;
-        }
+        .back-btn { display: inline-block; color: #555; text-decoration: none; font-size: 1rem; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s; cursor: pointer; background: none; border: none; outline: none; align-self: center; margin-top: auto; padding: 1rem 0; letter-spacing: 0.05em; }
         .back-btn:hover { border-color: #555; color: var(--accent); }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--card-gap);
-            width: 100%;
-        }
-
-        .card-box {
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #ccc;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            line-height: 0;
-        }
-        .card-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 36px rgba(0,0,0,0.12);
-        }
-        .card-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: contain;
-            background: inherit;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); width: 100%; }
+        .card-box { width: 100%; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; line-height: 0; }
+        .card-box:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+        .card-box img { width: 100%; height: auto; display: block; object-fit: contain; background: inherit; }
 
         /* 响应式 */
         @media (max-width: 1024px) {
@@ -333,38 +151,20 @@
             header { padding: 1rem 1.5rem; }
             .nav-links { font-size: 1rem; gap: 1.5rem; }
             main { justify-content: space-evenly; gap: 0; padding: 0.5rem 1.5rem; }
-            .hero-title {
-                white-space: normal; flex-wrap: wrap; text-align: center;
-                font-size: max(2.5rem,10vw); gap: 0.6rem; margin: 0;
-            }
+            .hero-title { white-space: normal; flex-wrap: wrap; text-align: center; font-size: max(2.5rem,10vw); gap: 0.6rem; margin: 0; }
             .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
             .profile-img { width: 65px; min-width: 65px; }
-            .hero-desc {
-                display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem;
-                font-size: max(0.95rem,3.5vw); text-align: center;
-            }
+            .hero-desc { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; font-size: max(0.95rem,3.5vw); text-align: center; }
             .hero-desc::before { left: 0; width: 100%; }
-            .hero-desc div:first-child, .hero-desc div:last-child {
-                margin: 0; width: 100%; text-align: center;
-            }
-            .hero-desc div:last-child {
-                gap: 0.3rem; display: flex; flex-direction: column; align-items: center;
-            }
+            .hero-desc div:first-child, .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
+            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
             .software-item:hover { transform: none; color: inherit; }
-            footer {
-                flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem;
-                font-size: 0.8rem; text-align: center;
-            }
-            .footer-left { font-size: 0.85rem; }
-            .footer-center { position: static; transform: none; font-size: 1rem; }
+            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; text-align: center; }
+            .footer-left { font-size: 0.85rem; } .footer-center { position: static; transform: none; font-size: 1rem; }
             .footer-right { justify-content: center; gap: 1.2rem; }
-            .icon-wrapper svg { width: 20px; height: 20px; }
-            .icon-text { font-size: 1.2rem; }
+            .icon-wrapper svg { width: 20px; height: 20px; } .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
-            .year-tag {
-                font-size: max(0.85rem,3vw);
-                margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em;
-            }
+            .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
             .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
             .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
             .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
@@ -375,16 +175,12 @@
             .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
-            @keyframes softBlink {
-                0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; }
-                15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
-                25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
-            }
+            @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .cards-row { grid-template-columns: 1fr; }
             .cards-grid { grid-template-columns: 1fr; }
             .entry-card-image { aspect-ratio: 1/1; }
             .entry-card-label { font-size: 2rem; }
-            .page4-text { font-size: 3rem; }
+            .page4-text { font-size: 6rem; }   /* 移动端也放大一倍 (原 3rem) */
         }
     </style>
 </head>
@@ -394,17 +190,12 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
             <defs>
                 <mask id="smileMask">
-                    <!-- 白色表示完全显示，黑色表示挖空 -->
                     <rect width="130" height="130" fill="white" />
-                    <!-- 左眼 -->
                     <circle cx="48" cy="48" r="9" fill="black" />
-                    <!-- 右眼 -->
                     <circle cx="82" cy="48" r="9" fill="black" />
-                    <!-- 嘴巴（使用一条加粗的路径） -->
                     <path d="M 40 80 Q 65 104 90 80" stroke="black" stroke-width="10" fill="none" stroke-linecap="round" />
                 </mask>
             </defs>
-            <!-- 黄色实底圆，无描边，应用镂空 mask -->
             <circle cx="65" cy="65" r="58" fill="#FFFF00" mask="url(#smileMask)" />
         </svg>
     </div>
@@ -494,7 +285,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1、2、3 保持不变 -->
+    <!-- 详情页 1 / 2 / 3 保持不变 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -547,7 +338,6 @@
             let vh = window.innerHeight;
             let ticking = false;
 
-            // 自定义笑脸光标跟随鼠标
             document.addEventListener('mousemove', (e) => {
                 if (currentPage === 'home' && window.scrollY >= 3 * vh) {
                     smileCursor.style.left = e.clientX + 'px';
@@ -559,126 +349,39 @@
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
-            function getRandomPool(c) {
-                if (c >= '0' && c <= '9') return '0123456789'.split('');
-                if (c === '–' || c === '-') return ['–','—','·','-'];
-                if (c === '©') return ['©','®','℗'];
-                return [c];
-            }
+            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
             const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0),
-                locked = new Array(totalChars).fill(false),
-                lockIndex = 0;
-            function clearTimers() {
-                if (intervalId) clearInterval(intervalId);
-                if (loopTimeout) clearTimeout(loopTimeout);
-                intervalId = null; loopTimeout = null;
-            }
+            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
+            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
             function updateSlotChars() {
-                const elapsed = performance.now() - startTime,
-                      globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
                 const targetLockCount = Math.floor(globalProgress * totalChars);
-                while (lockIndex < targetLockCount && lockIndex < totalChars) {
-                    const idx = lockIndex;
-                    locked[idx] = true;
-                    slotPositions[idx] = pools[idx].indexOf(chars[idx]);
-                    lockIndex++;
-                }
+                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
                 const result = [];
-                for (let i = 0; i < totalChars; i++) {
-                    if (locked[i]) { result.push(chars[i]); continue; }
-                    const pool = pools[i];
-                    if (pool.length <= 1) { result.push(pool[0]); continue; }
-                    const slotSlowStart = 0.5 + (i / totalChars) * 0.2;
-                    let slotProgress;
-                    if (globalProgress >= slotSlowStart) {
-                        const slotDuration = 1 - slotSlowStart;
-                        slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration);
-                        slotProgress = easeOutCubic(slotProgress);
-                    } else {
-                        slotProgress = 0;
-                    }
-                    if (slotProgress < 1) {
-                        const speedFactor = 1 + Math.floor((1 - slotProgress) * 12);
-                        slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length;
-                    } else {
-                        locked[i] = true;
-                        const finalIdx = pool.indexOf(chars[i]);
-                        if (finalIdx >= 0) slotPositions[i] = finalIdx;
-                    }
-                    result.push(pool[slotPositions[i] % pool.length]);
-                }
+                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = 0.5 + (i / totalChars) * 0.2; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
                 yearDigits.textContent = result.join('');
-                if (locked.every(v => v)) {
-                    yearDigits.textContent = FINAL_TEXT;
-                    clearTimers();
-                    if (loopActive) {
-                        loopTimeout = setTimeout(() => {
-                            if (loopActive) startSlotSpin();
-                        }, LOOP_DELAY);
-                    }
-                }
+                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
             }
-            function startSlotSpin() {
-                clearTimers();
-                locked.fill(false);
-                lockIndex = 0;
-                for (let i = 0; i < totalChars; i++) {
-                    slotPositions[i] = Math.floor(Math.random() * pools[i].length);
-                }
-                startTime = performance.now();
-                yearDigits.textContent = FINAL_TEXT;
-                intervalId = setInterval(updateSlotChars, TICK_INTERVAL);
-            }
+            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
             const title = document.getElementById('titleMove');
-            if (title) {
-                let tx = 0, cx = 0, raf;
-                const updateTitle = () => {
-                    cx += (tx - cx) * 0.25;
-                    title.style.transform = `translateX(${cx}px)`;
-                    if (Math.abs(tx - cx) > 0.5) {
-                        raf = requestAnimationFrame(updateTitle);
-                    } else {
-                        title.style.transform = `translateX(${tx}px)`;
-                        cx = tx;
-                        raf = null;
-                    }
-                };
-                document.addEventListener('mousemove', e => {
-                    tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0;
-                    if (!raf) raf = requestAnimationFrame(updateTitle);
-                });
-                document.addEventListener('mouseleave', () => {
-                    tx = 0;
-                    if (!raf) raf = requestAnimationFrame(updateTitle);
-                });
-            }
+            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) { raf = requestAnimationFrame(updateTitle); } else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
 
             window.showDetail = function(detailId) {
                 savedScrollY = window.scrollY;
-                page1.classList.add('hidden');
-                page2.classList.remove('active');
-                page3.classList.remove('active');
-                page4.classList.remove('active');
+                page1.classList.add('hidden'); page2.classList.remove('active'); page3.classList.remove('active'); page4.classList.remove('active');
                 document.body.classList.remove('smile-cursor');
                 document.getElementById(detailId).classList.add('active');
-                currentPage = detailId;
-                loopActive = false;
-                clearTimers();
+                currentPage = detailId; loopActive = false; clearTimers();
                 document.body.style.overflow = 'hidden';
             };
 
             window.goBack = function() {
                 detailPages.forEach(p => p.classList.remove('active'));
                 page1.classList.remove('hidden');
-                currentPage = 'home';
-                document.body.style.overflow = '';
-                window.scrollTo(0, savedScrollY);
-                loopActive = true;
-                startSlotSpin();
-                updateScroll();
+                currentPage = 'home'; document.body.style.overflow = '';
+                window.scrollTo(0, savedScrollY); loopActive = true; startSlotSpin(); updateScroll();
             };
 
             function updateScroll() {
@@ -690,53 +393,17 @@
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
                 const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) {
-                    page2.classList.add('active');
-                    if (!loopActive) {
-                        loopActive = true;
-                        startSlotSpin();
-                    }
-                } else {
-                    page2.classList.remove('active');
-                    if (loopActive) {
-                        loopActive = false;
-                        clearTimers();
-                        yearDigits.textContent = FINAL_TEXT;
-                    }
-                }
+                if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } }
+                else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
 
-                if (sY >= 2 * vh && sY < 3 * vh) {
-                    page3.classList.add('active');
-                } else {
-                    page3.classList.remove('active');
-                }
+                if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active'); else page3.classList.remove('active');
 
-                // 第四页切换
-                if (sY >= 3 * vh) {
-                    page4.classList.add('active');
-                    document.body.classList.add('smile-cursor');
-                } else {
-                    page4.classList.remove('active');
-                    document.body.classList.remove('smile-cursor');
-                }
+                if (sY >= 3 * vh) { page4.classList.add('active'); document.body.classList.add('smile-cursor'); }
+                else { page4.classList.remove('active'); document.body.classList.remove('smile-cursor'); }
             }
 
-            window.addEventListener('scroll', () => {
-                if (currentPage !== 'home') return;
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        updateScroll();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            window.addEventListener('resize', () => {
-                vh = window.innerHeight;
-                if (currentPage === 'home') updateScroll();
-            });
-
+            window.addEventListener('scroll', () => { if (currentPage !== 'home') return; if (!ticking) { requestAnimationFrame(() => { updateScroll(); ticking = false; }); ticking = true; } }, { passive: true });
+            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
             updateScroll();
         })();
     </script>
