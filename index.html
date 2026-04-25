@@ -64,7 +64,26 @@
 
         header { display: flex; justify-content: center; align-items: center; padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative; }
         .nav-links { display: flex; gap: clamp(1.8rem,3vw,2.8rem); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em; }
-        .nav-links a { color: var(--text); text-decoration: none; transition: transform 0.25s ease; }
+        .nav-links a {
+            color: var(--text); text-decoration: none; transition: transform 0.25s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        /* 下划线只在悬停时出现，颜色为黑色 */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background: #000;           /* 黑色下划线 */
+            transform: scaleX(0);
+            transition: transform 0.25s ease;
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
         .nav-links a:hover { transform: scale(1.18); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
@@ -395,22 +414,18 @@
             // 标题动画：鼠标跟随（方向反转）+ 自动左右滑动
             const title = document.getElementById('titleMove');
             if (title) {
-                let mouseTarget = 0;           // 鼠标目标位置
-                let autoSwingRaf = null;       // 自动滑动的 RAF ID
+                let mouseTarget = 0;
+                let autoSwingRaf = null;
                 let autoSwingStart = performance.now();
 
-                // 持续自动左右滑动循环
                 function autoSwingLoop(now) {
-                    const elapsed = (now - autoSwingStart) / 1000;  // 秒
-                    // 正弦波：幅度 60px，周期约 3.5 秒
+                    const elapsed = (now - autoSwingStart) / 1000;
                     const swing = Math.sin(elapsed * Math.PI * 2 / 3.5) * 60;
-                    // 最终位置 = 鼠标目标 + 自动摆动
                     title.style.transform = `translateX(${mouseTarget + swing}px) translateZ(0)`;
                     autoSwingRaf = requestAnimationFrame(autoSwingLoop);
                 }
                 autoSwingRaf = requestAnimationFrame(autoSwingLoop);
 
-                // 鼠标移动：更新鼠标目标，方向反转
                 document.addEventListener('mousemove', e => {
                     mouseTarget = e.clientY < innerHeight / 2 ? -(e.clientX / innerWidth - 0.5) * 2400 : 0;
                 });
@@ -445,6 +460,7 @@
             function updateScroll() {
                 if (currentPage !== 'home') return;
                 const sY = window.scrollY;
+
                 const p1 = Math.min(1, Math.max(0, sY / vh));
                 page1.style.transform = `scale(${1 - p1 * 0.3})`;
                 page1.style.opacity = 1 - p1;
@@ -457,8 +473,13 @@
                 if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active');
                 else page3.classList.remove('active');
 
-                if (sY >= 3 * vh) { page4.classList.add('active'); document.body.classList.add('smile-cursor'); }
-                else { page4.classList.remove('active'); document.body.classList.remove('smile-cursor'); }
+                if (sY >= 3 * vh) {
+                    page4.classList.add('active');
+                    document.body.classList.add('smile-cursor');
+                } else {
+                    page4.classList.remove('active');
+                    document.body.classList.remove('smile-cursor');
+                }
             }
 
             window.addEventListener('scroll', () => {
