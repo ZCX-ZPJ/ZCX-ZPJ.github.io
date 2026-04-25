@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>周成鑫 · 3D渲染作品集</title>
+    <title>苏畅 · 3D渲染作品集</title>
 
-    <!-- DNS 预解析与预连接，加速 jsDelivr CDN -->
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- DNS 预解析与预连接，加速外部图片服务 -->
+    <link rel="dns-prefetch" href="https://i.pravatar.cc">
+    <link rel="preconnect" href="https://i.pravatar.cc">
+    <link rel="dns-prefetch" href="https://picsum.photos">
+    <link rel="preconnect" href="https://picsum.photos">
 
     <style>
         :root {
@@ -21,79 +23,334 @@
             --card-gap: 16px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background: var(--bg); color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            height: 300vh; overflow-x: hidden; cursor: default;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 300vh;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        a,
+        .software-item,
+        .icon-wrapper,
+        .profile-img,
+        .hero-title span {
+            cursor: pointer !important;
+        }
 
         /* ---------- 第一页 ---------- */
         .page1 {
-            position: fixed; inset: 0; height: 100vh;
-            display: flex; flex-direction: column; justify-content: space-between;
-            pointer-events: auto; z-index: 20; will-change: transform, opacity;
+            position: fixed;
+            inset: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: auto;
+            z-index: 20;
+            will-change: transform, opacity;
         }
-        header { display: flex; justify-content: center; align-items: center; padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative; }
-        .nav-links { display: flex; gap: clamp(1.8rem,3vw,2.8rem); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em; }
-        .nav-links a { color: var(--text); text-decoration: none; transition: transform 0.25s ease; }
-        .nav-links a:hover { transform: scale(1.18); }
-        main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
-        .hero-title { display: flex; align-items: center; justify-content: center; gap: clamp(1.2rem,2.5vw,2.2rem); font-size: clamp(4rem,13vw,11rem); font-weight: 700; white-space: nowrap; transition: transform 0.25s ease; will-change: transform; letter-spacing: -0.02em; line-height: 1; color: #0a0a0a; margin-top: clamp(-5rem,-6vw,-3rem); }
-        .hero-title span:first-child { font-weight: 750; } .hero-title span:last-child { font-weight: 650; color: #202020; }
-        .dot-text { display: inline-block; line-height: 1; vertical-align: middle; font-weight: 650; }
-        .middle-dot { font-size: 1.1em; font-weight: 700; display: inline-block; vertical-align: middle; margin: 0 0.05em; }
-        .profile-img { width: clamp(70px,10vw,150px); border-radius: 8px; transform: rotate(-5deg); box-shadow: 0 6px 14px rgba(0,0,0,0.05); object-fit: cover; aspect-ratio: 1/1; background: #ccc; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; }
-        .hero-desc { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,7rem); max-width: var(--w); width: 100%; margin: 0 auto; font-size: clamp(1rem,2vw,1.3rem); line-height: 1.6; color: #1e1e1e; font-weight: 550; letter-spacing: -0.01em; padding-top: clamp(1.5rem,3vw,2.8rem); position: relative; overflow: visible; }
-        .hero-desc::before { content: ''; position: absolute; top: 0; left: calc(-1*var(--offset)); width: calc(100% + 2*var(--offset)); height: 1px; background: var(--border); }
-        .hero-desc div:first-child { justify-self: start; margin-left: calc(-1*var(--offset)); }
-        .hero-desc div:last-child { justify-self: end; margin-right: calc(-1*var(--offset)); color: var(--gray); text-align: left; font-weight: 550; line-height: 1.6; }
-        .toolbox-line { display: block; margin-bottom: 0.2rem; } .toolbox-line strong { font-weight: 650; }
-        .ai-line { display: block; }
-        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer; }
-        .software-item:hover { color: var(--accent); transform: scale(1.05); }
-        footer { display: flex; justify-content: space-between; align-items: center; padding: clamp(1.2rem,2.5vw,1.8rem) clamp(1.5rem,4vw,3rem); width: 100%; font-size: clamp(0.7rem,1vw,0.8rem); font-weight: 450; color: #1f1f1f; letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative; }
-        .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
-        .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
-        .footer-right { display: flex; gap: 1.5rem; align-items: center; }
-        .icon-wrapper { position: relative; display: inline-flex; cursor: pointer; }
-        .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.2s ease; }
-        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.2s ease; }
-        .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
-        .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
-        .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
-        .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
+            position: relative;
+        }
+        .nav-links {
+            display: flex;
+            gap: clamp(1.8rem, 3vw, 2.8rem);
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: transform 0.25s ease;
+        }
+        .nav-links a:hover {
+            transform: scale(1.18);
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(4rem, 8vw, 6.5rem);
+            padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+        }
+        .hero-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1.2rem, 2.5vw, 2.2rem);
+            font-size: clamp(4rem, 13vw, 11rem);
+            font-weight: 700;
+            white-space: nowrap;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: #0a0a0a;
+            margin-top: clamp(-5rem, -6vw, -3rem);
+        }
+        .hero-title span:first-child {
+            font-weight: 750;
+        }
+        .hero-title span:last-child {
+            font-weight: 650;
+            color: #202020;
+        }
+        .dot-text {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            font-weight: 650;
+        }
+        .middle-dot {
+            font-size: 1.1em;
+            font-weight: 700;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.05em;
+        }
+        .profile-img {
+            width: clamp(70px, 10vw, 150px);
+            border-radius: 8px;
+            transform: rotate(-5deg);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            background: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-img:hover {
+            transform: rotate(-3deg) scale(1.04);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+        }
+        .hero-desc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(3rem, 8vw, 7rem);
+            max-width: var(--w);
+            width: 100%;
+            margin: 0 auto;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            line-height: 1.6;
+            color: #1e1e1e;
+            font-weight: 550;
+            letter-spacing: -0.01em;
+            padding-top: clamp(1.5rem, 3vw, 2.8rem);
+            position: relative;
+            overflow: visible;
+        }
+        .hero-desc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: calc(-1 * var(--offset));
+            width: calc(100% + 2 * var(--offset));
+            height: 1px;
+            background: var(--border);
+        }
+        .hero-desc div:first-child {
+            justify-self: start;
+            margin-left: calc(-1 * var(--offset));
+        }
+        .hero-desc div:last-child {
+            justify-self: end;
+            margin-right: calc(-1 * var(--offset));
+            color: var(--gray);
+            text-align: left;
+            font-weight: 550;
+            line-height: 1.6;
+        }
+        .toolbox-line {
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .toolbox-line strong {
+            font-weight: 650;
+        }
+        .ai-line {
+            display: block;
+        }
+        .software-item {
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+        .software-item:hover {
+            color: var(--accent);
+            transform: scale(1.05);
+        }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
+            width: 100%;
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
+            font-weight: 450;
+            color: #1f1f1f;
+            letter-spacing: 0.02em;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+        .footer-left {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .footer-center {
+            font-size: 1.2rem;
+            letter-spacing: 0.3rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .footer-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .icon-wrapper {
+            position: relative;
+            display: inline-flex;
+            cursor: pointer;
+        }
+        .icon-wrapper svg {
+            width: 22px;
+            height: 22px;
+            fill: #1f1f1f;
+            transition: fill 0.2s ease, transform 0.2s ease;
+        }
+        .icon-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1f1f1f;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .icon-wrapper:hover svg,
+        .icon-wrapper:hover .icon-text {
+            fill: var(--accent);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .icon-wrapper::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: #1f1f1f;
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .icon-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-2px);
+            border: 5px solid transparent;
+            border-top-color: #1f1f1f;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .icon-wrapper:hover::after,
+        .icon-wrapper:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
 
         /* ---------- 第二页 ---------- */
         .page2 {
-            position: fixed; inset: 0; z-index: 25;
+            position: fixed;
+            inset: 0;
+            z-index: 25;
             background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            pointer-events: none; opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
             transition: opacity 0.3s ease;
             will-change: opacity;
         }
-        .splash-wrapper { display: flex; align-items: flex-start; justify-content: center; }
-        .splash-title { font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em; color: #0a0a0a; line-height: 1; user-select: none; }
-        .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
-        .year-digits { display: inline-block; }
+        .splash-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .splash-title {
+            font-size: clamp(5rem, 16vw, 14rem);
+            font-weight: 750;
+            letter-spacing: 0.06em;
+            color: #0a0a0a;
+            line-height: 1;
+            user-select: none;
+        }
+        .year-tag {
+            font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+            font-weight: 550;
+            letter-spacing: 0.06em;
+            color: #3a3a3a;
+            user-select: none;
+            opacity: 0.85;
+            line-height: 1;
+            white-space: nowrap;
+            margin-left: clamp(0.3rem, 0.8vw, 0.6rem);
+            margin-top: 0.35em;
+        }
+        .year-digits {
+            display: inline-block;
+        }
 
         /* ---------- 第三页：全屏自适应三列卡片 ---------- */
         .page3 {
-            position: fixed; inset: 0; z-index: 30;
+            position: fixed;
+            inset: 0;
+            z-index: 30;
             background: var(--bg);
-            display: flex; flex-direction: column;
-            pointer-events: none; opacity: 0;
+            display: flex;
+            flex-direction: column;
+            pointer-events: none;
+            opacity: 0;
             transform: translateY(40px);
-            transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
+            transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
             padding: 4vh 2vw 4vh;
         }
-        .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .page3.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
 
         .section-header {
             text-align: center;
@@ -125,7 +382,7 @@
         .ornament-line {
             width: 50px;
             height: 1px;
-            background: rgba(0,0,0,0.15);
+            background: rgba(0, 0, 0, 0.15);
             border-radius: 1px;
         }
         .ornament-dot {
@@ -160,56 +417,254 @@
             background: #ccc;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             margin: auto;
+            position: relative;
         }
         .card-box:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
         }
         .card-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: opacity 0.4s ease;
+        }
+        .card-box img.loaded {
+            opacity: 1;
+        }
+        .card-box img.loading {
+            opacity: 0;
+        }
+
+        /* 卡片刷新按钮 */
+        .card-refresh-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.2s ease;
+            z-index: 5;
+            pointer-events: auto;
+        }
+        .card-refresh-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+            transition: transform 0.4s ease;
+        }
+        .card-box:hover .card-refresh-btn {
+            opacity: 1;
+        }
+        .card-refresh-btn:hover {
+            background: rgba(0, 0, 0, 0.75);
+        }
+        .card-refresh-btn:active svg {
+            transform: rotate(180deg);
+        }
+        .card-refresh-btn.spinning svg {
+            animation: spinIcon 0.5s ease-out;
+        }
+        @keyframes spinIcon {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
-            :root { --offset: 0rem; --card-gap: 8px; }
-            header { padding: 1rem 1.5rem; }
-            .nav-links { font-size: 1rem; gap: 1.5rem; }
-            main { justify-content: space-evenly; gap: 0; padding: 0.5rem 1.5rem; }
-            .hero-title { white-space: normal; flex-wrap: wrap; text-align: center; font-size: max(2.5rem,10vw); gap: 0.6rem; margin: 0; }
-            .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
-            .profile-img { width: 65px; min-width: 65px; }
-            .hero-desc { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; font-size: max(0.95rem,3.5vw); text-align: center; }
-            .hero-desc::before { left: 0; width: 100%; }
-            .hero-desc div:first-child, .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
-            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
-            .software-item:hover { transform: none; color: inherit; }
-            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; text-align: center; }
-            .footer-left { font-size: 0.85rem; } .footer-center { position: static; transform: none; font-size: 1rem; }
-            .footer-right { justify-content: center; gap: 1.2rem; }
-            .icon-wrapper svg { width: 20px; height: 20px; } .icon-text { font-size: 1.2rem; }
-            .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
-            .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
-            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
-            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
-            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
-            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
-            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
-            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
-            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
-            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
-            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
-            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
-            @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
-            .section-title { font-size: 2rem; }
-            .cards-row { flex-wrap: wrap; align-items: stretch; }
-            .card-col { flex: 0 0 calc(50% - 4px); height: auto; }
-            .card-box { border-radius: 12px; }
+            :root {
+                --offset: 0rem;
+                --card-gap: 8px;
+            }
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                font-size: 1rem;
+                gap: 1.5rem;
+            }
+            main {
+                justify-content: space-evenly;
+                gap: 0;
+                padding: 0.5rem 1.5rem;
+            }
+            .hero-title {
+                white-space: normal;
+                flex-wrap: wrap;
+                text-align: center;
+                font-size: max(2.5rem, 10vw);
+                gap: 0.6rem;
+                margin: 0;
+            }
+            .hero-title .dot-text {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.2rem;
+            }
+            .profile-img {
+                width: 65px;
+                min-width: 65px;
+            }
+            .hero-desc {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-top: 1rem;
+                font-size: max(0.95rem, 3.5vw);
+                text-align: center;
+            }
+            .hero-desc::before {
+                left: 0;
+                width: 100%;
+            }
+            .hero-desc div:first-child,
+            .hero-desc div:last-child {
+                margin: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-desc div:last-child {
+                gap: 0.3rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .software-item:hover {
+                transform: none;
+                color: inherit;
+            }
+            footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.8rem;
+                text-align: center;
+            }
+            .footer-left {
+                font-size: 0.85rem;
+            }
+            .footer-center {
+                position: static;
+                transform: none;
+                font-size: 1rem;
+            }
+            .footer-right {
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .icon-wrapper svg {
+                width: 20px;
+                height: 20px;
+            }
+            .icon-text {
+                font-size: 1.2rem;
+            }
+            .splash-title {
+                font-size: max(3.5rem, 14vw);
+                letter-spacing: 0.04em;
+            }
+            .year-tag {
+                font-size: max(0.85rem, 3vw);
+                margin-left: clamp(0.2rem, 0.8vw, 0.4rem);
+                margin-top: 0.25em;
+            }
+            .blink-1 {
+                animation: softBlink 6s infinite;
+                animation-delay: 0s;
+            }
+            .blink-2 {
+                animation: softBlink 6s infinite;
+                animation-delay: 4s;
+            }
+            .blink-3 {
+                animation: softBlink 6s infinite;
+                animation-delay: 1.5s;
+            }
+            .blink-4 {
+                animation: softBlink 6s infinite;
+                animation-delay: 5s;
+            }
+            .blink-5 {
+                animation: softBlink 6s infinite;
+                animation-delay: 2.5s;
+            }
+            .blink-6 {
+                animation: softBlink 6s infinite;
+                animation-delay: 0.8s;
+            }
+            .blink-7 {
+                animation: softBlink 6s infinite;
+                animation-delay: 3.5s;
+            }
+            .blink-8 {
+                animation: softBlink 6s infinite;
+                animation-delay: 1s;
+            }
+            .blink-9 {
+                animation: softBlink 6s infinite;
+                animation-delay: 3s;
+            }
+            .blink-10 {
+                animation: softBlink 6s infinite;
+                animation-delay: 4.5s;
+            }
+            @keyframes softBlink {
+                0%,
+                100% {
+                    color: var(--gray);
+                    transform: scale(1);
+                    text-shadow: none;
+                }
+                15%,
+                35% {
+                    color: #ff9d5c;
+                    transform: scale(1.02);
+                    text-shadow: 0 0 6px rgba(255, 157, 92, 0.3);
+                }
+                25% {
+                    color: var(--accent);
+                    transform: scale(1.03);
+                    text-shadow: 0 0 10px rgba(255, 140, 66, 0.4);
+                }
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .cards-row {
+                flex-wrap: wrap;
+                align-items: stretch;
+            }
+            .card-col {
+                flex: 0 0 calc(50% - 4px);
+                height: auto;
+            }
+            .card-box {
+                border-radius: 12px;
+            }
+            .card-refresh-btn {
+                width: 28px;
+                height: 28px;
+                top: 8px;
+                right: 8px;
+                opacity: 0.7;
+            }
+            .card-refresh-btn svg {
+                width: 14px;
+                height: 14px;
+            }
         }
     </style>
 </head>
@@ -222,12 +677,13 @@
         </header>
         <main>
             <div class="hero-title" id="titleMove">
-                <span>周成鑫</span><span>—</span>
-                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/TX.webp?v=2" class="profile-img" alt="头像">
+                <span>苏畅</span><span>—</span>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect fill='%23d4d4ce' width='150' height='150'/%3E%3Ccircle cx='75' cy='60' r='28' fill='%23bbb'/%3E%3Cellipse cx='75' cy='125' rx='50' ry='22' fill='%23bbb'/%3E%3C/svg%3E"
+                class="profile-img" alt="头像" id="profileImg">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
-                <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
+                <div>Hi, 我是苏畅，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
                 <div>
                     <span class="toolbox-line"><strong>日常工具箱：</strong>
                         <span class="software-item blink-1">C4D/Redshift</span>
@@ -259,7 +715,7 @@
         </div>
     </div>
 
-    <!-- 第三页：全屏自适应三列卡片（jsDelivr CDN 加速） -->
+    <!-- 第三页：全屏自适应三列卡片（随机图片） -->
     <div class="page3" id="page3">
         <div class="section-header">
             <div class="section-title">主图渲染</div>
@@ -274,22 +730,34 @@
         <div class="cards-row">
             <!-- ===== 卡片1 ===== -->
             <div class="card-col">
-                <div class="card-box">
-                    <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT1.webp" alt="主图1">
+                <div class="card-box" id="cardBox1">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect fill='%23d4d4ce' width='600' height='600'/%3E%3Ctext x='300' y='310' text-anchor='middle' fill='%23aaa' font-size='28' font-family='sans-serif'%3E加载中...%3C/text%3E%3C/svg%3E"
+                    class="loading" alt="主图1" id="cardImg1">
+                    <button class="card-refresh-btn" title="换一张" data-card="1">
+                        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4C7.58 4 4 7.58 4 12s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                    </button>
                 </div>
             </div>
 
             <!-- ===== 卡片2 ===== -->
             <div class="card-col">
-                <div class="card-box">
-                    <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT2.webp" alt="主图2">
+                <div class="card-box" id="cardBox2">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect fill='%23d4d4ce' width='600' height='600'/%3E%3Ctext x='300' y='310' text-anchor='middle' fill='%23aaa' font-size='28' font-family='sans-serif'%3E加载中...%3C/text%3E%3C/svg%3E"
+                    class="loading" alt="主图2" id="cardImg2">
+                    <button class="card-refresh-btn" title="换一张" data-card="2">
+                        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4C7.58 4 4 7.58 4 12s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                    </button>
                 </div>
             </div>
 
             <!-- ===== 卡片3 ===== -->
             <div class="card-col">
-                <div class="card-box">
-                    <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT3.webp" alt="主图3">
+                <div class="card-box" id="cardBox3">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect fill='%23d4d4ce' width='600' height='600'/%3E%3Ctext x='300' y='310' text-anchor='middle' fill='%23aaa' font-size='28' font-family='sans-serif'%3E加载中...%3C/text%3E%3C/svg%3E"
+                    class="loading" alt="主图3" id="cardImg3">
+                    <button class="card-refresh-btn" title="换一张" data-card="3">
+                        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4C7.58 4 4 7.58 4 12s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -300,6 +768,169 @@
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
 
+            // ==================== 随机图片生成核心 ====================
+            const profileImg = document.getElementById('profileImg');
+            const cardImgs = [
+                document.getElementById('cardImg1'),
+                document.getElementById('cardImg2'),
+                document.getElementById('cardImg3'),
+            ];
+            const cardBoxes = [
+                document.getElementById('cardBox1'),
+                document.getElementById('cardBox2'),
+                document.getElementById('cardBox3'),
+            ];
+
+            // 生成随机种子（用于图片服务以保证可复现的随机）
+            function randomSeed() {
+                return Math.random().toString(36).substring(2, 14) + Date.now().toString(36);
+            }
+
+            // 存储当前卡片种子，用于刷新单张
+            const cardSeeds = [randomSeed(), randomSeed(), randomSeed()];
+            const profileSeed = randomSeed();
+
+            /**
+             * 生成随机头像URL
+             * 使用 pravatar.cc —— 生成插画风格的随机头像
+             * 备用：picsum 随机正方形图片
+             */
+            function getRandomAvatarURL(seed) {
+                // pravatar: AI生成的插画头像，尺寸300x300，使用seed确保一致性
+                return `https://i.pravatar.cc/300?u=${encodeURIComponent(seed)}`;
+            }
+
+            /**
+             * 生成随机卡片图片URL
+             * 使用 picsum.photos —— 高质量Unsplash摄影作品
+             * 800x800正方形，适配1:1卡片
+             */
+            function getRandomCardURL(seed) {
+                // picsum seed模式：相同seed返回相同图片
+                return `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/800`;
+            }
+
+            /** 设置图片src并处理加载状态 */
+            function setImageWithFallback(imgEl, primaryURL, fallbackURL) {
+                imgEl.classList.add('loading');
+                imgEl.classList.remove('loaded');
+
+                const handleLoad = () => {
+                    imgEl.classList.remove('loading');
+                    imgEl.classList.add('loaded');
+                    imgEl.removeEventListener('load', handleLoad);
+                    imgEl.removeEventListener('error', handleError);
+                };
+                const handleError = () => {
+                    imgEl.removeEventListener('load', handleLoad);
+                    imgEl.removeEventListener('error', handleError);
+                    if (fallbackURL && imgEl.src !== fallbackURL) {
+                        // 尝试备用URL
+                        const fbImg = new Image();
+                        fbImg.onload = () => {
+                            imgEl.src = fallbackURL;
+                            imgEl.classList.remove('loading');
+                            imgEl.classList.add('loaded');
+                        };
+                        fbImg.onerror = () => {
+                            // 最终失败，保持SVG占位
+                            imgEl.classList.remove('loading');
+                            imgEl.classList.add('loaded');
+                        };
+                        fbImg.src = fallbackURL;
+                    } else {
+                        imgEl.classList.remove('loading');
+                        imgEl.classList.add('loaded');
+                    }
+                };
+
+                imgEl.addEventListener('load', handleLoad, { once: true });
+                imgEl.addEventListener('error', handleError, { once: true });
+                imgEl.src = primaryURL;
+            }
+
+            /** 初始化头像随机图片 */
+            function initProfileImage() {
+                const primaryURL = getRandomAvatarURL(profileSeed);
+                // 备用：picsum随机图片
+                const fallbackURL = `https://picsum.photos/seed/${encodeURIComponent(profileSeed)}/300/300`;
+                setImageWithFallback(profileImg, primaryURL, fallbackURL);
+            }
+
+            /** 初始化单张卡片随机图片 */
+            function initCardImage(index) {
+                const seed = cardSeeds[index];
+                const primaryURL = getRandomCardURL(seed);
+                // 备用：使用不同seed的picsum
+                const fallbackSeed = seed + '-fb';
+                const fallbackURL = `https://picsum.photos/seed/${encodeURIComponent(fallbackSeed)}/800/800`;
+                setImageWithFallback(cardImgs[index], primaryURL, fallbackURL);
+            }
+
+            /** 刷新单张卡片图片 */
+            function refreshCardImage(index) {
+                cardSeeds[index] = randomSeed();
+                const seed = cardSeeds[index];
+                const primaryURL = getRandomCardURL(seed);
+                const fallbackSeed = seed + '-fb';
+                const fallbackURL = `https://picsum.photos/seed/${encodeURIComponent(fallbackSeed)}/800/800`;
+                // 先重置为loading状态
+                cardImgs[index].classList.add('loading');
+                cardImgs[index].classList.remove('loaded');
+                setImageWithFallback(cardImgs[index], primaryURL, fallbackURL);
+            }
+
+            /** 初始化所有随机图片 */
+            function initAllRandomImages() {
+                initProfileImage();
+                cardImgs.forEach((_, i) => initCardImage(i));
+            }
+
+            // 页面加载时初始化随机图片
+            initAllRandomImages();
+
+            // 绑定卡片刷新按钮事件
+            document.querySelectorAll('.card-refresh-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const cardIndex = parseInt(btn.getAttribute('data-card')) - 1;
+                    if (cardIndex >= 0 && cardIndex < 3) {
+                        // 旋转动画
+                        btn.classList.add('spinning');
+                        setTimeout(() => btn.classList.remove('spinning'), 500);
+                        // 刷新图片
+                        refreshCardImage(cardIndex);
+                    }
+                });
+            });
+
+            // 点击卡片也可以刷新
+            cardBoxes.forEach((box, i) => {
+                box.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    const btn = box.querySelector('.card-refresh-btn');
+                    if (btn) {
+                        btn.classList.add('spinning');
+                        setTimeout(() => btn.classList.remove('spinning'), 500);
+                        refreshCardImage(i);
+                    }
+                });
+            });
+
+            // 双击头像也可以刷新头像
+            profileImg.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                const newSeed = randomSeed();
+                // 更新profileSeed（使用新seed）
+                const primaryURL = getRandomAvatarURL(newSeed);
+                const fallbackURL = `https://picsum.photos/seed/${encodeURIComponent(newSeed)}/300/300`;
+                // 更新存储的seed引用
+                Object.assign({ profileSeed: newSeed });
+                setImageWithFallback(profileImg, primaryURL, fallbackURL);
+            });
+
+            // ==================== 原有滚动逻辑 ====================
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const page3 = document.getElementById('page3');
@@ -307,33 +938,118 @@
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
 
-            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
-            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
-            const chars = FINAL_TEXT.split(''), totalChars = chars.length;
-            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
-            const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
-            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
-            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-            function updateSlotChars() {
-                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
-                const targetLockCount = Math.floor(globalProgress * totalChars);
-                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
-                const result = [];
-                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
-                yearDigits.textContent = result.join('');
-                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
+            const FINAL_TEXT = '2020–2026',
+                SPIN_DURATION = 1000,
+                TICK_INTERVAL = 20,
+                LOOP_DELAY = 600,
+                SLOWDOWN_START = 0.5;
+            let loopActive = false,
+                intervalId = null,
+                loopTimeout = null,
+                startTime = 0;
+            const chars = FINAL_TEXT.split(''),
+                totalChars = chars.length;
+
+            function getRandomPool(c) {
+                if (c >= '0' && c <= '9') return '0123456789'.split('');
+                if (c === '–' || c === '-') return ['–', '—', '·', '-'];
+                if (c === '©') return ['©', '®', '℗'];
+                return [c];
             }
-            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
+            const pools = chars.map(getRandomPool);
+            let slotPositions = new Array(totalChars).fill(0),
+                locked = new Array(totalChars).fill(false),
+                lockIndex = 0;
 
-            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
+            function clearTimers() {
+                if (intervalId) clearInterval(intervalId);
+                if (loopTimeout) clearTimeout(loopTimeout);
+                intervalId = null;
+                loopTimeout = null;
+            }
 
-            if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+            function updateSlotChars() {
+                const elapsed = performance.now() - startTime,
+                    globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const targetLockCount = Math.floor(globalProgress * totalChars);
+                while (lockIndex < targetLockCount && lockIndex < totalChars) {
+                    const idx = lockIndex;
+                    locked[idx] = true;
+                    slotPositions[idx] = pools[idx].indexOf(chars[idx]);
+                    lockIndex++;
+                }
+                const result = [];
+                for (let i = 0; i < totalChars; i++) {
+                    if (locked[i]) { result.push(chars[i]); continue; }
+                    const pool = pools[i];
+                    if (pool.length <= 1) { result.push(pool[0]); continue; }
+                    const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4;
+                    let slotProgress;
+                    if (globalProgress >= slotSlowStart) {
+                        const slotDuration = 1 - slotSlowStart;
+                        slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration);
+                        slotProgress = easeOutCubic(slotProgress);
+                    } else { slotProgress = 0; }
+                    if (slotProgress < 1) {
+                        const speedFactor = 1 + Math.floor((1 - slotProgress) * 12);
+                        slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length;
+                    } else {
+                        locked[i] = true;
+                        const finalIdx = pool.indexOf(chars[i]);
+                        if (finalIdx >= 0) slotPositions[i] = finalIdx;
+                    }
+                    result.push(pool[slotPositions[i] % pool.length]);
+                }
+                yearDigits.textContent = result.join('');
+                if (locked.every(v => v)) {
+                    yearDigits.textContent = FINAL_TEXT;
+                    clearTimers();
+                    if (loopActive) {
+                        loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY);
+                    }
+                }
+            }
+
+            function startSlotSpin() {
+                clearTimers();
+                locked.fill(false);
+                lockIndex = 0;
+                for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); }
+                startTime = performance.now();
+                yearDigits.textContent = FINAL_TEXT;
+                intervalId = setInterval(updateSlotChars, TICK_INTERVAL);
+            }
+
+            if (title) {
+                let tx = 0,
+                    cx = 0,
+                    raf;
+                const updateTitle = () => {
+                    cx += (tx - cx) * 0.25;
+                    title.style.transform = `translateX(${cx}px)`;
+                    if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle);
+                    else { title.style.transform = `translateX(${tx}px)`;
+                        cx = tx;
+                        raf = null; }
+                };
+                document.addEventListener('mousemove', e => {
+                    tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0;
+                    if (!raf) raf = requestAnimationFrame(updateTitle);
+                });
+                document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(
+                    updateTitle); });
+            }
+
+            if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
             let vh = window.innerHeight;
             window.addEventListener('resize', () => { vh = window.innerHeight; });
 
-            let ticking = false, wasPage2Active = false;
+            let ticking = false,
+                wasPage2Active = false;
             const updateScroll = () => {
                 const sY = window.scrollY;
                 const p1 = Math.min(1, Math.max(0, sY / vh));
@@ -343,11 +1059,16 @@
 
                 const inPage2 = sY >= vh && sY < 2 * vh;
                 if (inPage2) {
-                    page2.style.opacity = 1; page2.style.pointerEvents = 'auto';
-                    if (!wasPage2Active) { loopActive = true; startSlotSpin(); }
+                    page2.style.opacity = 1;
+                    page2.style.pointerEvents = 'auto';
+                    if (!wasPage2Active) { loopActive = true;
+                        startSlotSpin(); }
                 } else {
-                    page2.style.opacity = 0; page2.style.pointerEvents = 'none';
-                    if (wasPage2Active) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; }
+                    page2.style.opacity = 0;
+                    page2.style.pointerEvents = 'none';
+                    if (wasPage2Active) { loopActive = false;
+                        clearTimers();
+                        yearDigits.textContent = FINAL_TEXT; }
                 }
                 wasPage2Active = inPage2;
 
@@ -356,7 +1077,8 @@
 
                 ticking = false;
             };
-            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
+            window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll);
+                    ticking = true; } }, { passive: true });
             window.addEventListener('resize', updateScroll);
             updateScroll();
         })();
