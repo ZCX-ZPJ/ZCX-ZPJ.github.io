@@ -76,7 +76,7 @@
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ---------- 第三页：图片自适应卡片（可滚动，无滚动条） ---------- */
+        /* ---------- 第三页：无限制自适应卡片 ---------- */
         .page3 {
             position: fixed; inset: 0; z-index: 30;
             background: var(--bg);
@@ -87,28 +87,28 @@
             will-change: transform, opacity;
             overflow-y: auto; -webkit-overflow-scrolling: touch;
             scrollbar-width: none; -ms-overflow-style: none;
-            padding: 2rem 1rem;
+            padding: 1rem;
         }
         .page3::-webkit-scrollbar { display: none; }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
         .single-card {
             width: 100%;
-            max-width: 1000px;
+            max-width: 100%;              /* 移除固定最大宽度 */
             background: transparent;
             border-radius: 20px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: auto;                     /* 内容不足时垂直居中 */
+            margin: auto;
         }
         .single-card img {
+            display: block;
             width: 100%;
             height: auto;
-            display: block;
             object-fit: contain;
-            border-radius: 12px;              /* 图片也带点圆角 */
+            border-radius: 12px;
         }
 
         @media (max-width: 768px) {
@@ -141,8 +141,6 @@
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
-            .page3 { padding: 1rem 0.5rem; }
-            .single-card { max-width: 100%; }
         }
     </style>
 </head>
@@ -194,7 +192,6 @@
 
     <div class="page3" id="page3">
         <div class="single-card">
-            <!-- 图片原比例展示，卡片高度自动适应，页面可滚动 -->
             <img src="https://raw.githubusercontent.com/ZCX-ZPJ/ZCX-ZPJ.github.io/dec95a86c0cdee694005386746a1e383982dfb66/ZP.jpg" alt="展示作品">
         </div>
     </div>
