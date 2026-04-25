@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
 
-    <!-- DNS 预解析与预连接，加速 jsDelivr CDN -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
@@ -91,7 +90,8 @@
             transform: translateY(40px);
             transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1);
             will-change: transform, opacity;
-            padding: 4vh 2vw 4vh;
+            padding: 4vh 2vw;
+            overflow-y: auto;           /* 内容超过一屏时可滚动 */
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
@@ -136,34 +136,31 @@
             opacity: 0.8;
         }
 
+        /* 卡片网格：三列，自动换行 */
         .cards-row {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--card-gap);
             width: 100%;
             flex: 1;
-            min-height: 0;
-            align-items: center;
+            align-content: start;       /* 保证从顶部开始排列 */
         }
 
         .card-col {
-            flex: 1 1 0;
-            min-width: 0;
-            height: 100%;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         .card-box {
             width: 100%;
             aspect-ratio: 1 / 1;
-            max-height: 100%;
             background: #ccc;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            margin: auto;
         }
         .card-box:hover {
             transform: translateY(-4px);
@@ -175,9 +172,10 @@
             object-fit: cover;
             display: block;
             opacity: 1;
-            transition: opacity 0.6s ease; /* 图片加载后的淡入效果 */
+            transition: opacity 0.6s ease;
         }
 
+        /* 移动端布局调整 */
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 8px; }
             header { padding: 1rem 1.5rem; }
@@ -209,8 +207,11 @@
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .section-title { font-size: 2rem; }
-            .cards-row { flex-wrap: wrap; align-items: stretch; }
-            .card-col { flex: 0 0 calc(50% - 4px); height: auto; }
+
+            /* 移动端改为两列 */
+            .cards-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .card-box { border-radius: 12px; }
         }
     </style>
@@ -261,7 +262,7 @@
         </div>
     </div>
 
-    <!-- 第三页：全屏自适应三列卡片（图片懒加载） -->
+    <!-- 第三页：15张卡片，三列网格，懒加载 -->
     <div class="page3" id="page3">
         <div class="section-header">
             <div class="section-title">主图渲染</div>
@@ -274,30 +275,110 @@
         </div>
 
         <div class="cards-row">
-            <!-- 卡片1 -->
+            <!-- 以下15张卡片，图片链接请替换为你自己的图片地址 -->
             <div class="card-col">
                 <div class="card-box">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                          data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT1.webp"
-                         alt="主图1" loading="lazy">
+                         alt="渲染作品1" loading="lazy">
                 </div>
             </div>
-
-            <!-- 卡片2 -->
             <div class="card-col">
                 <div class="card-box">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                          data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT2.webp"
-                         alt="主图2" loading="lazy">
+                         alt="渲染作品2" loading="lazy">
                 </div>
             </div>
-
-            <!-- 卡片3 -->
             <div class="card-col">
                 <div class="card-box">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                          data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT3.webp"
-                         alt="主图3" loading="lazy">
+                         alt="渲染作品3" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT4.webp"
+                         alt="渲染作品4" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT5.webp"
+                         alt="渲染作品5" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT6.webp"
+                         alt="渲染作品6" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT7.webp"
+                         alt="渲染作品7" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT8.webp"
+                         alt="渲染作品8" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT9.webp"
+                         alt="渲染作品9" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT10.webp"
+                         alt="渲染作品10" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT11.webp"
+                         alt="渲染作品11" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT12.webp"
+                         alt="渲染作品12" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT13.webp"
+                         alt="渲染作品13" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT14.webp"
+                         alt="渲染作品14" loading="lazy">
+                </div>
+            </div>
+            <div class="card-col">
+                <div class="card-box">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/ZT15.webp"
+                         alt="渲染作品15" loading="lazy">
                 </div>
             </div>
         </div>
@@ -315,7 +396,6 @@
             const yearDigits = document.getElementById('yearDigits');
             const homeLink = document.getElementById('homeLink');
 
-            // 第三页图片懒加载标志位
             let page3ImagesLoaded = false;
 
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
@@ -362,7 +442,7 @@
                 }
                 wasPage2Active = inPage2;
 
-                // 第三页：激活时懒加载图片
+                // 第三页：激活时加载所有卡片图片
                 if (sY >= 2 * vh) {
                     page3.classList.add('active');
                     if (!page3ImagesLoaded) {
