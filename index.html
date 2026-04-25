@@ -193,7 +193,7 @@
         <main>
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span><span>—</span>
-                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/TX.webp?v=2" class="profile-img" alt="头像">
+                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp?v=2" class="profile-img" alt="头像">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
@@ -233,31 +233,8 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：首屏仅3张直接加载，其余全部懒加载 -->
     <div class="detail-overlay" id="detailOverlay">
-        <div class="detail-grid" id="detailGrid">
-            <!-- 第1~3张：直接加载（首屏） -->
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图1.webp?v=2" class="full-img" alt="展示图1">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图2.webp?v=2" class="full-img" alt="展示图2">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图3.webp?v=2" class="full-img" alt="展示图3">
-
-            <!-- 第4~18张：懒加载（滚动到附近才加载） -->
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图4.webp?v=2" class="full-img lazy-load" alt="展示图4">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图5.webp?v=2" class="full-img lazy-load" alt="展示图5">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图6.webp?v=2" class="full-img lazy-load" alt="展示图6">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图7.webp?v=2" class="full-img lazy-load" alt="展示图7">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图8.webp?v=2" class="full-img lazy-load" alt="展示图8">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图9.webp?v=2" class="full-img lazy-load" alt="展示图9">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图10.webp?v=2" class="full-img lazy-load" alt="展示图10">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图11.webp?v=2" class="full-img lazy-load" alt="展示图11">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图12.webp?v=2" class="full-img lazy-load" alt="展示图12">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图13.webp?v=2" class="full-img lazy-load" alt="展示图13">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图14.webp?v=2" class="full-img lazy-load" alt="展示图14">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图15.webp?v=2" class="full-img lazy-load" alt="展示图15">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图16.webp?v=2" class="full-img lazy-load" alt="展示图16">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图17.webp?v=2" class="full-img lazy-load" alt="展示图17">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图18.webp?v=2" class="full-img lazy-load" alt="展示图18">
-        </div>
+        <div class="detail-grid" id="detailGrid"></div>
         <div class="detail-footer" id="detailFooter" onclick="document.getElementById('detailOverlay').classList.remove('active');window.scrollTo({top:2*window.innerHeight,behavior:'auto'});document.getElementById('page3').classList.add('active');">
             <span class="detail-footer-text">↑ 点击返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
         </div>
@@ -265,9 +242,37 @@
 
     <script>
         (() => {
-            // ========== 懒加载逻辑 ==========
-            const lazyImages = document.querySelectorAll('.lazy-load');
-            const imageObserver = new IntersectionObserver((entries) => {
+            // ==================== 图片服务器配置（修改这一行即可切换服务器） ====================
+            const CDN_BASE = 'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/'; // 当前使用 jsDelivr
+            // 如果使用阿里云OSS，改为：'https://your-bucket.oss-cn-hangzhou.aliyuncs.com/'
+            // 如果使用腾讯云COS，改为：'https://your-bucket.cos.ap-guangzhou.myqcloud.com/'
+            // ============================================================================
+
+            const detailGrid = document.getElementById('detailGrid');
+            const imageFiles = [
+                '主图1.webp', '主图2.webp', '主图3.webp',
+                '主图4.webp', '主图5.webp', '主图6.webp',
+                '主图7.webp', '主图8.webp', '主图9.webp',
+                '主图10.webp', '主图11.webp', '主图12.webp',
+                '主图13.webp', '主图14.webp', '主图15.webp',
+                '主图16.webp', '主图17.webp', '主图18.webp'
+            ];
+
+            imageFiles.forEach((file, i) => {
+                const img = document.createElement('img');
+                img.className = 'full-img';
+                img.alt = `展示图${i + 1}`;
+                if (i < 3) {
+                    img.src = CDN_BASE + file + '?v=2';
+                } else {
+                    img.dataset.src = CDN_BASE + file + '?v=2';
+                    img.classList.add('lazy-load');
+                }
+                detailGrid.appendChild(img);
+            });
+
+            // 懒加载
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const img = entry.target;
@@ -276,13 +281,13 @@
                             img.removeAttribute('data-src');
                             img.classList.remove('lazy-load');
                         }
-                        imageObserver.unobserve(img);
+                        observer.unobserve(img);
                     }
                 });
             }, { rootMargin: '300px' });
-            lazyImages.forEach(img => imageObserver.observe(img));
-            // =================================
+            document.querySelectorAll('.lazy-load').forEach(img => observer.observe(img));
 
+            // 其余页面逻辑（保持不变）
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
 
@@ -304,12 +309,10 @@
             });
 
             if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-            // 第三页卡片封面
             const captions = [
-                { zh: "主图渲染", en: "Main Render" },
-                { zh: "详情展示", en: "Detail Display" },
-                { zh: "AI辅助", en: "AI Assisted" }
+                { zh: '主图渲染', en: 'Main Render' },
+                { zh: '详情展示', en: 'Detail Display' },
+                { zh: 'AI辅助', en: 'AI Assisted' }
             ];
             const cardImages = [
                 'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp?v=2',
@@ -329,40 +332,49 @@
                 galleryGrid.appendChild(col);
             }
 
-            // 第二页老虎机动画
-            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
+            // 第二页动画
+            const FINAL_TEXT = '2020–2026', SPIN = 1000, TICK = 20, DELAY = 600, START_DECEL = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
-            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
-            const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
-            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
-            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-            function updateSlotChars() {
-                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
-                const targetLockCount = Math.floor(globalProgress * totalChars);
-                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
-                const result = [];
-                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = SLOWDOWN_START + (i / totalChars) * (1 - SLOWDOWN_START) * 0.4; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
-                yearDigits.textContent = result.join('');
-                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
+            const pools = chars.map(c => c>='0'&&c<='9' ? '0123456789'.split('') : c==='–'||c==='-' ? ['–','—','·','-'] : c==='©' ? ['©','®','℗'] : [c]);
+            let slots = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIdx = 0;
+            function clearTimers() { if(intervalId)clearInterval(intervalId); if(loopTimeout)clearTimeout(loopTimeout); intervalId=null; loopTimeout=null; }
+            function easeOut(t) { return 1-Math.pow(1-t,3); }
+            function updateSlots() {
+                const prog = Math.min(1, (performance.now()-startTime)/SPIN);
+                const target = Math.floor(prog*totalChars);
+                while(lockIdx<target && lockIdx<totalChars) { locked[lockIdx]=true; slots[lockIdx]=pools[lockIdx].indexOf(chars[lockIdx]); lockIdx++; }
+                const res = [];
+                for(let i=0;i<totalChars;i++) {
+                    if(locked[i]) { res.push(chars[i]); continue; }
+                    const pool = pools[i];
+                    if(pool.length<=1) { res.push(pool[0]); continue; }
+                    const slotSlow = START_DECEL + (i/totalChars)*(1-START_DECEL)*0.4;
+                    let slotProg = prog>=slotSlow ? Math.min(1, (prog-slotSlow)/(1-slotSlow)) : 0;
+                    slotProg = easeOut(slotProg);
+                    if(slotProg<1) { const speed = 1+Math.floor((1-slotProg)*12); slots[i] = (slots[i]+speed)%pool.length; }
+                    else { locked[i]=true; const idx = pool.indexOf(chars[i]); if(idx>=0)slots[i]=idx; }
+                    res.push(pool[slots[i]%pool.length]);
+                }
+                yearDigits.textContent = res.join('');
+                if(locked.every(v=>v)) { yearDigits.textContent=FINAL_TEXT; clearTimers(); if(loopActive) loopTimeout=setTimeout(()=>{if(loopActive)startSpin();},DELAY); }
             }
-            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
+            function startSpin() { clearTimers(); locked.fill(false); lockIdx=0; for(let i=0;i<totalChars;i++)slots[i]=Math.floor(Math.random()*pools[i].length); startTime=performance.now(); yearDigits.textContent=FINAL_TEXT; intervalId=setInterval(updateSlots,TICK); }
 
-            // 第一页标题视差
-            if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
-
+            if(title) { let tx=0,cx=0,raf; const up=()=>{ cx+=(tx-cx)*0.25; title.style.transform=`translateX(${cx}px)`; if(Math.abs(tx-cx)>0.5)raf=requestAnimationFrame(up); else{title.style.transform=`translateX(${tx}px)`;cx=tx;raf=null;} }; document.addEventListener('mousemove',e=>{ tx=e.clientY<innerHeight/2?(e.clientX/innerWidth-0.5)*1600:0; if(!raf)raf=requestAnimationFrame(up); }); document.addEventListener('mouseleave',()=>{tx=0;if(!raf)raf=requestAnimationFrame(up);}); }
             let vh = window.innerHeight;
-            window.addEventListener('resize', () => { vh = window.innerHeight; });
-            let ticking = false, wasPage2Active = false;
+            window.addEventListener('resize', () => vh = window.innerHeight);
+            let ticking = false, wasP2 = false;
             const updateScroll = () => {
                 const sY = window.scrollY;
                 const p1 = Math.min(1, Math.max(0, sY / vh));
-                page1.style.transform = `scale(${1 - p1 * 0.3})`; page1.style.opacity = 1 - p1; page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
-                const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) { page2.style.opacity = 1; page2.style.pointerEvents = 'auto'; if (!wasPage2Active) { loopActive = true; startSlotSpin(); } }
-                else { page2.style.opacity = 0; page2.style.pointerEvents = 'none'; if (wasPage2Active) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
-                wasPage2Active = inPage2;
+                page1.style.transform = `scale(${1 - p1 * 0.3})`;
+                page1.style.opacity = 1 - p1;
+                page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
+                const inP2 = sY >= vh && sY < 2 * vh;
+                if (inP2) { page2.style.opacity = 1; page2.style.pointerEvents = 'auto'; if (!wasP2) { loopActive = true; startSpin(); } }
+                else { page2.style.opacity = 0; page2.style.pointerEvents = 'none'; if (wasP2) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
+                wasP2 = inP2;
                 if (sY >= 2 * vh) page3.classList.add('active'); else page3.classList.remove('active');
                 ticking = false;
             };
