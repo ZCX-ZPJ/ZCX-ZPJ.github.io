@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
+
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
     <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp">
+
     <style>
         :root {
             --bg: #e0e0dc;
@@ -18,14 +24,18 @@
             --offset: clamp(2.5rem, 6vw, 4rem);
             --card-gap: 10px;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background: var(--bg); color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
             height: 300vh; overflow-x: hidden; cursor: default;
         }
+
         a, .software-item, .icon-wrapper, .profile-img, .hero-title span { cursor: pointer !important; }
+
         .page1 {
             position: fixed; inset: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -60,11 +70,13 @@
         .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
         .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
+
         .page2 { position: fixed; inset: 0; z-index: 25; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; will-change: opacity; }
         .splash-wrapper { display: flex; align-items: flex-start; justify-content: center; }
         .splash-title { font-size: clamp(5rem,16vw,14rem); font-weight: 750; letter-spacing: 0.06em; color: #0a0a0a; line-height: 1; user-select: none; }
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
+
         .page3 {
             position: fixed; inset: 0; z-index: 30; background: var(--bg);
             display: flex; flex-direction: column;
@@ -81,6 +93,8 @@
         .gallery-item { flex: 1; width: 100%; min-height: 0; background: #ccc; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; display: flex; }
         .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 二级页：底色统一，悬停缩小 */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 50;
             background: var(--bg);
@@ -91,19 +105,29 @@
             -webkit-overflow-scrolling: touch;
         }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
+
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px; padding: 0.6rem;
-            flex: 1; min-height: 0;
+            gap: 10px;
+            padding: 0.6rem;
+            flex: 1;
         }
         .detail-grid img {
-            width: 100%; height: auto;
-            object-fit: cover; border-radius: 10px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: transform 0.2s ease; cursor: pointer;
+            transition: transform 0.2s ease;
+            cursor: pointer;
         }
+
+        /* 悬停改为缩小效果 */
         .detail-grid img:hover { transform: scale(0.98); }
+
+        .full-img { display: block; width: 100%; height: auto; }
+
         .detail-footer {
             flex-shrink: 0; height: 60px;
             display: flex; align-items: center; justify-content: center;
@@ -112,6 +136,7 @@
             box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
         }
         .detail-footer-text { font-size: clamp(0.75rem,1vw,0.85rem); font-weight: 500; letter-spacing: 0.06em; color: #777; padding: 0 1rem; }
+
         @media (max-width: 768px) {
             :root { --offset: 0rem; --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -157,17 +182,30 @@
 <body>
     <div class="page1" id="page1">
         <header>
-            <nav class="nav-links"><a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a></nav>
+            <nav class="nav-links">
+                <a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a>
+            </nav>
         </header>
         <main>
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span><span>—</span>
-                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp" class="profile-img" alt="头像">
+                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/TX.webp" class="profile-img" alt="头像">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
                 <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
-                <div><span class="toolbox-line"><strong>日常工具箱：</strong> <span class="software-item blink-1">C4D/Redshift</span> <span class="software-item blink-2">Rhino</span> <span class="software-item blink-3">PS</span> <span class="software-item blink-4">AI</span> <span class="software-item blink-5">AE</span> <span class="software-item blink-6">PR</span> <span class="software-item blink-7">Style3D</span> </span> <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span></div>
+                <div>
+                    <span class="toolbox-line"><strong>日常工具箱：</strong>
+                        <span class="software-item blink-1">C4D/Redshift</span>
+                        <span class="software-item blink-2">Rhino</span>
+                        <span class="software-item blink-3">PS</span>
+                        <span class="software-item blink-4">AI</span>
+                        <span class="software-item blink-5">AE</span>
+                        <span class="software-item blink-6">PR</span>
+                        <span class="software-item blink-7">Style3D</span>
+                    </span>
+                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span>
+                </div>
             </div>
         </main>
         <footer>
@@ -179,96 +217,86 @@
             </div>
         </footer>
     </div>
+
     <div class="page2" id="page2">
         <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
             <div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div>
         </div>
     </div>
+
     <div class="page3" id="page3">
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
-    <!-- 二级页：全屏覆盖，独立滚动，底色一致 -->
+
+    <!-- 二级页：底色统一，悬停缩小 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid">
-            <img src="主图1.webp" alt="展示图1">
-            <img src="主图2.webp" alt="展示图2">
-            <img src="主图3.webp" alt="展示图3">
-            <img src="主图4.webp" alt="展示图4">
-            <img src="主图5.webp" alt="展示图5">
-            <img src="主图6.webp" alt="展示图6">
-            <img src="主图7.webp" alt="展示图7">
-            <img src="主图8.webp" alt="展示图8">
-            <img src="主图9.webp" alt="展示图9">
-            <img src="主图10.webp" alt="展示图10">
-            <img src="主图11.webp" alt="展示图11">
-            <img src="主图12.webp" alt="展示图12">
-            <img src="主图13.webp" alt="展示图13">
-            <img src="主图14.webp" alt="展示图14">
-            <img src="主图15.webp" alt="展示图15">
-            <img src="主图16.webp" alt="展示图16">
-            <img src="主图17.webp" alt="展示图17">
-            <img src="主图18.webp" alt="展示图18">
+            <img src="主图1.webp" class="full-img" alt="展示图1">
+            <img src="主图2.webp" class="full-img" alt="展示图2">
+            <img src="主图3.webp" class="full-img" alt="展示图3">
+            <img src="主图4.webp" class="full-img" alt="展示图4">
+            <img src="主图5.webp" class="full-img" alt="展示图5">
+            <img src="主图6.webp" class="full-img" alt="展示图6">
+            <img src="主图7.webp" class="full-img" alt="展示图7">
+            <img src="主图8.webp" class="full-img" alt="展示图8">
+            <img src="主图9.webp" class="full-img" alt="展示图9">
+            <img src="主图10.webp" class="full-img" alt="展示图10">
+            <img src="主图11.webp" class="full-img" alt="展示图11">
+            <img src="主图12.webp" class="full-img" alt="展示图12">
+            <img src="主图13.webp" class="full-img" alt="展示图13">
+            <img src="主图14.webp" class="full-img" alt="展示图14">
+            <img src="主图15.webp" class="full-img" alt="展示图15">
+            <img src="主图16.webp" class="full-img" alt="展示图16">
+            <img src="主图17.webp" class="full-img" alt="展示图17">
+            <img src="主图18.webp" class="full-img" alt="展示图18">
         </div>
-        <div class="detail-footer" id="detailFooter">
-            <span class="detail-footer-text">↑ 点击此处返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
+        <div class="detail-footer" id="detailFooter" onclick="document.getElementById('detailOverlay').classList.remove('active');window.scrollTo({top:2*window.innerHeight,behavior:'auto'});document.getElementById('page3').classList.add('active');">
+            <span class="detail-footer-text">↑ 点击返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
         </div>
     </div>
+
     <script>
         (() => {
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
-            const page1 = document.getElementById('page1');
-            const page2 = document.getElementById('page2');
-            const page3 = document.getElementById('page3');
-            const galleryGrid = document.getElementById('galleryGrid');
-            const title = document.getElementById('titleMove');
-            const yearDigits = document.getElementById('yearDigits');
-            const homeLink = document.getElementById('homeLink');
+            const page1 = document.getElementById('page1'), page2 = document.getElementById('page2'), page3 = document.getElementById('page3');
+            const galleryGrid = document.getElementById('galleryGrid'), title = document.getElementById('titleMove');
+            const yearDigits = document.getElementById('yearDigits'), homeLink = document.getElementById('homeLink');
             const detailOverlay = document.getElementById('detailOverlay');
-            const detailFooter = document.getElementById('detailFooter');
-            function closeDetail() {
-                detailOverlay.classList.remove('active');
-                window.scrollTo({ top: 2 * window.innerHeight, behavior: 'auto' });
-                page3.classList.add('active');
-            }
-            detailFooter.addEventListener('click', closeDetail);
-            detailOverlay.addEventListener('click', (e) => { if (e.target === detailOverlay) closeDetail(); });
-            if (homeLink) { homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
-            const cardImages = [
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp',
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp',
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp'
-            ];
+
+            detailOverlay.addEventListener('click', (e) => {
+                if (e.target === detailOverlay) {
+                    detailOverlay.classList.remove('active');
+                    window.scrollTo({ top: 2 * window.innerHeight, behavior: 'auto' });
+                    page3.classList.add('active');
+                }
+            });
+
+            if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
+            const cardImages = [
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp'
+            ];
             for (let i = 0; i < 3; i++) {
-                const col = document.createElement('div');
-                col.className = 'gallery-col';
-                const header = document.createElement('div');
-                header.className = 'col-header';
-                const label = document.createElement('div');
-                label.className = 'col-label';
-                label.textContent = captions[i].zh;
-                header.appendChild(label);
-                const sub = document.createElement('div');
-                sub.className = 'col-sub';
-                sub.textContent = captions[i].en;
-                header.appendChild(sub);
+                const col = document.createElement('div'); col.className = 'gallery-col';
+                const header = document.createElement('div'); header.className = 'col-header';
+                const label = document.createElement('div'); label.className = 'col-label'; label.textContent = captions[i].zh; header.appendChild(label);
+                const sub = document.createElement('div'); sub.className = 'col-sub'; sub.textContent = captions[i].en; header.appendChild(sub);
                 col.appendChild(header);
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                const img = document.createElement('img');
-                img.src = cardImages[i];
-                img.alt = captions[i].zh;
-                item.appendChild(img);
-                if (i === 0) { item.addEventListener('click', () => { detailOverlay.classList.add('active'); }); }
-                col.appendChild(item);
-                galleryGrid.appendChild(col);
+                const item = document.createElement('div'); item.className = 'gallery-item';
+                const img = document.createElement('img'); img.src = cardImages[i]; img.alt = captions[i].zh; item.appendChild(img);
+                if (i === 0) item.addEventListener('click', () => detailOverlay.classList.add('active'));
+                col.appendChild(item); galleryGrid.appendChild(col);
             }
+
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
@@ -287,9 +315,10 @@
                 if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
+
             if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
-            let vh = window.innerHeight;
-            window.addEventListener('resize', () => { vh = window.innerHeight; });
+
+            let vh = window.innerHeight; window.addEventListener('resize', () => { vh = window.innerHeight; });
             let ticking = false, wasPage2Active = false;
             const updateScroll = () => {
                 const sY = window.scrollY;
@@ -303,8 +332,7 @@
                 ticking = false;
             };
             window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
-            window.addEventListener('resize', updateScroll);
-            updateScroll();
+            window.addEventListener('resize', updateScroll); updateScroll();
         })();
     </script>
 </body>
