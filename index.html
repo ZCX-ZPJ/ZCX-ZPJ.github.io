@@ -19,14 +19,9 @@
 
     <style>
         :root {
-            --bg: #e0e0dc;
-            --text: #111;
-            --gray: #2c2c2c;
-            --accent: #ff8c42;
-            --border: rgba(0, 0, 0, 0.06);
-            --w: min(1100px, 85vw);
-            --offset: clamp(2.5rem, 6vw, 4rem);
-            --card-gap: 10px;
+            --bg: #e0e0dc; --text: #111; --gray: #2c2c2c; --accent: #ff8c42;
+            --border: rgba(0, 0, 0, 0.06); --w: min(1100px, 85vw);
+            --offset: clamp(2.5rem, 6vw, 4rem); --card-gap: 10px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -107,10 +102,7 @@
             transition: opacity 0.35s ease;
             overflow-y: auto; overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-
-            /* 隐藏滚动条 */
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            scrollbar-width: none; -ms-overflow-style: none;
         }
         .detail-overlay::-webkit-scrollbar { display: none; }
         .detail-overlay.active { opacity: 1; pointer-events: auto; }
@@ -123,13 +115,9 @@
             flex: 1;
         }
         .detail-grid img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: transform 0.2s ease;
-            cursor: pointer;
+            width: 100%; height: auto; object-fit: cover;
+            border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease; cursor: pointer;
         }
         .detail-grid img:hover { transform: scale(0.98); }
 
@@ -138,9 +126,8 @@
         .detail-footer {
             flex-shrink: 0; height: 60px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; user-select: none;
-            background: var(--bg); position: sticky; bottom: 0;
-            box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
+            cursor: pointer; user-select: none; background: var(--bg);
+            position: sticky; bottom: 0; box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
         }
         .detail-footer-text { font-size: clamp(0.75rem,1vw,0.85rem); font-weight: 500; letter-spacing: 0.06em; color: #777; padding: 0 1rem; }
 
@@ -189,11 +176,7 @@
 <body>
     <div class="page1" id="page1">
         <header>
-            <nav class="nav-links">
-                <a href="#" id="homeLink">首页</a>
-                <a href="#">关于</a>
-                <a href="#">工作</a>
-            </nav>
+            <nav class="nav-links"><a href="#" id="homeLink">首页</a><a href="#">关于</a><a href="#">工作</a></nav>
         </header>
         <main>
             <div class="hero-title" id="titleMove">
@@ -203,23 +186,11 @@
             </div>
             <div class="hero-desc">
                 <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
-                <div>
-                    <span class="toolbox-line"><strong>日常工具箱：</strong>
-                        <span class="software-item blink-1">C4D/Redshift</span>
-                        <span class="software-item blink-2">Rhino</span>
-                        <span class="software-item blink-3">PS</span>
-                        <span class="software-item blink-4">AI</span>
-                        <span class="software-item blink-5">AE</span>
-                        <span class="software-item blink-6">PR</span>
-                        <span class="software-item blink-7">Style3D</span>
-                    </span>
-                    <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span>  <span class="software-item blink-10">Lovart</span>）</span>
-                </div>
+                <div><span class="toolbox-line"><strong>日常工具箱：</strong> <span class="software-item blink-1">C4D/Redshift</span> <span class="software-item blink-2">Rhino</span> <span class="software-item blink-3">PS</span> <span class="software-item blink-4">AI</span> <span class="software-item blink-5">AE</span> <span class="software-item blink-6">PR</span> <span class="software-item blink-7">Style3D</span> </span> <span class="ai-line"><span class="software-item blink-8">Ai人工智能工作流</span>（<span class="software-item blink-9">椒图Ai</span> <span class="software-item blink-10">Lovart</span>）</span></div>
             </div>
         </main>
         <footer>
-            <div class="footer-left">期待合作</div>
-            <div class="footer-center">···</div>
+            <div class="footer-left">期待合作</div><div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57"><svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg></div>
                 <div class="icon-wrapper" data-title="2077821405"><span class="icon-text">Q</span></div>
@@ -228,43 +199,13 @@
         </footer>
     </div>
 
-    <div class="page2" id="page2">
-        <div class="splash-wrapper">
-            <div class="splash-title">作品集</div>
-            <div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div>
-        </div>
-    </div>
+    <div class="page2" id="page2"><div class="splash-wrapper"><div class="splash-title">作品集</div><div class="year-tag" id="yearTag">©<span class="year-digits" id="yearDigits">2020–2026</span></div></div></div>
+    <div class="page3" id="page3"><div class="gallery-grid" id="galleryGrid"></div></div>
 
-    <div class="page3" id="page3">
-        <div class="gallery-grid" id="galleryGrid"></div>
-    </div>
-
-    <!-- 二级页：首屏6张直接加载，其余懒加载，无滚动条 -->
+    <!-- 二级页：动态加载CDN图片，首屏优先，其余懒加载 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid">
-
-            <!-- 首屏直接加载（前6张） -->
-            <img src="主图1.webp" class="full-img" alt="展示图1">
-            <img src="主图2.webp" class="full-img" alt="展示图2">
-            <img src="主图3.webp" class="full-img" alt="展示图3">
-            <img src="主图4.webp" class="full-img" alt="展示图4">
-            <img src="主图5.webp" class="full-img" alt="展示图5">
-            <img src="主图6.webp" class="full-img" alt="展示图6">
-
-            <!-- 懒加载（第7～18张） -->
-            <img data-src="主图7.webp" class="full-img lazy-load" alt="展示图7">
-            <img data-src="主图8.webp" class="full-img lazy-load" alt="展示图8">
-            <img data-src="主图9.webp" class="full-img lazy-load" alt="展示图9">
-            <img data-src="主图10.webp" class="full-img lazy-load" alt="展示图10">
-            <img data-src="主图11.webp" class="full-img lazy-load" alt="展示图11">
-            <img data-src="主图12.webp" class="full-img lazy-load" alt="展示图12">
-            <img data-src="主图13.webp" class="full-img lazy-load" alt="展示图13">
-            <img data-src="主图14.webp" class="full-img lazy-load" alt="展示图14">
-            <img data-src="主图15.webp" class="full-img lazy-load" alt="展示图15">
-            <img data-src="主图16.webp" class="full-img lazy-load" alt="展示图16">
-            <img data-src="主图17.webp" class="full-img lazy-load" alt="展示图17">
-            <img data-src="主图18.webp" class="full-img lazy-load" alt="展示图18">
-
+            <!-- 图片将通过JS动态生成，以避免硬编码大量CDN链接 -->
         </div>
         <div class="detail-footer" id="detailFooter" onclick="document.getElementById('detailOverlay').classList.remove('active');window.scrollTo({top:2*window.innerHeight,behavior:'auto'});document.getElementById('page3').classList.add('active');">
             <span class="detail-footer-text">↑ 点击返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
@@ -273,19 +214,36 @@
 
     <script>
         (() => {
-            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-            window.scrollTo(0, 0);
+            // ========== 二级页图片配置（修改这里的文件名即可） ==========
+            const CDN_BASE = 'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/';
+            // 按顺序列出所有图片文件名（1:1 和 4:3 可混排）
+            const imageFiles = [
+                '主图1.webp', '主图2.webp', '主图3.webp',  // 前3张建议1:1
+                '主图4.webp', '主图5.webp', '主图6.webp',
+                '主图7.webp', '主图8.webp', '主图9.webp',
+                '主图10.webp', '主图11.webp', '主图12.webp',
+                '主图13.webp', '主图14.webp', '主图15.webp',
+                '主图16.webp', '主图17.webp', '主图18.webp'
+            ];
+            // ==========================================================
 
-            const page1 = document.getElementById('page1');
-            const page2 = document.getElementById('page2');
-            const page3 = document.getElementById('page3');
-            const galleryGrid = document.getElementById('galleryGrid');
-            const title = document.getElementById('titleMove');
-            const yearDigits = document.getElementById('yearDigits');
-            const homeLink = document.getElementById('homeLink');
-            const detailOverlay = document.getElementById('detailOverlay');
+            const detailGrid = document.getElementById('detailGrid');
 
-            // ==================== 懒加载逻辑 ====================
+            // 生成所有图片元素，首屏6张直接设置src，其余暂存data-src
+            imageFiles.forEach((file, i) => {
+                const img = document.createElement('img');
+                img.className = 'full-img';
+                img.alt = `展示图${i + 1}`;
+                if (i < 6) {
+                    img.src = CDN_BASE + file;   // 前6张立即加载
+                } else {
+                    img.dataset.src = CDN_BASE + file;  // 其余懒加载
+                    img.classList.add('lazy-load');
+                }
+                detailGrid.appendChild(img);
+            });
+
+            // 懒加载观察器
             const lazyImages = document.querySelectorAll('.lazy-load');
             const imageObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -302,7 +260,19 @@
             }, { rootMargin: '300px' });
 
             lazyImages.forEach(img => imageObserver.observe(img));
-            // ===================================================
+
+            // ===== 其余页面逻辑保持不变 =====
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+            window.scrollTo(0, 0);
+
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
+            const galleryGrid = document.getElementById('galleryGrid');
+            const title = document.getElementById('titleMove');
+            const yearDigits = document.getElementById('yearDigits');
+            const homeLink = document.getElementById('homeLink');
+            const detailOverlay = document.getElementById('detailOverlay');
 
             detailOverlay.addEventListener('click', (e) => {
                 if (e.target === detailOverlay) {
@@ -314,7 +284,6 @@
 
             if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-            // 第三页卡片封面（WebP 格式，预加载已配置）
             const captions = [
                 { zh: "主图渲染", en: "Main Render" },
                 { zh: "详情展示", en: "Detail Display" },
@@ -334,11 +303,9 @@
                 const item = document.createElement('div'); item.className = 'gallery-item';
                 const img = document.createElement('img'); img.src = cardImages[i]; img.alt = captions[i].zh; item.appendChild(img);
                 if (i === 0) item.addEventListener('click', () => detailOverlay.classList.add('active'));
-                col.appendChild(item);
-                galleryGrid.appendChild(col);
+                col.appendChild(item); galleryGrid.appendChild(col);
             }
 
-            // 第二页老虎机动画
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600, SLOWDOWN_START = 0.5;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
             const chars = FINAL_TEXT.split(''), totalChars = chars.length;
@@ -358,11 +325,9 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // 第一页标题视差
             if (title) { let tx = 0, cx = 0, raf; const updateTitle = () => { cx += (tx - cx) * 0.25; title.style.transform = `translateX(${cx}px)`; if (Math.abs(tx - cx) > 0.5) raf = requestAnimationFrame(updateTitle); else { title.style.transform = `translateX(${tx}px)`; cx = tx; raf = null; } }; document.addEventListener('mousemove', e => { tx = e.clientY < innerHeight / 2 ? (e.clientX / innerWidth - 0.5) * 1600 : 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); document.addEventListener('mouseleave', () => { tx = 0; if (!raf) raf = requestAnimationFrame(updateTitle); }); }
 
-            let vh = window.innerHeight;
-            window.addEventListener('resize', () => { vh = window.innerHeight; });
+            let vh = window.innerHeight; window.addEventListener('resize', () => { vh = window.innerHeight; });
             let ticking = false, wasPage2Active = false;
             const updateScroll = () => {
                 const sY = window.scrollY;
