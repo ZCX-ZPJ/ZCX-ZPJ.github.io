@@ -69,7 +69,6 @@
             position: relative;
             padding-bottom: 4px;
         }
-        /* 下划线只在悬停时出现，颜色为黑色 */
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -77,13 +76,11 @@
             right: 0;
             bottom: 0;
             height: 2px;
-            background: #000;           /* 黑色下划线 */
+            background: #000;
             transform: scaleX(0);
             transition: transform 0.25s ease;
         }
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-        }
+        .nav-links a:hover::after { transform: scaleX(1); }
         .nav-links a:hover { transform: scale(1.18); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
@@ -166,7 +163,6 @@
             .card-box { border-radius: 16px; }
             .cards-row { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 768px) {
             :root { --card-gap: 8px; }
             header { padding: 1rem 1.5rem; }
@@ -306,7 +302,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 -->
+    <!-- 详情页 1 / 2 / 3 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -358,6 +354,7 @@
             const detailPages = document.querySelectorAll('.detail-page');
             const smileCursor = document.getElementById('smile-cursor');
             let currentPage = 'home';
+            let savedScrollY = 0;
             let vh = window.innerHeight;
             let ticking = false;
 
@@ -411,7 +408,6 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // 标题动画：鼠标跟随（方向反转）+ 自动左右滑动
             const title = document.getElementById('titleMove');
             if (title) {
                 let mouseTarget = 0;
@@ -435,6 +431,7 @@
             }
 
             window.showDetail = function(detailId) {
+                savedScrollY = window.scrollY;  // 保存当前滚动位置，通常是第三页开始位置
                 page1.classList.add('hidden');
                 page2.classList.remove('active');
                 page3.classList.remove('active');
@@ -447,14 +444,21 @@
                 document.body.style.overflow = 'hidden';
             };
 
+            // 返回：瞬间回到顶部，然后平滑滚动到第三页
             window.goBack = function() {
+                // 关闭详情页
                 detailPages.forEach(p => p.classList.remove('active'));
                 page1.classList.remove('hidden');
                 currentPage = 'home';
                 document.body.style.overflow = '';
                 loopActive = true;
                 startSlotSpin();
-                updateScroll();
+                // 先瞬间跳到顶部（无动画）
+                window.scrollTo(0, 0);
+                // 然后平滑滚动到之前保存的第三页位置
+                setTimeout(() => {
+                    window.scrollTo({ top: savedScrollY, behavior: 'smooth' });
+                }, 30);
             };
 
             function updateScroll() {
