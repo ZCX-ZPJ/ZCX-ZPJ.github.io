@@ -10,12 +10,12 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
     <!-- 第一页头像图片预加载 (WebP) -->
-    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp?v=2">
 
     <!-- 第三页卡片封面图预加载 (WebP) -->
-    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp">
-    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp">
-    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp?v=2">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp?v=2">
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp?v=2">
 
     <style>
         :root {
@@ -193,7 +193,7 @@
         <main>
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span><span>—</span>
-                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/1.webp" class="profile-img" alt="头像">
+                <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/TX.webp?v=2" class="profile-img" alt="头像">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
@@ -233,30 +233,30 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- 二级页：首屏6张直接加载，其余懒加载，无滚动条，自适应 -->
+    <!-- 二级页：首屏仅3张直接加载，其余全部懒加载 -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-grid" id="detailGrid">
-            <!-- 第1~6张：直接加载，修改 src 即可 -->
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图1.webp" class="full-img" alt="展示图1">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图2.webp" class="full-img" alt="展示图2">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图3.webp" class="full-img" alt="展示图3">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图4.webp" class="full-img" alt="展示图4">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图5.webp" class="full-img" alt="展示图5">
-            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图6.webp" class="full-img" alt="展示图6">
+            <!-- 第1~3张：直接加载（首屏） -->
+            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图1.webp?v=2" class="full-img" alt="展示图1">
+            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图2.webp?v=2" class="full-img" alt="展示图2">
+            <img src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图3.webp?v=2" class="full-img" alt="展示图3">
 
-            <!-- 第7~18张：懒加载，修改 data-src 即可 -->
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图7.webp" class="full-img lazy-load" alt="展示图7">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图8.webp" class="full-img lazy-load" alt="展示图8">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图9.webp" class="full-img lazy-load" alt="展示图9">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图10.webp" class="full-img lazy-load" alt="展示图10">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图11.webp" class="full-img lazy-load" alt="展示图11">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图12.webp" class="full-img lazy-load" alt="展示图12">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图13.webp" class="full-img lazy-load" alt="展示图13">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图14.webp" class="full-img lazy-load" alt="展示图14">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图15.webp" class="full-img lazy-load" alt="展示图15">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图16.webp" class="full-img lazy-load" alt="展示图16">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图17.webp" class="full-img lazy-load" alt="展示图17">
-            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图18.webp" class="full-img lazy-load" alt="展示图18">
+            <!-- 第4~18张：懒加载（滚动到附近才加载） -->
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图4.webp?v=2" class="full-img lazy-load" alt="展示图4">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图5.webp?v=2" class="full-img lazy-load" alt="展示图5">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图6.webp?v=2" class="full-img lazy-load" alt="展示图6">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图7.webp?v=2" class="full-img lazy-load" alt="展示图7">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图8.webp?v=2" class="full-img lazy-load" alt="展示图8">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图9.webp?v=2" class="full-img lazy-load" alt="展示图9">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图10.webp?v=2" class="full-img lazy-load" alt="展示图10">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图11.webp?v=2" class="full-img lazy-load" alt="展示图11">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图12.webp?v=2" class="full-img lazy-load" alt="展示图12">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图13.webp?v=2" class="full-img lazy-load" alt="展示图13">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图14.webp?v=2" class="full-img lazy-load" alt="展示图14">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图15.webp?v=2" class="full-img lazy-load" alt="展示图15">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图16.webp?v=2" class="full-img lazy-load" alt="展示图16">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图17.webp?v=2" class="full-img lazy-load" alt="展示图17">
+            <img data-src="https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/主图18.webp?v=2" class="full-img lazy-load" alt="展示图18">
         </div>
         <div class="detail-footer" id="detailFooter" onclick="document.getElementById('detailOverlay').classList.remove('active');window.scrollTo({top:2*window.innerHeight,behavior:'auto'});document.getElementById('page3').classList.add('active');">
             <span class="detail-footer-text">↑ 点击返回作品集  ·  每一帧渲染都是对真实世界的细腻转译</span>
@@ -312,9 +312,9 @@
                 { zh: "AI辅助", en: "AI Assisted" }
             ];
             const cardImages = [
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp',
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp',
-                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp'
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card1.webp?v=2',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card2.webp?v=2',
+                'https://cdn.jsdelivr.net/gh/ZCX-ZPJ/ZCX-ZPJ.github.io@main/card3.webp?v=2'
             ];
             for (let i = 0; i < 3; i++) {
                 const col = document.createElement('div'); col.className = 'gallery-col';
