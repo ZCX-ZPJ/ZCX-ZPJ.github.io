@@ -200,6 +200,7 @@
             color: #fff;
             margin-bottom: 8px;
             flex-shrink: 0;
+            text-align: left;          /* 左对齐 */
         }
 
         .card-description {
@@ -209,6 +210,8 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
+            text-align: left;          /* 左对齐 */
+            margin-top: auto;          /* 推到底部 */
             flex-shrink: 0;
             margin-bottom: 2px;
         }
@@ -221,6 +224,7 @@
             transform: translateY(2px);
             transition: transform 0.2s ease;
             color: #fff;
+            align-self: flex-end;
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
@@ -350,7 +354,7 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（比例最终调整） -->
+    <!-- 第三页：极简黑白卡片（文案靠底） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 卡片1：主图渲染 -->
