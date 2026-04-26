@@ -213,10 +213,11 @@
             margin-top: auto;
             flex-shrink: 0;
             margin-bottom: 2px;
+            padding-right: 0; /* 确保没有额外右内边距 */
         }
         .card-description span {
             flex: 1;
-            margin-right: 8px;
+            margin-right: 0; /* 移除默认间距，让空格自然产生距离 */
         }
         .card-arrow {
             font-size: 1.2rem;
@@ -224,6 +225,8 @@
             color: #fff;
             align-self: flex-end;
             margin-left: 0;
+            margin-right: -2px; /* 微调，使箭头右侧边缘与分割线对齐 */
+            line-height: 1; /* 防止额外的行高偏移 */
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
@@ -433,7 +436,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 -->
+    <!-- 详情页 1 / 2 / 3 保持不变 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
