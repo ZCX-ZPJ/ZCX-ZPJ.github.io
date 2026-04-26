@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg: #e0e0dc;
+            --bg: #d7d6d2;          /* 修改为 RGB(215, 214, 210) */
             --text: #111;
             --gray: #2c2c2c;
             --accent: #ff8c42;
@@ -431,7 +431,7 @@
             }
 
             window.showDetail = function(detailId) {
-                savedScrollY = window.scrollY;  // 保存当前滚动位置，通常是第三页开始位置
+                savedScrollY = window.scrollY;
                 page1.classList.add('hidden');
                 page2.classList.remove('active');
                 page3.classList.remove('active');
@@ -444,18 +444,14 @@
                 document.body.style.overflow = 'hidden';
             };
 
-            // 返回：瞬间回到顶部，然后平滑滚动到第三页
             window.goBack = function() {
-                // 关闭详情页
                 detailPages.forEach(p => p.classList.remove('active'));
                 page1.classList.remove('hidden');
                 currentPage = 'home';
                 document.body.style.overflow = '';
                 loopActive = true;
                 startSlotSpin();
-                // 先瞬间跳到顶部（无动画）
                 window.scrollTo(0, 0);
-                // 然后平滑滚动到之前保存的第三页位置
                 setTimeout(() => {
                     window.scrollTo({ top: savedScrollY, behavior: 'smooth' });
                 }, 30);
