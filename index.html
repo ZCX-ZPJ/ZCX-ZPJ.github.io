@@ -115,9 +115,49 @@
         .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
-        .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
-        .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
+        .icon-wrapper::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: #1f1f1f; color: #fff;
+            font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none; z-index: 100;
+        }
+        .icon-wrapper::before {
+            content: '';
+            position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%) translateY(-2px);
+            border: 5px solid transparent;
+            border-top-color: #1f1f1f;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
+        /* 复制成功提示 */
+        .icon-wrapper .copy-toast {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 101;
+        }
+        .icon-wrapper .copy-toast.show {
+            opacity: 1;
+        }
 
         /* ========== 第二页 ========== */
         .page2 { position: fixed; inset: 0; z-index: 25; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; will-change: opacity; }
@@ -142,144 +182,41 @@
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        .cards-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-        }
-
+        .cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; height: 100%; margin: 0; }
         .minimal-card {
-            background: #000;
-            border-radius: 24px;
-            padding: 24px 22px 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            color: #fff;
-            font-family: inherit;
-            height: 100%;
+            background: #000; border-radius: 24px; padding: 24px 22px 20px; display: flex; flex-direction: column;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            cursor: pointer; border: none; outline: none; color: #fff; font-family: inherit; height: 100%;
         }
-        .minimal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-        }
-
-        .card-video {
-            flex: 0 0 70%;
-            max-height: 70%;
-            min-height: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #1a1a1a;
-            margin-bottom: 14px;
-        }
-        .card-video video,
-        .card-video img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .card-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin-bottom: 12px;
-            flex-shrink: 0;
-        }
-
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #fff;
-            margin-bottom: 8px;
-            flex-shrink: 0;
-            text-align: left;
-        }
-
-        .card-description {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: #aaa;
-            display: flex;
-            align-items: flex-start;
-            text-align: left;
-            margin-top: auto;
-            flex-shrink: 0;
-            margin-bottom: 2px;
-            position: relative;
-            padding-right: 0;
-        }
-        .card-description span {
-            flex: 1;
-            margin-right: 30px;
-        }
-        /* 实底圆角正方形箭头图标 */
-        .card-arrow {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 24px;
-            height: 24px;
-            transition: transform 0.2s ease;
-            line-height: 0;
-        }
-        .card-arrow svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        .minimal-card:hover .card-arrow {
-            transform: translate(4px, -2px);
-        }
+        .minimal-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(0,0,0,0.25); }
+        .card-video { flex: 0 0 70%; max-height: 70%; min-height: 0; border-radius: 12px; overflow: hidden; background: #1a1a1a; margin-bottom: 14px; }
+        .card-video video, .card-video img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.2); margin-bottom: 12px; flex-shrink: 0; }
+        .card-title { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; margin-bottom: 8px; flex-shrink: 0; text-align: left; }
+        .card-description { font-size: 0.85rem; line-height: 1.4; color: #aaa; display: flex; align-items: flex-start; text-align: left; margin-top: auto; flex-shrink: 0; margin-bottom: 2px; position: relative; padding-right: 0; }
+        .card-description span { flex: 1; margin-right: 30px; }
+        .card-arrow { position: absolute; right: 0; bottom: 0; width: 24px; height: 24px; transition: transform 0.2s ease; line-height: 0; }
+        .card-arrow svg { width: 100%; height: 100%; display: block; }
+        .minimal-card:hover .card-arrow { transform: translate(4px, -2px); }
 
         /* ========== 第四页 ========== */
-        .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0;
-            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: opacity;
-        }
+        .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: opacity; }
         .page4.active { opacity: 1; pointer-events: auto; }
-        .page4-text {
-            font-size: clamp(8rem, 16vw, 14rem);
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            color: #0a0a0a;
-            text-align: center;
-            padding: 1rem;
-            line-height: 1.2;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        .page4-text { font-size: clamp(8rem, 16vw, 14rem); font-weight: 700; letter-spacing: 0.04em; color: #0a0a0a; text-align: center; padding: 1rem; line-height: 1.2; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .page4.active .page4-text { transform: scale(1); }
         .page4:not(.active) .page4-text { transform: scale(0.9); }
 
         /* ========== 详情页通用样式 ========== */
-        .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .detail-page.active { opacity: 1; pointer-events: auto; }
-        .back-btn { display: inline-block; color: #555; text-decoration: none; font-size: 1rem; border-bottom: 1px solid transparent;
-            transition: border-color 0.2s, color 0.2s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer; background: none; border: none; outline: none; align-self: center; margin-top: auto; padding: 1rem 0; letter-spacing: 0.05em;
-        }
+        .back-btn { display: inline-block; color: #555; text-decoration: none; font-size: 1rem; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; background: none; border: none; outline: none; align-self: center; margin-top: auto; padding: 1rem 0; letter-spacing: 0.05em; }
         .back-btn:hover { border-color: #555; color: var(--accent); transform: scale(1.08); }
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); width: 100%; }
-        .card-box { width: 100%; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-            cursor: pointer; line-height: 0;
-        }
+        .card-box { width: 100%; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; cursor: pointer; line-height: 0; }
         .card-box:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-box img { width: 100%; height: auto; display: block; object-fit: contain; background: inherit; }
 
-        /* 响应式调整 */
+        /* 响应式 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
@@ -376,14 +313,20 @@
             <div class="footer-left">期待合作</div>
             <div class="footer-center">···</div>
             <div class="footer-right">
-                <div class="icon-wrapper" data-title="ZHOU-9-57">
+                <!-- 微信图标 -->
+                <div class="icon-wrapper" data-title="ZHOU-9-57" data-copy="ZHOU-9-57">
                     <svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg>
+                    <span class="copy-toast">已复制</span>
                 </div>
-                <div class="icon-wrapper" data-title="2077821405">
+                <!-- QQ图标 -->
+                <div class="icon-wrapper" data-title="2077821405" data-copy="2077821405">
                     <span class="icon-text">Q</span>
+                    <span class="copy-toast">已复制</span>
                 </div>
-                <div class="icon-wrapper" data-title="13226408301">
+                <!-- 电话图标 -->
+                <div class="icon-wrapper" data-title="13226408301" data-copy="13226408301">
                     <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>
+                    <span class="copy-toast">已复制</span>
                 </div>
             </div>
         </footer>
@@ -400,31 +343,20 @@
     <!-- 第三页：极简黑白卡片（三张封面均为视频） -->
     <div class="page3" id="page3">
         <div class="cards-row">
-            <!-- 卡片1：主图渲染 -->
             <button class="minimal-card" onclick="showDetail('detail1')">
-                <div class="card-video">
-                    <video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM1.mp4" autoplay loop muted playsinline></video>
-                </div>
+                <div class="card-video"><video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM1.mp4" autoplay loop muted playsinline></video></div>
                 <div class="card-divider"></div>
                 <div class="card-title">主图渲染</div>
                 <div class="card-description"><span>三维渲染作品精选，自由构图与质感表达</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask1"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask1)"/></svg></span></div>
             </button>
-
-            <!-- 卡片2：详情页 -->
             <button class="minimal-card" onclick="showDetail('detail2')">
-                <div class="card-video">
-                    <video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM2.mp4" autoplay loop muted playsinline></video>
-                </div>
+                <div class="card-video"><video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM2.mp4" autoplay loop muted playsinline></video></div>
                 <div class="card-divider"></div>
                 <div class="card-title">详情页</div>
                 <div class="card-description"><span>产品细节展示与交互微动效</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask2"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask2)"/></svg></span></div>
             </button>
-
-            <!-- 卡片3：AI辅助 -->
             <button class="minimal-card" onclick="showDetail('detail3')">
-                <div class="card-video">
-                    <video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM3.mp4" autoplay loop muted playsinline></video>
-                </div>
+                <div class="card-video"><video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM3.mp4" autoplay loop muted playsinline></video></div>
                 <div class="card-divider"></div>
                 <div class="card-title">AI辅助</div>
                 <div class="card-description"><span>生成式设计探索，人机协作新可能</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask3"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask3)"/></svg></span></div>
@@ -458,7 +390,6 @@
         </div>
         <button class="back-btn" onclick="goBack()">← 返回首页</button>
     </div>
-
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/DT1.webp" alt="详情1"></div>
@@ -467,7 +398,6 @@
         </div>
         <button class="back-btn" onclick="goBack()">← 返回首页</button>
     </div>
-
     <div class="detail-page" id="detail3">
         <div class="cards-grid">
             <div class="card-box"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' fill='%23cccccc'%3E%3Crect width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-size='20'%3EAI1%3C/text%3E%3C/svg%3E" alt="AI1"></div>
@@ -525,6 +455,51 @@
                     smileCursor.style.top = e.clientY + 'px';
                 }
             });
+
+            // ========== 图标复制功能 ==========
+            document.querySelectorAll('.icon-wrapper').forEach(wrapper => {
+                const toast = wrapper.querySelector('.copy-toast');
+                const copyText = wrapper.getAttribute('data-copy');
+                if (!copyText) return;
+
+                wrapper.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // 复制到剪贴板
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(copyText).then(() => {
+                            showToast(wrapper, toast);
+                        }).catch(() => {
+                            fallbackCopy(copyText, wrapper, toast);
+                        });
+                    } else {
+                        fallbackCopy(copyText, wrapper, toast);
+                    }
+                });
+            });
+
+            function fallbackCopy(text, wrapper, toast) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(wrapper, toast);
+                } catch (err) {
+                    console.log('复制失败');
+                }
+                document.body.removeChild(textarea);
+            }
+
+            function showToast(wrapper, toast) {
+                if (!toast) return;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 1200);
+            }
 
             // 数字动画
             const yearDigits = document.getElementById('yearDigits');
@@ -610,7 +585,6 @@
             function updateScroll() {
                 if (currentPage !== 'home') return;
                 const sY = window.scrollY;
-
                 const p1 = Math.min(1, Math.max(0, sY / vh));
                 page1.style.transform = `scale(${1 - p1 * 0.3})`;
                 page1.style.opacity = 1 - p1;
@@ -622,9 +596,7 @@
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
-                    document.querySelectorAll('.page3 video').forEach(v => {
-                        if (v.paused) v.play().catch(() => {});
-                    });
+                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() => {}); });
                 } else {
                     page3.classList.remove('active');
                     document.querySelectorAll('.page3 video').forEach(v => v.pause());
@@ -649,11 +621,7 @@
                 }
             }, { passive: true });
 
-            window.addEventListener('resize', () => {
-                vh = window.innerHeight;
-                if (currentPage === 'home') updateScroll();
-            });
-
+            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
             updateScroll();
         })();
     </script>
