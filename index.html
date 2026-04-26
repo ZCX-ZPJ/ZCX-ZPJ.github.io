@@ -393,10 +393,10 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（封面已替换为 FM.webp） -->
+    <!-- 第三页：极简黑白卡片（第三个卡片使用视频） -->
     <div class="page3" id="page3">
         <div class="cards-row">
-            <!-- 卡片1：主图渲染 -->
+            <!-- 卡片1：主图渲染（图片） -->
             <button class="minimal-card" onclick="showDetail('detail1')">
                 <div class="card-video">
                     <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="主图渲染封面">
@@ -406,7 +406,7 @@
                 <div class="card-description"><span>三维渲染作品精选，自由构图与质感表达</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask1"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask1)"/></svg></span></div>
             </button>
 
-            <!-- 卡片2：详情页 -->
+            <!-- 卡片2：详情页（图片） -->
             <button class="minimal-card" onclick="showDetail('detail2')">
                 <div class="card-video">
                     <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="详情页封面">
@@ -416,10 +416,10 @@
                 <div class="card-description"><span>产品细节展示与交互微动效</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask2"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask2)"/></svg></span></div>
             </button>
 
-            <!-- 卡片3：AI辅助 -->
+            <!-- 卡片3：AI辅助（视频） -->
             <button class="minimal-card" onclick="showDetail('detail3')">
                 <div class="card-video">
-                    <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="AI辅助封面">
+                    <video src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM3.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">AI辅助</div>
@@ -587,6 +587,8 @@
                 loopActive = false;
                 clearTimers();
                 document.body.style.overflow = 'hidden';
+                // 暂停第三页所有视频
+                document.querySelectorAll('.page3 video').forEach(v => v.pause());
             };
 
             window.goBack = function() {
@@ -617,8 +619,14 @@
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
+                    // 播放第三页所有视频
+                    document.querySelectorAll('.page3 video').forEach(v => {
+                        if (v.paused) v.play().catch(() => {});
+                    });
                 } else {
                     page3.classList.remove('active');
+                    // 暂停第三页所有视频
+                    document.querySelectorAll('.page3 video').forEach(v => v.pause());
                 }
 
                 if (sY >= 3 * vh) {
