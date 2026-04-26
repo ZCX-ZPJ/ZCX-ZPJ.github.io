@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg: #d7d6d2;          /* 修改为 RGB(215, 214, 210) */
+            --bg: #d7d6d2;
             --text: #111;
             --gray: #2c2c2c;
             --accent: #ff8c42;
@@ -69,18 +69,22 @@
             position: relative;
             padding-bottom: 4px;
         }
+        /* 修改1：下划线变细，高度1px，并且 transform-origin 设为 left，实现从左滑出 */
         .nav-links a::after {
             content: '';
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
-            height: 2px;
+            height: 1px;                /* 更细 */
             background: #000;
             transform: scaleX(0);
+            transform-origin: left;      /* 从左开始 */
             transition: transform 0.25s ease;
         }
-        .nav-links a:hover::after { transform: scaleX(1); }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
         .nav-links a:hover { transform: scale(1.18); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(4rem,8vw,6.5rem); padding: 1rem clamp(1.5rem,3vw,2rem) clamp(2rem,4vw,3rem); }
