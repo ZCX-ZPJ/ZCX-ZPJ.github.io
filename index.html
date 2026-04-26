@@ -58,14 +58,15 @@
             position: fixed; inset: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: space-between;
             pointer-events: auto; z-index: 20; will-change: transform, opacity;
-            transition: opacity 0.4s, transform 0.4s;
+            transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .page1.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
 
         header { display: flex; justify-content: center; align-items: center; padding: max(1.5rem,2.5vw) max(2rem,4vw); position: relative; }
         .nav-links { display: flex; gap: clamp(1.8rem,3vw,2.8rem); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 500; letter-spacing: -0.01em; }
         .nav-links a {
-            color: var(--text); text-decoration: none; transition: transform 0.25s ease;
+            color: var(--text); text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             padding-bottom: 4px;
         }
@@ -79,7 +80,7 @@
             background: #000;
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.25s ease;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .nav-links a:hover::after { transform: scaleX(1); }
         .nav-links a:hover { transform: scale(1.18); }
@@ -99,16 +100,16 @@
         .hero-desc div:last-child { justify-self: end; margin-right: calc(-1*var(--offset)); color: var(--gray); text-align: left; font-weight: 550; line-height: 1.6; }
         .toolbox-line { display: block; margin-bottom: 0.2rem; } .toolbox-line strong { font-weight: 650; }
         .ai-line { display: block; }
-        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; cursor: pointer; }
-        .software-item:hover { color: var(--accent); transform: scale(1.05); }
+        .software-item { display: inline-block; transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; }
+        .software-item:hover { color: var(--accent); transform: scale(1.08); }
 
         footer { display: flex; justify-content: space-between; align-items: center; padding: clamp(1.2rem,2.5vw,1.8rem) clamp(1.5rem,4vw,3rem); width: 100%; font-size: clamp(0.7rem,1vw,0.8rem); font-weight: 450; color: #1f1f1f; letter-spacing: 0.02em; border-top: 1px solid var(--border); position: relative; }
         .footer-left { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; }
         .footer-center { font-size: 1.2rem; letter-spacing: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
         .footer-right { display: flex; gap: 1.5rem; align-items: center; }
         .icon-wrapper { position: relative; display: inline-flex; cursor: pointer; }
-        .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.2s ease; }
-        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.2s ease; }
+        .icon-wrapper svg { width: 22px; height: 22px; fill: #1f1f1f; transition: fill 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
         .icon-wrapper::after { content: attr(data-title); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; pointer-events: none; z-index: 100; }
         .icon-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-2px); border: 5px solid transparent; border-top-color: #1f1f1f; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
@@ -122,27 +123,36 @@
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ========== 第三页（入口卡片，封面换为视频） ========== */
-        .page3 { position: fixed; inset: 0; z-index: 30; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1); will-change: transform, opacity; padding: 4vh 2vw; }
+        /* ========== 第三页 ========== */
+        .page3 { position: fixed; inset: 0; z-index: 30; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transform: translateY(40px); transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform, opacity; padding: 4vh 2vw; }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
         .cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); width: 100%; margin: 0; }
-        .entry-card { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; gap: 1.5rem; cursor: pointer; transition: transform 0.3s ease; background: none; border: none; outline: none; }
-        .entry-card:hover { transform: translateY(-6px); }
-        .entry-card-image { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease; }
-        .entry-card:hover .entry-card-image { box-shadow: 0 16px 36px rgba(0,0,0,0.15); }
-        /* 视频样式完全替换图片 */
+        .entry-card { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; gap: 1.5rem; cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: none; border: none; outline: none;
+        }
+        .entry-card:hover { transform: translateY(-10px); }
+        .entry-card-image { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transition: box-shadow 0.4s ease;
+        }
+        .entry-card:hover .entry-card-image { box-shadow: 0 20px 40px rgba(0,0,0,0.18); }
         .entry-card-image video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-        .entry-card-label { font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 600; letter-spacing: 0.04em; color: #1a1a1a; text-align: center; transition: color 0.2s ease; line-height: 1.2; }
-        .entry-card:hover .entry-card-label { color: var(--accent); }
+        .entry-card-label { font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 600; letter-spacing: 0.04em; color: #1a1a1a; text-align: center;
+            transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .entry-card:hover .entry-card-label { color: var(--accent); transform: scale(1.05); }
 
         /* ========== 第四页 ========== */
-        .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; will-change: opacity; }
+        .page4 { position: fixed; inset: 0; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity;
+        }
         .page4.active { opacity: 1; pointer-events: auto; }
         .page4-text {
             font-size: clamp(8rem, 16vw, 14rem);
@@ -152,16 +162,27 @@
             text-align: center;
             padding: 1rem;
             line-height: 1.2;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .page4.active .page4-text { transform: scale(1); }
+        .page4:not(.active) .page4-text { transform: scale(0.9); }
 
         /* ========== 详情页通用样式 ========== */
-        .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         .detail-page.active { opacity: 1; pointer-events: auto; }
-        .back-btn { display: inline-block; color: #555; text-decoration: none; font-size: 1rem; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s; cursor: pointer; background: none; border: none; outline: none; align-self: center; margin-top: auto; padding: 1rem 0; letter-spacing: 0.05em; }
-        .back-btn:hover { border-color: #555; color: var(--accent); }
+        .back-btn { display: inline-block; color: #555; text-decoration: none; font-size: 1rem; border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.2s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer; background: none; border: none; outline: none; align-self: center; margin-top: auto; padding: 1rem 0; letter-spacing: 0.05em;
+        }
+        .back-btn:hover { border-color: #555; color: var(--accent); transform: scale(1.08); }
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); width: 100%; }
-        .card-box { width: 100%; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; line-height: 0; }
-        .card-box:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+        .card-box { width: 100%; border-radius: 20px; overflow: hidden; background: #ccc; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            cursor: pointer; line-height: 0;
+        }
+        .card-box:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-box img { width: 100%; height: auto; display: block; object-fit: contain; background: inherit; }
 
         /* 响应式 */
@@ -282,24 +303,18 @@
     <!-- 第三页：三个入口卡片，封面为视频 -->
     <div class="page3" id="page3">
         <div class="cards-row">
-            <!-- 主图渲染 -->
             <button class="entry-card" onclick="showDetail('detail1')">
                 <div class="entry-card-image">
-                    <!-- 视频封面，替换你的视频链接 -->
                     <video src="你的视频链接1.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <span class="entry-card-label">主图渲染</span>
             </button>
-
-            <!-- 详情页 -->
             <button class="entry-card" onclick="showDetail('detail2')">
                 <div class="entry-card-image">
                     <video src="你的视频链接2.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <span class="entry-card-label">详情页</span>
             </button>
-
-            <!-- AI辅助 -->
             <button class="entry-card" onclick="showDetail('detail3')">
                 <div class="entry-card-image">
                     <video src="你的视频链接3.mp4" autoplay loop muted playsinline></video>
@@ -314,7 +329,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 保持不变 -->
+    <!-- 详情页 1 / 2 / 3 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -420,26 +435,41 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
+            // ========== 标题缓动跟随（修复版） ==========
             const title = document.getElementById('titleMove');
             if (title) {
-                let mouseTarget = 0;
-                let autoSwingRaf = null;
-                let autoSwingStart = performance.now();
+                let targetX = 0;           // 目标位置（包含鼠标反向 + 自动摆动）
+                let currentX = 0;          // 当前位置
+                let rafId = null;
 
-                function autoSwingLoop(now) {
-                    const elapsed = (now - autoSwingStart) / 1000;
-                    const swing = Math.sin(elapsed * Math.PI * 2 / 3.5) * 60;
-                    title.style.transform = `translateX(${mouseTarget + swing}px) translateZ(0)`;
-                    autoSwingRaf = requestAnimationFrame(autoSwingLoop);
+                function animate() {
+                    // 自动摆动 + 鼠标目标
+                    const now = performance.now() / 1000;
+                    const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
+                    const mouseTarget = -(window.mouseX || 0);  // 鼠标目标，方向反转
+                    const finalTarget = mouseTarget + swing;
+
+                    // 缓动系数，0.1 会产生平滑的跟随效果
+                    currentX += (finalTarget - currentX) * 0.1;
+
+                    title.style.transform = `translateX(${currentX}px) translateZ(0)`;
+                    rafId = requestAnimationFrame(animate);
                 }
-                autoSwingRaf = requestAnimationFrame(autoSwingLoop);
 
+                // 存储鼠标位置到全局变量
+                window.mouseX = 0;
                 document.addEventListener('mousemove', e => {
-                    mouseTarget = e.clientY < innerHeight / 2 ? -(e.clientX / innerWidth - 0.5) * 2400 : 0;
+                    if (e.clientY < innerHeight / 2) {
+                        window.mouseX = (e.clientX / innerWidth - 0.5) * 2400;
+                    } else {
+                        window.mouseX = 0;
+                    }
                 });
                 document.addEventListener('mouseleave', () => {
-                    mouseTarget = 0;
+                    window.mouseX = 0;
                 });
+
+                rafId = requestAnimationFrame(animate);
             }
 
             window.showDetail = function(detailId) {
@@ -454,7 +484,6 @@
                 loopActive = false;
                 clearTimers();
                 document.body.style.overflow = 'hidden';
-                // 暂停第三页所有视频
                 document.querySelectorAll('.page3 video').forEach(v => v.pause());
             };
 
@@ -471,7 +500,6 @@
                 }, 30);
             };
 
-            // 滚动时控制第三页视频自动播放/暂停
             function updateScroll() {
                 if (currentPage !== 'home') return;
                 const sY = window.scrollY;
@@ -487,13 +515,11 @@
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
-                    // 播放第三页所有视频
                     document.querySelectorAll('.page3 video').forEach(v => {
                         if (v.paused) v.play().catch(() => {});
                     });
                 } else {
                     page3.classList.remove('active');
-                    // 暂停第三页所有视频
                     document.querySelectorAll('.page3 video').forEach(v => v.pause());
                 }
 
