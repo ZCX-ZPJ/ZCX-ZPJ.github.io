@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
 
+    <!-- 浏览器标签头像 -->
+    <link rel="icon" type="image/webp" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/redshift.webp">
+    <link rel="apple-touch-icon" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/redshift.webp">
+
     <link rel="dns-prefetch" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com">
     <link rel="preconnect" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com">
 
@@ -587,7 +591,6 @@
                 loopActive = false;
                 clearTimers();
                 document.body.style.overflow = 'hidden';
-                // 暂停第三页所有视频
                 document.querySelectorAll('.page3 video').forEach(v => v.pause());
             };
 
@@ -619,13 +622,11 @@
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
-                    // 播放第三页所有视频
                     document.querySelectorAll('.page3 video').forEach(v => {
                         if (v.paused) v.play().catch(() => {});
                     });
                 } else {
                     page3.classList.remove('active');
-                    // 暂停第三页所有视频
                     document.querySelectorAll('.page3 video').forEach(v => v.pause());
                 }
 
