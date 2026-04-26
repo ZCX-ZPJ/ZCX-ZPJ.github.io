@@ -212,21 +212,27 @@
             margin-top: auto;
             flex-shrink: 0;
             margin-bottom: 2px;
-            position: relative; /* 为箭头绝对定位提供参考 */
+            position: relative;
             padding-right: 0;
         }
         .card-description span {
             flex: 1;
-            margin-right: 30px; /* 给箭头留出空间，避免文字被遮挡 */
+            margin-right: 30px;
         }
+        /* 实底圆角正方形箭头图标 */
         .card-arrow {
             position: absolute;
-            right: 0;            /* 右边缘与描述区域右边缘对齐 = 分割线右边缘 */
+            right: 0;
             bottom: 0;
-            font-size: 1.2rem;
-            color: #fff;
-            line-height: 1;
+            width: 24px;
+            height: 24px;
             transition: transform 0.2s ease;
+            line-height: 0;
+        }
+        .card-arrow svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
@@ -387,7 +393,7 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（箭头精确对齐分割线右边缘） -->
+    <!-- 第三页：极简黑白卡片（实底圆角正方形 + 透明箭头） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 卡片1：主图渲染 -->
@@ -399,7 +405,17 @@
                 <div class="card-title">主图渲染</div>
                 <div class="card-description">
                     <span>三维渲染作品精选，自由构图与质感表达</span>
-                    <span class="card-arrow">↗</span>
+                    <span class="card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <defs>
+                                <mask id="arrowMask1">
+                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
+                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </mask>
+                            </defs>
+                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask1)"/>
+                        </svg>
+                    </span>
                 </div>
             </button>
 
@@ -412,7 +428,17 @@
                 <div class="card-title">详情页</div>
                 <div class="card-description">
                     <span>产品细节展示与交互微动效</span>
-                    <span class="card-arrow">↗</span>
+                    <span class="card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <defs>
+                                <mask id="arrowMask2">
+                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
+                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </mask>
+                            </defs>
+                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask2)"/>
+                        </svg>
+                    </span>
                 </div>
             </button>
 
@@ -425,7 +451,17 @@
                 <div class="card-title">AI辅助</div>
                 <div class="card-description">
                     <span>生成式设计探索，人机协作新可能</span>
-                    <span class="card-arrow">↗</span>
+                    <span class="card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <defs>
+                                <mask id="arrowMask3">
+                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
+                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </mask>
+                            </defs>
+                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask3)"/>
+                        </svg>
+                    </span>
                 </div>
             </button>
         </div>
@@ -436,7 +472,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 -->
+    <!-- 详情页 1 / 2 / 3 保持不变 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
