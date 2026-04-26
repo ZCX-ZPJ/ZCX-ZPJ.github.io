@@ -257,7 +257,7 @@
         .page4.active .page4-text { transform: scale(1); }
         .page4:not(.active) .page4-text { transform: scale(0.9); }
 
-        /* ========== 详情页通用样式（未改动） ========== */
+        /* ========== 详情页通用样式 ========== */
         .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -393,76 +393,37 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（实底圆角正方形 + 透明箭头） -->
+    <!-- 第三页：极简黑白卡片（封面已替换为 FM.webp） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 卡片1：主图渲染 -->
             <button class="minimal-card" onclick="showDetail('detail1')">
                 <div class="card-video">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
+                    <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="主图渲染封面">
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">主图渲染</div>
-                <div class="card-description">
-                    <span>三维渲染作品精选，自由构图与质感表达</span>
-                    <span class="card-arrow">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <defs>
-                                <mask id="arrowMask1">
-                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
-                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                </mask>
-                            </defs>
-                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask1)"/>
-                        </svg>
-                    </span>
-                </div>
+                <div class="card-description"><span>三维渲染作品精选，自由构图与质感表达</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask1"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask1)"/></svg></span></div>
             </button>
 
             <!-- 卡片2：详情页 -->
             <button class="minimal-card" onclick="showDetail('detail2')">
                 <div class="card-video">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
+                    <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="详情页封面">
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">详情页</div>
-                <div class="card-description">
-                    <span>产品细节展示与交互微动效</span>
-                    <span class="card-arrow">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <defs>
-                                <mask id="arrowMask2">
-                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
-                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                </mask>
-                            </defs>
-                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask2)"/>
-                        </svg>
-                    </span>
-                </div>
+                <div class="card-description"><span>产品细节展示与交互微动效</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask2"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask2)"/></svg></span></div>
             </button>
 
             <!-- 卡片3：AI辅助 -->
             <button class="minimal-card" onclick="showDetail('detail3')">
                 <div class="card-video">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
+                    <img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/FM.webp" alt="AI辅助封面">
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">AI辅助</div>
-                <div class="card-description">
-                    <span>生成式设计探索，人机协作新可能</span>
-                    <span class="card-arrow">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <defs>
-                                <mask id="arrowMask3">
-                                    <rect width="24" height="24" rx="6" ry="6" fill="white"/>
-                                    <path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                </mask>
-                            </defs>
-                            <rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask3)"/>
-                        </svg>
-                    </span>
-                </div>
+                <div class="card-description"><span>生成式设计探索，人机协作新可能</span><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none"><defs><mask id="arrowMask3"><rect width="24" height="24" rx="6" ry="6" fill="white"/><path d="M15 9L9 15M15 15L15 9L9 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></mask></defs><rect width="24" height="24" rx="6" ry="6" fill="white" mask="url(#arrowMask3)"/></svg></span></div>
             </button>
         </div>
     </div>
@@ -472,7 +433,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 保持不变 -->
+    <!-- 详情页省略，与原代码相同 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
