@@ -384,6 +384,8 @@
             let savedScrollY = 0;
             let vh = window.innerHeight;
             let ticking = false;
+            let lastMouseX = window.innerWidth / 2;
+            let lastMouseY = window.innerHeight / 2;
 
             const homeLink = document.getElementById('homeLink');
             const aboutLink = document.getElementById('aboutLink');
@@ -408,6 +410,8 @@
             workLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(2 * vh); });
 
             document.addEventListener('mousemove', (e) => {
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
                 if (currentPage === 'home' && window.scrollY >= 3 * vh) {
                     smileCursor.style.left = e.clientX + 'px';
                     smileCursor.style.top = e.clientY + 'px';
@@ -435,28 +439,23 @@
             }
             function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
-            // ========== 标题缓动跟随（修复版） ==========
+            // 标题缓动跟随
             const title = document.getElementById('titleMove');
             if (title) {
-                let targetX = 0;           // 目标位置（包含鼠标反向 + 自动摆动）
-                let currentX = 0;          // 当前位置
+                let targetX = 0;
+                let currentX = 0;
                 let rafId = null;
 
                 function animate() {
-                    // 自动摆动 + 鼠标目标
                     const now = performance.now() / 1000;
                     const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
-                    const mouseTarget = -(window.mouseX || 0);  // 鼠标目标，方向反转
+                    const mouseTarget = -(window.mouseX || 0);
                     const finalTarget = mouseTarget + swing;
-
-                    // 缓动系数，0.1 会产生平滑的跟随效果
                     currentX += (finalTarget - currentX) * 0.1;
-
                     title.style.transform = `translateX(${currentX}px) translateZ(0)`;
                     rafId = requestAnimationFrame(animate);
                 }
 
-                // 存储鼠标位置到全局变量
                 window.mouseX = 0;
                 document.addEventListener('mousemove', e => {
                     if (e.clientY < innerHeight / 2) {
@@ -526,6 +525,9 @@
                 if (sY >= 3 * vh) {
                     page4.classList.add('active');
                     document.body.classList.add('smile-cursor');
+                    // 修正：立即定位到最近记录的鼠标位置
+                    smileCursor.style.left = lastMouseX + 'px';
+                    smileCursor.style.top = lastMouseY + 'px';
                 } else {
                     page4.classList.remove('active');
                     document.body.classList.remove('smile-cursor');
