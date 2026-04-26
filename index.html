@@ -68,7 +68,7 @@
             color: var(--text); text-decoration: none;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
-            padding-bottom: 4px;
+            padding-bottom: 2px;          /* 下划线紧贴文案 */
         }
         .nav-links a::after {
             content: '';
@@ -123,12 +123,12 @@
         .year-tag { font-size: clamp(1.1rem,1.9vw,1.5rem); font-weight: 550; letter-spacing: 0.06em; color: #3a3a3a; user-select: none; opacity: 0.85; line-height: 1; white-space: nowrap; margin-left: clamp(0.3rem,0.8vw,0.6rem); margin-top: 0.35em; }
         .year-digits { display: inline-block; }
 
-        /* ========== 第三页：全新极简黑白卡片（全屏自适应高度） ========== */
+        /* ========== 第三页：极简黑白卡片（全屏自适应高度） ========== */
         .page3 {
             position: fixed; inset: 0; z-index: 30;
             background: var(--bg);
             display: flex;
-            align-items: stretch;          /* 让子元素在垂直方向拉伸 */
+            align-items: stretch;
             justify-content: center;
             pointer-events: none; opacity: 0;
             transform: translateY(40px);
@@ -143,7 +143,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
-            height: 100%;               /* 占满父级高度 */
+            height: 100%;
             margin: 0;
         }
 
@@ -151,65 +151,46 @@
         .minimal-card {
             background: #000;
             border-radius: 24px;
-            padding: 32px 24px 28px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             box-shadow: 0 12px 32px rgba(0,0,0,0.15);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
             cursor: pointer;
             border: none;
             outline: none;
-            text-align: left;
             color: #fff;
             font-family: inherit;
-            height: 100%;               /* 撑满所在网格单元格 */
+            height: 100%;
         }
         .minimal-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
         }
 
-        /* 笔记本电脑模型预览区 */
-        .card-preview {
-            background: #111;
+        /* 视频容器：占据剩余空间 */
+        .card-video {
+            flex: 1 1 auto;
+            min-height: 0;
             border-radius: 12px;
-            padding: 16px 12px 0;
-            margin-bottom: 18px;
-            position: relative;
             overflow: hidden;
+            background: #1a1a1a;
+            margin-bottom: 16px;
         }
-        .laptop-screen {
-            background: #222;
-            border-radius: 8px 8px 0 0;
-            padding: 12px 8px 0;
-            min-height: 80px;
-        }
-        .gallery-strip {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-        }
-        .gallery-strip img {
-            width: 48px;
-            height: 32px;
+        .card-video video,
+        .card-video img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 4px;
+            display: block;
+        }
+
+        .card-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            margin-bottom: 14px;
             flex-shrink: 0;
-            background: #444;
-        }
-        .laptop-base {
-            background: #111;
-            height: 6px;
-            border-radius: 0 0 6px 6px;
-            margin: 0 16px;
-        }
-        .laptop-stand {
-            background: #222;
-            height: 4px;
-            margin: 0 40px 8px;
-            border-radius: 2px;
         }
 
         .card-title {
@@ -217,14 +198,10 @@
             font-weight: 700;
             letter-spacing: -0.02em;
             color: #fff;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
-        .card-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin-bottom: 16px;
-        }
+
         .card-description {
             font-size: 0.9rem;
             line-height: 1.5;
@@ -232,6 +209,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
+            flex-shrink: 0;
         }
         .card-description span {
             flex: 1;
@@ -289,12 +267,12 @@
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
             .cards-row { gap: 14px; }
-            .minimal-card { padding: 24px 18px 22px; }
+            .minimal-card { padding: 18px; }
             .card-title { font-size: 1.5rem; }
         }
         @media (max-width: 768px) {
             .cards-row { grid-template-columns: 1fr; }
-            .minimal-card { padding: 24px 18px 22px; }
+            .minimal-card { padding: 18px; }
         }
     </style>
 </head>
@@ -369,25 +347,17 @@
         </div>
     </div>
 
-    <!-- 第三页：三张极简黑白卡片（全屏自适应高度） -->
+    <!-- 第三页：极简黑白卡片（全屏自适应，结构：视频容器 + 分割线 + 标题 + 描述） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 卡片1：主图渲染 -->
             <button class="minimal-card" onclick="showDetail('detail1')">
-                <div class="card-preview">
-                    <div class="laptop-screen">
-                        <div class="gallery-strip">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                        </div>
-                    </div>
-                    <div class="laptop-base"></div>
-                    <div class="laptop-stand"></div>
+                <div class="card-video">
+                    <!-- 替换你的视频链接 -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
                 </div>
-                <div class="card-title">主图渲染</div>
                 <div class="card-divider"></div>
+                <div class="card-title">主图渲染</div>
                 <div class="card-description">
                     <span>三维渲染作品精选，自由构图与质感表达</span>
                     <span class="card-arrow">↗</span>
@@ -396,20 +366,11 @@
 
             <!-- 卡片2：详情页 -->
             <button class="minimal-card" onclick="showDetail('detail2')">
-                <div class="card-preview">
-                    <div class="laptop-screen">
-                        <div class="gallery-strip">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                        </div>
-                    </div>
-                    <div class="laptop-base"></div>
-                    <div class="laptop-stand"></div>
+                <div class="card-video">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
                 </div>
-                <div class="card-title">详情页</div>
                 <div class="card-divider"></div>
+                <div class="card-title">详情页</div>
                 <div class="card-description">
                     <span>产品细节展示与交互微动效</span>
                     <span class="card-arrow">↗</span>
@@ -418,20 +379,11 @@
 
             <!-- 卡片3：AI辅助 -->
             <button class="minimal-card" onclick="showDetail('detail3')">
-                <div class="card-preview">
-                    <div class="laptop-screen">
-                        <div class="gallery-strip">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' fill='%23444'%3E%3Crect width='48' height='32'/%3E%3C/svg%3E" alt="">
-                        </div>
-                    </div>
-                    <div class="laptop-base"></div>
-                    <div class="laptop-stand"></div>
+                <div class="card-video">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' fill='%23222'%3E%3Crect width='400' height='225'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3E视频封面%3C/text%3E%3C/svg%3E" alt="视频占位">
                 </div>
-                <div class="card-title">AI辅助</div>
                 <div class="card-divider"></div>
+                <div class="card-title">AI辅助</div>
                 <div class="card-description">
                     <span>生成式设计探索，人机协作新可能</span>
                     <span class="card-arrow">↗</span>
@@ -445,7 +397,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 -->
+    <!-- 详情页 1 / 2 / 3（保持不变） -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
