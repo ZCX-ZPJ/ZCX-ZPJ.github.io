@@ -167,7 +167,6 @@
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
         }
 
-        /* 视频容器：占卡片高度 70% */
         .card-video {
             flex: 0 0 70%;
             max-height: 70%;
@@ -200,7 +199,7 @@
             color: #fff;
             margin-bottom: 8px;
             flex-shrink: 0;
-            text-align: left;          /* 左对齐 */
+            text-align: left;
         }
 
         .card-description {
@@ -210,8 +209,8 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            text-align: left;          /* 左对齐 */
-            margin-top: auto;          /* 推到底部 */
+            text-align: left;
+            margin-top: auto;
             flex-shrink: 0;
             margin-bottom: 2px;
         }
@@ -221,10 +220,10 @@
         }
         .card-arrow {
             font-size: 1.2rem;
-            transform: translateY(2px);
             transition: transform 0.2s ease;
             color: #fff;
             align-self: flex-end;
+            margin-left: 0;
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
@@ -249,7 +248,7 @@
         .page4.active .page4-text { transform: scale(1); }
         .page4:not(.active) .page4-text { transform: scale(0.9); }
 
-        /* ========== 详情页通用样式（未改动） ========== */
+        /* ========== 详情页通用样式 ========== */
         .detail-page { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; padding: 4vh 2vw 2vh; overflow-y: auto; opacity: 0; pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -277,9 +276,40 @@
             .card-video { flex: 0 0 65%; max-height: 65%; }
         }
         @media (max-width: 768px) {
+            :root { --card-gap: 8px; }
+            header { padding: 1rem 1.5rem; }
+            .nav-links { font-size: 1rem; gap: 1.5rem; }
+            main { justify-content: space-evenly; gap: 0; padding: 0.5rem 1.5rem; }
+            .hero-title { white-space: normal; flex-wrap: wrap; text-align: center; font-size: max(2.5rem,10vw); gap: 0.6rem; margin: 0; }
+            .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
+            .profile-img { width: 65px; min-width: 65px; }
+            .hero-desc { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 1rem; font-size: max(0.95rem,3.5vw); text-align: center; }
+            .hero-desc::before { left: 0; width: 100%; }
+            .hero-desc div:first-child, .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
+            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
+            .software-item:hover { transform: none; color: inherit; }
+            footer { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.8rem; text-align: center; }
+            .footer-left { font-size: 0.85rem; } .footer-center { position: static; transform: none; font-size: 1rem; }
+            .footer-right { justify-content: center; gap: 1.2rem; }
+            .icon-wrapper svg { width: 20px; height: 20px; } .icon-text { font-size: 1.2rem; }
+            .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
+            .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
+            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
+            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
+            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
+            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
+            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
+            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
+            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
+            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
+            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
+            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
+            @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .cards-row { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr; }
             .minimal-card { padding: 20px 18px 18px; }
             .card-video { flex: 0 0 65%; max-height: 65%; }
+            .page4-text { font-size: 6rem; }
         }
     </style>
 </head>
@@ -354,7 +384,7 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（文案靠底） -->
+    <!-- 第三页：极简黑白卡片 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <!-- 卡片1：主图渲染 -->
@@ -403,7 +433,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3（保持不变） -->
+    <!-- 详情页 1 / 2 / 3 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
