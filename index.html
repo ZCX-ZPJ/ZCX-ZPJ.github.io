@@ -184,7 +184,7 @@
         .card-box:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-box img { width: 100%; height: auto; display: block; object-fit: contain; background: inherit; }
 
-        /* 平板适配 */
+        /* 平板 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
@@ -194,7 +194,7 @@
             .card-video { flex: 0 0 65%; max-height: 65%; }
         }
 
-        /* 移动端全面压缩 */
+        /* 移动端彻底修复：内部滚动 + 全面压缩 */
         @media (max-width: 768px) {
             :root { --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -214,43 +214,51 @@
             .icon-wrapper svg { width: 20px; height: 20px; } .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
-            .cards-row { grid-template-columns: 1fr; gap: 6px; }
+
+            .cards-row { grid-template-columns: 1fr; }
             .cards-grid { grid-template-columns: 1fr; }
             .page4-text { font-size: 6rem; }
 
-            /* 第三页移动端压缩 */
+            /* 第三页内部滚动，不锁定body */
             .page3 {
-                padding: 1vh 2vw;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: auto;   /* 允许滚动传到body */
+                padding: 2vh 3vw;
+            }
+            .page3 .cards-row {
+                height: auto;               /* 让内容自然撑开 */
             }
             .minimal-card {
-                padding: 8px 10px 6px;
+                padding: 12px 14px 10px;
                 border-radius: 16px;
+                margin-bottom: 10px;        /* 卡片间距 */
             }
             .card-video {
-                flex: 0 0 36%;
-                max-height: 36%;
-                margin-bottom: 5px;
+                flex: 0 0 42%;
+                max-height: 42%;
+                margin-bottom: 8px;
                 border-radius: 10px;
             }
             .card-divider {
-                margin-bottom: 3px;
+                margin-bottom: 5px;
             }
             .card-title {
-                font-size: 1.1rem;
-                margin-bottom: 2px;
-                letter-spacing: -0.01em;
+                font-size: 1.2rem;
+                margin-bottom: 3px;
             }
             .card-description {
-                font-size: 0.68rem;
-                line-height: 1.2;
-                margin-bottom: 1px;
-            }
-            .card-description span {
-                margin-right: 14px;
+                font-size: 0.75rem;
+                line-height: 1.3;
+                margin-bottom: 0;
             }
             .card-arrow {
-                width: 18px;
-                height: 18px;
+                width: 20px;
+                height: 20px;
+            }
+            /* 取消任何可能的吸附干扰 */
+            .page3, .page4, .page2, .page1 {
+                scroll-snap-align: none;
             }
         }
     </style>
@@ -329,7 +337,7 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片 -->
+    <!-- 第三页：极简黑白卡片（三张封面均为视频） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
