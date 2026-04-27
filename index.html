@@ -221,7 +221,7 @@
             .card-video { flex: 0 0 65%; max-height: 65%; }
         }
 
-        /* 移动端最终优化：视频区拉长、文案压缩、三卡一屏精准适配 */
+        /* 移动端：视频容器拉长至70%，文案紧凑，完美适配一屏 */
         @media (max-width: 768px) {
             :root { --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -275,13 +275,13 @@
                 gap: 4px;
             }
             .minimal-card {
-                height: calc((100vh - 4vh - 8px) / 3);  /* 上下padding共4vh，两处gap共8px */
+                height: calc((100vh - 4vh - 8px) / 3);
                 padding: 5px 8px 3px;
                 border-radius: 14px;
             }
             .card-video {
-                flex: 0 0 55%;
-                max-height: 55%;
+                flex: 0 0 70%;        /* 👈 已拉长至70% */
+                max-height: 70%;
                 margin-bottom: 3px;
                 border-radius: 8px;
             }
