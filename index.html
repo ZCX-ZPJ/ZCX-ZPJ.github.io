@@ -313,17 +313,14 @@
             <div class="footer-left">期待合作</div>
             <div class="footer-center">···</div>
             <div class="footer-right">
-                <!-- 微信图标 -->
                 <div class="icon-wrapper" data-title="ZHOU-9-57" data-copy="ZHOU-9-57">
                     <svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg>
                     <span class="copy-toast">已复制</span>
                 </div>
-                <!-- QQ图标 -->
                 <div class="icon-wrapper" data-title="2077821405" data-copy="2077821405">
                     <span class="icon-text">Q</span>
                     <span class="copy-toast">已复制</span>
                 </div>
-                <!-- 电话图标 -->
                 <div class="icon-wrapper" data-title="13226408301" data-copy="13226408301">
                     <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>
                     <span class="copy-toast">已复制</span>
@@ -424,6 +421,8 @@
             let ticking = false;
             let lastMouseX = window.innerWidth / 2;
             let lastMouseY = window.innerHeight / 2;
+            let snapTimer = null;
+            let isSnapping = false;       // 防止吸附过程触发新的吸附
 
             const homeLink = document.getElementById('homeLink');
             const aboutLink = document.getElementById('aboutLink');
@@ -439,8 +438,9 @@
                     startSlotSpin();
                 }
                 document.body.classList.remove('smile-cursor');
+                isSnapping = true;   // 导航滚动时不触发吸附
                 window.scrollTo({ top: targetY, behavior: 'smooth' });
-                setTimeout(() => updateScroll(), 50);
+                setTimeout(() => { isSnapping = false; updateScroll(); }, 600);
             }
 
             homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
@@ -456,21 +456,16 @@
                 }
             });
 
-            // ========== 图标复制功能 ==========
+            // 图标复制功能
             document.querySelectorAll('.icon-wrapper').forEach(wrapper => {
                 const toast = wrapper.querySelector('.copy-toast');
                 const copyText = wrapper.getAttribute('data-copy');
                 if (!copyText) return;
-
                 wrapper.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    // 复制到剪贴板
                     if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(copyText).then(() => {
-                            showToast(wrapper, toast);
-                        }).catch(() => {
-                            fallbackCopy(copyText, wrapper, toast);
-                        });
+                        navigator.clipboard.writeText(copyText).then(() => showToast(wrapper, toast))
+                        .catch(() => fallbackCopy(copyText, wrapper, toast));
                     } else {
                         fallbackCopy(copyText, wrapper, toast);
                     }
@@ -480,25 +475,17 @@
             function fallbackCopy(text, wrapper, toast) {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
+                textarea.style.position = 'fixed'; textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast(wrapper, toast);
-                } catch (err) {
-                    console.log('复制失败');
-                }
+                try { document.execCommand('copy'); showToast(wrapper, toast); } catch (err) {}
                 document.body.removeChild(textarea);
             }
 
             function showToast(wrapper, toast) {
                 if (!toast) return;
                 toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 1200);
+                setTimeout(() => toast.classList.remove('show'), 1200);
             }
 
             // 数字动画
@@ -525,10 +512,7 @@
             // 标题缓动跟随
             const title = document.getElementById('titleMove');
             if (title) {
-                let targetX = 0;
-                let currentX = 0;
-                let rafId = null;
-
+                let targetX = 0, currentX = 0, rafId = null;
                 function animate() {
                     const now = performance.now() / 1000;
                     const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
@@ -538,19 +522,12 @@
                     title.style.transform = `translateX(${currentX}px) translateZ(0)`;
                     rafId = requestAnimationFrame(animate);
                 }
-
                 window.mouseX = 0;
                 document.addEventListener('mousemove', e => {
-                    if (e.clientY < innerHeight / 2) {
-                        window.mouseX = (e.clientX / innerWidth - 0.5) * 2400;
-                    } else {
-                        window.mouseX = 0;
-                    }
+                    if (e.clientY < innerHeight / 2) window.mouseX = (e.clientX / innerWidth - 0.5) * 2400;
+                    else window.mouseX = 0;
                 });
-                document.addEventListener('mouseleave', () => {
-                    window.mouseX = 0;
-                });
-
+                document.addEventListener('mouseleave', () => { window.mouseX = 0; });
                 rafId = requestAnimationFrame(animate);
             }
 
@@ -581,6 +558,25 @@
                     window.scrollTo({ top: savedScrollY, behavior: 'smooth' });
                 }, 30);
             };
+
+            // 滚动吸附逻辑
+            function snapToPage() {
+                if (isSnapping || currentPage !== 'home') return;
+                const sY = window.scrollY;
+                const pages = [0, vh, 2 * vh, 3 * vh];
+                let closest = pages[0];
+                let minDist = Math.abs(sY - closest);
+                for (let i = 1; i < pages.length; i++) {
+                    const dist = Math.abs(sY - pages[i]);
+                    if (dist < minDist) { minDist = dist; closest = pages[i]; }
+                }
+                // 如果已经非常接近某页（< 10px）就不吸附，避免抖动
+                if (minDist > 10) {
+                    isSnapping = true;
+                    window.scrollTo({ top: closest, behavior: 'smooth' });
+                    setTimeout(() => { isSnapping = false; updateScroll(); }, 600);
+                }
+            }
 
             function updateScroll() {
                 if (currentPage !== 'home') return;
@@ -619,6 +615,11 @@
                     requestAnimationFrame(() => { updateScroll(); ticking = false; });
                     ticking = true;
                 }
+                // 滚动停止检测：300ms内没有再滚动就吸附
+                if (snapTimer) clearTimeout(snapTimer);
+                snapTimer = setTimeout(() => {
+                    snapToPage();
+                }, 300);
             }, { passive: true });
 
             window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
