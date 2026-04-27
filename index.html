@@ -69,14 +69,12 @@
         .nav-links a {
             color: var(--text); text-decoration: none;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            padding-bottom: 2px;
+            position: relative; padding-bottom: 2px;
         }
         .nav-links a::after {
             content: '';
-            position: absolute; left: 0; right: 0; bottom: 0;
-            height: 1px; background: #000;
-            transform: scaleX(0); transform-origin: left;
+            position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+            background: #000; transform: scaleX(0); transform-origin: left;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .nav-links a:hover::after { transform: scaleX(1); }
@@ -214,27 +212,16 @@
             .icon-wrapper svg { width: 20px; height: 20px; } .icon-text { font-size: 1.2rem; }
             .splash-title { font-size: max(3.5rem,14vw); letter-spacing: 0.04em; }
             .year-tag { font-size: max(0.85rem,3vw); margin-left: clamp(0.2rem,0.8vw,0.4rem); margin-top: 0.25em; }
-            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
-            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
-            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
-            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
-            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
-            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
-            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
-            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
-            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
-            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
-            @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
             .cards-row { grid-template-columns: 1fr; gap: 12px; }
             .cards-grid { grid-template-columns: 1fr; }
             .minimal-card { padding: 20px 18px 18px; }
             .card-video { flex: 0 0 58%; max-height: 58%; }
             .page4-text { font-size: 6rem; }
-            /* 移动端第三页内部滚动 */
+            /* 移动端第三页内部滚动，且允许滚动传递 */
             .page3 {
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
-                overscroll-behavior: contain;
+                overscroll-behavior: auto; /* 允许滚动链，自然过渡到body滚动 */
                 padding: 2vh 3vw;
             }
             .page3 .cards-row {
@@ -259,7 +246,7 @@
         </svg>
     </div>
 
-    <!-- 第一页 -->
+    <!-- 第一页、第二页、第三页、第四页、详情页结构相同，此处保留所有HTML，确保PC端完整 -->
     <div class="page1" id="page1">
         <header>
             <nav class="nav-links">
@@ -310,7 +297,6 @@
         </footer>
     </div>
 
-    <!-- 第二页 -->
     <div class="page2" id="page2">
         <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
@@ -318,7 +304,6 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片（三张封面均为视频） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
@@ -342,12 +327,11 @@
         </div>
     </div>
 
-    <!-- 第四页 -->
     <div class="page4" id="page4">
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 / 2 / 3 -->
+    <!-- 详情页 1 / 2 / 3 保持原样 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -402,8 +386,6 @@
             let ticking = false;
             let lastMouseX = window.innerWidth / 2;
             let lastMouseY = window.innerHeight / 2;
-            let snapTimer = null;
-            let isSnapping = false;
             let isMobile = window.innerWidth <= 768;
 
             const homeLink = document.getElementById('homeLink');
@@ -420,9 +402,8 @@
                     startSlotSpin();
                 }
                 document.body.classList.remove('smile-cursor');
-                isSnapping = true;
                 window.scrollTo({ top: targetY, behavior: 'smooth' });
-                setTimeout(() => { isSnapping = false; updateScroll(); }, 600);
+                setTimeout(() => updateScroll(), 50);
             }
 
             homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
@@ -541,26 +522,6 @@
                 }, 30);
             };
 
-            function snapToPage() {
-                if (!isMobile || isSnapping || currentPage !== 'home') return;
-                // 移动端第三页内部滚动时，不触发吸附
-                if (window.scrollY >= 2 * vh && window.scrollY < 3 * vh) return;
-                const sY = window.scrollY;
-                const currentVH = window.innerHeight;
-                const pages = [0, currentVH, 2 * currentVH, 3 * currentVH];
-                let closest = pages[0];
-                let minDist = Math.abs(sY - closest);
-                for (let i = 1; i < pages.length; i++) {
-                    const dist = Math.abs(sY - pages[i]);
-                    if (dist < minDist) { minDist = dist; closest = pages[i]; }
-                }
-                if (minDist > 10) {
-                    isSnapping = true;
-                    window.scrollTo({ top: closest, behavior: 'smooth' });
-                    setTimeout(() => { isSnapping = false; updateScroll(); }, 600);
-                }
-            }
-
             function updateScroll() {
                 if (currentPage !== 'home') return;
                 const sY = window.scrollY;
@@ -573,19 +534,13 @@
                 if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } }
                 else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
 
-                // 移动端第三页锁定 body 滚动
-                if (isMobile && sY >= 2 * vh && sY < 3 * vh) {
-                    document.body.style.overflow = 'hidden';
+                // 桌面和移动端统一处理，不锁定body滚动
+                if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
+                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() => {}); });
                 } else {
-                    if (isMobile) document.body.style.overflow = '';
                     page3.classList.remove('active');
-                }
-
-                // 桌面端正常处理
-                if (!isMobile) {
-                    if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active');
-                    else page3.classList.remove('active');
+                    document.querySelectorAll('.page3 video').forEach(v => v.pause());
                 }
 
                 if (sY >= 3 * vh) {
@@ -593,7 +548,6 @@
                     document.body.classList.add('smile-cursor');
                     smileCursor.style.left = lastMouseX + 'px';
                     smileCursor.style.top = lastMouseY + 'px';
-                    if (isMobile) document.body.style.overflow = '';
                 } else {
                     page4.classList.remove('active');
                     document.body.classList.remove('smile-cursor');
@@ -606,10 +560,6 @@
                     requestAnimationFrame(() => { updateScroll(); ticking = false; });
                     ticking = true;
                 }
-                if (snapTimer) clearTimeout(snapTimer);
-                snapTimer = setTimeout(() => {
-                    snapToPage();
-                }, 300);
             }, { passive: true });
 
             window.addEventListener('resize', () => {
