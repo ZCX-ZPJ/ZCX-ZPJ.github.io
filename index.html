@@ -438,7 +438,10 @@
             height: 100%;
             margin: 0;
         }
+
+        /* ---------- 卡片流体背景核心样式 ---------- */
         .minimal-card {
+            position: relative;
             background: #000;
             border-radius: 24px;
             padding: 24px 22px 20px;
@@ -452,11 +455,60 @@
             color: #fff;
             font-family: inherit;
             height: 100%;
+            overflow: hidden; /* 确保伪元素不溢出圆角 */
+            z-index: 1;
         }
+
+        /* 流体渐变背景层 */
+        .minimal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg,
+                    #1E1E1E 0%,
+                    #3F3F3F 20%,
+                    #7F7F7F 40%,
+                    #DADADA 60%,
+                    #EAEBE8 80%,
+                    #1E1E1E 100%);
+            background-size: 400% 400%;
+            animation: fluidFlow 12s ease-in-out infinite alternate;
+            border-radius: inherit;
+        }
+
+        /* 流动动画关键帧 */
+        @keyframes fluidFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 50% 100%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 50% 0%;
+            }
+            100% {
+                background-position: 0% 100%;
+            }
+        }
+
+        /* 为每个卡片设置不同动画延迟，产生交错流动感 */
+        .minimal-card:nth-child(1)::before { animation-delay: 0s; }
+        .minimal-card:nth-child(2)::before { animation-delay: -4s; }
+        .minimal-card:nth-child(3)::before { animation-delay: -8s; }
+
         .minimal-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
         }
+
         .card-video {
             flex: 0 0 70%;
             max-height: 70%;
@@ -465,6 +517,9 @@
             overflow: hidden;
             background: #1a1a1a;
             margin-bottom: 14px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .card-video video,
         .card-video img {
@@ -479,6 +534,8 @@
             background: rgba(255, 255, 255, 0.2);
             margin-bottom: 12px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 2;
         }
         .card-title {
             font-size: 1.8rem;
@@ -488,11 +545,14 @@
             margin-bottom: 8px;
             flex-shrink: 0;
             text-align: left;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         .card-description {
             font-size: 0.85rem;
             line-height: 1.4;
-            color: #aaa;
+            color: #ddd;
             display: flex;
             align-items: flex-start;
             text-align: left;
@@ -501,6 +561,8 @@
             margin-bottom: 2px;
             position: relative;
             padding-right: 0;
+            z-index: 2;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
         .card-description span {
             flex: 1;
@@ -514,11 +576,13 @@
             height: 24px;
             transition: transform 0.2s ease;
             line-height: 0;
+            z-index: 3;
         }
         .card-arrow svg {
             width: 100%;
             height: 100%;
             display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
@@ -578,7 +642,7 @@
             pointer-events: auto;
         }
 
-        /* ========== 返回首页按钮（去掉了浮动弹跳，保留扫光和悬停效果） ========== */
+        /* 返回首页按钮（去浮动弹跳，保留扫光） */
         .back-btn {
             position: fixed;
             bottom: 0;
@@ -604,8 +668,6 @@
                 border-color 0.35s ease,
                 box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        /* 扫光伪元素保留 */
         .back-btn::after {
             content: '';
             position: absolute;
@@ -621,15 +683,12 @@
         .back-btn:hover::after {
             left: 100%;
         }
-
         .back-btn:hover {
             color: #ff8c42;
             background: rgba(255, 255, 255, 1);
             border-top-color: #ff8c42;
             box-shadow: 0 -6px 24px rgba(255, 140, 66, 0.25);
         }
-
-        /* 保证文字层级 */
         .back-btn > * {
             position: relative;
             z-index: 1;
@@ -785,66 +844,21 @@
                 margin-top: 0.25em;
             }
 
-            /* 移动端闪烁动效 */
-            .blink-1 {
-                animation: softBlink 6s infinite;
-                animation-delay: 0s;
-            }
-            .blink-2 {
-                animation: softBlink 6s infinite;
-                animation-delay: 4s;
-            }
-            .blink-3 {
-                animation: softBlink 6s infinite;
-                animation-delay: 1.5s;
-            }
-            .blink-4 {
-                animation: softBlink 6s infinite;
-                animation-delay: 5s;
-            }
-            .blink-5 {
-                animation: softBlink 6s infinite;
-                animation-delay: 2.5s;
-            }
-            .blink-6 {
-                animation: softBlink 6s infinite;
-                animation-delay: 0.8s;
-            }
-            .blink-7 {
-                animation: softBlink 6s infinite;
-                animation-delay: 3.5s;
-            }
-            .blink-8 {
-                animation: softBlink 6s infinite;
-                animation-delay: 1s;
-            }
-            .blink-9 {
-                animation: softBlink 6s infinite;
-                animation-delay: 3s;
-            }
-            .blink-10 {
-                animation: softBlink 6s infinite;
-                animation-delay: 4.5s;
-            }
+            .blink-1 { animation: softBlink 6s infinite; animation-delay: 0s; }
+            .blink-2 { animation: softBlink 6s infinite; animation-delay: 4s; }
+            .blink-3 { animation: softBlink 6s infinite; animation-delay: 1.5s; }
+            .blink-4 { animation: softBlink 6s infinite; animation-delay: 5s; }
+            .blink-5 { animation: softBlink 6s infinite; animation-delay: 2.5s; }
+            .blink-6 { animation: softBlink 6s infinite; animation-delay: 0.8s; }
+            .blink-7 { animation: softBlink 6s infinite; animation-delay: 3.5s; }
+            .blink-8 { animation: softBlink 6s infinite; animation-delay: 1s; }
+            .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
+            .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
 
             @keyframes softBlink {
-                0%,
-                100% {
-                    color: var(--gray);
-                    transform: scale(1);
-                    text-shadow: none;
-                }
-                15%,
-                35% {
-                    color: #ff9d5c;
-                    transform: scale(1.02);
-                    text-shadow: 0 0 6px rgba(255, 157, 92, 0.3);
-                }
-                25% {
-                    color: var(--accent);
-                    transform: scale(1.03);
-                    text-shadow: 0 0 10px rgba(255, 140, 66, 0.4);
-                }
+                0%, 100% { color: var(--gray); transform: scale(1); text-shadow: none; }
+                15%, 35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); }
+                25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
 
             .cards-row {
@@ -979,7 +993,7 @@
         </div>
     </div>
 
-    <!-- 第三页：极简黑白卡片 -->
+    <!-- 第三页：卡片已内置流体背景动画 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
@@ -1008,7 +1022,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1 -->
+    <!-- 详情页 1/2/3 保持不变 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
@@ -1082,12 +1096,9 @@
                 setTimeout(() => updateScroll(), 50);
             }
 
-            homeLink.addEventListener('click', (e) => { e.preventDefault();
-                navigateTo(0); });
-            aboutLink.addEventListener('click', (e) => { e.preventDefault();
-                navigateTo(3 * vh); });
-            workLink.addEventListener('click', (e) => { e.preventDefault();
-                navigateTo(2 * vh); });
+            homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
+            aboutLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(3 * vh); });
+            workLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(2 * vh); });
 
             document.addEventListener('mousemove', (e) => {
                 lastMouseX = e.clientX;
@@ -1116,12 +1127,10 @@
             function fallbackCopy(text, wrapper, toast) {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
+                textarea.style.position = 'fixed'; textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
-                try { document.execCommand('copy');
-                    showToast(wrapper, toast); } catch (err) {}
+                try { document.execCommand('copy'); showToast(wrapper, toast); } catch (err) {}
                 document.body.removeChild(textarea);
             }
 
@@ -1132,69 +1141,29 @@
             }
 
             const yearDigits = document.getElementById('yearDigits');
-            const FINAL_TEXT = '2020–2026',
-                SPIN_DURATION = 1000,
-                TICK_INTERVAL = 20,
-                LOOP_DELAY = 600;
-            let loopActive = false,
-                intervalId = null,
-                loopTimeout = null,
-                startTime = 0;
-            const chars = FINAL_TEXT.split(''),
-                totalChars = chars.length;
-
-            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c ===
-                    '-') return ['–', '—', '·', '-']; if (c === '©') return ['©', '®', '℗']; return [c]; }
+            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
+            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
+            const chars = FINAL_TEXT.split(''), totalChars = chars.length;
+            function getRandomPool(c) { if (c >= '0' && c <= '9') return '0123456789'.split(''); if (c === '–' || c === '-') return ['–','—','·','-']; if (c === '©') return ['©','®','℗']; return [c]; }
             const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0),
-                locked = new Array(totalChars).fill(false),
-                lockIndex = 0;
+            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
 
-            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout);
-                intervalId = null;
-                loopTimeout = null; }
-
+            function clearTimers() { if (intervalId) clearInterval(intervalId); if (loopTimeout) clearTimeout(loopTimeout); intervalId = null; loopTimeout = null; }
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
             function updateSlotChars() {
-                const elapsed = performance.now() - startTime,
-                    globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
                 const targetLockCount = Math.floor(globalProgress * totalChars);
-                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex;
-                    locked[idx] = true;
-                    slotPositions[idx] = pools[idx].indexOf(chars[idx]);
-                    lockIndex++; }
+                while (lockIndex < targetLockCount && lockIndex < totalChars) { const idx = lockIndex; locked[idx] = true; slotPositions[idx] = pools[idx].indexOf(chars[idx]); lockIndex++; }
                 const result = [];
-                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool =
-                        pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = 0.5 + (i /
-                        totalChars) * 0.2;
-                    let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart;
-                        slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration);
-                        slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const
-                            speedFactor = 1 + Math.floor((1 - slotProgress) * 12);
-                        slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true;
-                        const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; }
-                    result.push(pool[slotPositions[i] % pool.length]); }
+                for (let i = 0; i < totalChars; i++) { if (locked[i]) { result.push(chars[i]); continue; } const pool = pools[i]; if (pool.length <= 1) { result.push(pool[0]); continue; } const slotSlowStart = 0.5 + (i / totalChars) * 0.2; let slotProgress; if (globalProgress >= slotSlowStart) { const slotDuration = 1 - slotSlowStart; slotProgress = Math.min(1, (globalProgress - slotSlowStart) / slotDuration); slotProgress = easeOutCubic(slotProgress); } else { slotProgress = 0; } if (slotProgress < 1) { const speedFactor = 1 + Math.floor((1 - slotProgress) * 12); slotPositions[i] = (slotPositions[i] + speedFactor) % pool.length; } else { locked[i] = true; const finalIdx = pool.indexOf(chars[i]); if (finalIdx >= 0) slotPositions[i] = finalIdx; } result.push(pool[slotPositions[i] % pool.length]); }
                 yearDigits.textContent = result.join('');
-                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT;
-                    clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); },
-                        LOOP_DELAY); } }
+                if (locked.every(v => v)) { yearDigits.textContent = FINAL_TEXT; clearTimers(); if (loopActive) { loopTimeout = setTimeout(() => { if (loopActive) startSlotSpin(); }, LOOP_DELAY); } }
             }
-
-            function startSlotSpin() { clearTimers();
-                locked.fill(false);
-                lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i]
-                        .length); }
-                startTime = performance.now();
-                yearDigits.textContent = FINAL_TEXT;
-                intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
+            function startSlotSpin() { clearTimers(); locked.fill(false); lockIndex = 0; for (let i = 0; i < totalChars; i++) { slotPositions[i] = Math.floor(Math.random() * pools[i].length); } startTime = performance.now(); yearDigits.textContent = FINAL_TEXT; intervalId = setInterval(updateSlotChars, TICK_INTERVAL); }
 
             const title = document.getElementById('titleMove');
             if (title) {
-                let targetX = 0,
-                    currentX = 0,
-                    rafId = null;
-
+                let targetX = 0, currentX = 0, rafId = null;
                 function animate() {
                     const now = performance.now() / 1000;
                     const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
@@ -1250,10 +1219,7 @@
                 page1.style.pointerEvents = p1 > 0.8 ? 'none' : 'auto';
 
                 const inPage2 = sY >= vh && sY < 2 * vh;
-                if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true;
-                        startSlotSpin(); } } else { page2.classList.remove('active'); if (loopActive) { loopActive = false;
-                        clearTimers();
-                        yearDigits.textContent = FINAL_TEXT; } }
+                if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } } else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
@@ -1277,14 +1243,12 @@
             window.addEventListener('scroll', () => {
                 if (currentPage !== 'home') return;
                 if (!ticking) {
-                    requestAnimationFrame(() => { updateScroll();
-                        ticking = false; });
+                    requestAnimationFrame(() => { updateScroll(); ticking = false; });
                     ticking = true;
                 }
             }, { passive: true });
 
-            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home')
-            updateScroll(); });
+            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
             updateScroll();
         })();
     </script>
