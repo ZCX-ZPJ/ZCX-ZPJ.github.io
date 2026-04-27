@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
 
-    <!-- 浏览器标签头像 -->
     <link rel="icon" type="image/webp" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/redshift.webp">
     <link rel="apple-touch-icon" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/redshift.webp">
-
     <link rel="dns-prefetch" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com">
     <link rel="preconnect" href="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com">
 
@@ -76,12 +74,9 @@
         }
         .nav-links a::after {
             content: '';
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 1px;
-            background: #000;
-            transform: scaleX(0);
-            transform-origin: left;
+            position: absolute; left: 0; right: 0; bottom: 0;
+            height: 1px; background: #000;
+            transform: scaleX(0); transform-origin: left;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .nav-links a:hover::after { transform: scaleX(1); }
@@ -114,34 +109,23 @@
         .icon-text { font-size: 1.4rem; font-weight: 600; color: #1f1f1f; line-height: 1; transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .icon-wrapper:hover svg, .icon-wrapper:hover .icon-text { fill: var(--accent); color: var(--accent); transform: scale(1.1); }
         .icon-wrapper::after {
-            content: attr(data-title);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-8px);
-            background: #1f1f1f; color: #fff;
+            content: attr(data-title); position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%) translateY(-8px); background: #1f1f1f; color: #fff;
             font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
+            opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
             pointer-events: none; z-index: 100;
         }
         .icon-wrapper::before {
-            content: '';
-            position: absolute; bottom: 100%; left: 50%;
+            content: ''; position: absolute; bottom: 100%; left: 50%;
             transform: translateX(-50%) translateY(-2px);
             border: 5px solid transparent; border-top-color: #1f1f1f;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
+            opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
         }
         .icon-wrapper:hover::after, .icon-wrapper:hover::before { opacity: 1; visibility: visible; }
         .icon-wrapper .copy-toast {
-            position: absolute;
-            bottom: calc(100% + 10px); left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent); color: #fff;
-            font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 4px;
-            white-space: nowrap; opacity: 0; pointer-events: none;
-            transition: opacity 0.2s; z-index: 101;
+            position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: #fff; font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 4px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 101;
         }
         .icon-wrapper .copy-toast.show { opacity: 1; }
 
@@ -165,7 +149,6 @@
             transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: transform, opacity;
             padding: 4vh 2vw;
-            /* PC 端不设 overflow，移动端通过媒体查询增加 */
         }
         .page3.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
@@ -203,7 +186,7 @@
         .card-box:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-box img { width: 100%; height: auto; display: block; object-fit: contain; background: inherit; }
 
-        /* 响应式调整 */
+        /* 移动端适配 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
@@ -242,13 +225,22 @@
             .blink-9 { animation: softBlink 6s infinite; animation-delay: 3s; }
             .blink-10 { animation: softBlink 6s infinite; animation-delay: 4.5s; }
             @keyframes softBlink { 0%,100% { color: var(--gray); transform: scale(1); text-shadow: none; } 15%,35% { color: #ff9d5c; transform: scale(1.02); text-shadow: 0 0 6px rgba(255,157,92,0.3); } 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); } }
-            .cards-row { grid-template-columns: 1fr; }
+            .cards-row { grid-template-columns: 1fr; gap: 12px; }
             .cards-grid { grid-template-columns: 1fr; }
             .minimal-card { padding: 20px 18px 18px; }
-            .card-video { flex: 0 0 60%; max-height: 60%; }
+            .card-video { flex: 0 0 58%; max-height: 58%; }
             .page4-text { font-size: 6rem; }
-            /* 移动端允许第三页内部滚动 */
-            .page3 { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+            /* 移动端第三页内部滚动 */
+            .page3 {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+                padding: 2vh 3vw;
+            }
+            .page3 .cards-row {
+                height: auto;
+                min-height: 100%;
+            }
         }
     </style>
 </head>
@@ -412,6 +404,7 @@
             let lastMouseY = window.innerHeight / 2;
             let snapTimer = null;
             let isSnapping = false;
+            let isMobile = window.innerWidth <= 768;
 
             const homeLink = document.getElementById('homeLink');
             const aboutLink = document.getElementById('aboutLink');
@@ -548,9 +541,10 @@
                 }, 30);
             };
 
-            // 滚动吸附逻辑（仅移动端触发）
             function snapToPage() {
-                if (window.innerWidth > 1024 || isSnapping || currentPage !== 'home') return;
+                if (!isMobile || isSnapping || currentPage !== 'home') return;
+                // 移动端第三页内部滚动时，不触发吸附
+                if (window.scrollY >= 2 * vh && window.scrollY < 3 * vh) return;
                 const sY = window.scrollY;
                 const currentVH = window.innerHeight;
                 const pages = [0, currentVH, 2 * currentVH, 3 * currentVH];
@@ -579,12 +573,19 @@
                 if (inPage2) { page2.classList.add('active'); if (!loopActive) { loopActive = true; startSlotSpin(); } }
                 else { page2.classList.remove('active'); if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; } }
 
-                if (sY >= 2 * vh && sY < 3 * vh) {
+                // 移动端第三页锁定 body 滚动
+                if (isMobile && sY >= 2 * vh && sY < 3 * vh) {
+                    document.body.style.overflow = 'hidden';
                     page3.classList.add('active');
-                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() => {}); });
                 } else {
+                    if (isMobile) document.body.style.overflow = '';
                     page3.classList.remove('active');
-                    document.querySelectorAll('.page3 video').forEach(v => v.pause());
+                }
+
+                // 桌面端正常处理
+                if (!isMobile) {
+                    if (sY >= 2 * vh && sY < 3 * vh) page3.classList.add('active');
+                    else page3.classList.remove('active');
                 }
 
                 if (sY >= 3 * vh) {
@@ -592,6 +593,7 @@
                     document.body.classList.add('smile-cursor');
                     smileCursor.style.left = lastMouseX + 'px';
                     smileCursor.style.top = lastMouseY + 'px';
+                    if (isMobile) document.body.style.overflow = '';
                 } else {
                     page4.classList.remove('active');
                     document.body.classList.remove('smile-cursor');
@@ -610,7 +612,12 @@
                 }, 300);
             }, { passive: true });
 
-            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
+            window.addEventListener('resize', () => {
+                vh = window.innerHeight;
+                isMobile = window.innerWidth <= 768;
+                if (currentPage === 'home') updateScroll();
+            });
+
             updateScroll();
         })();
     </script>
