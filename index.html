@@ -439,7 +439,7 @@
             margin: 0;
         }
 
-        /* ---------- 卡片流体背景核心样式 ---------- */
+        /* ---------- 卡片流体背景（暗黑灰色调） ---------- */
         .minimal-card {
             position: relative;
             background: #000;
@@ -455,11 +455,11 @@
             color: #fff;
             font-family: inherit;
             height: 100%;
-            overflow: hidden; /* 确保伪元素不溢出圆角 */
+            overflow: hidden;
             z-index: 1;
         }
 
-        /* 流体渐变背景层 */
+        /* 深色流体渐变背景 */
         .minimal-card::before {
             content: '';
             position: absolute;
@@ -469,12 +469,12 @@
             height: 100%;
             z-index: -1;
             background: linear-gradient(135deg,
-                    #1E1E1E 0%,
-                    #3F3F3F 20%,
-                    #7F7F7F 40%,
-                    #DADADA 60%,
-                    #EAEBE8 80%,
-                    #1E1E1E 100%);
+                    #1a1a1a 0%,
+                    #2c2c2c 20%,
+                    #3f3f3f 40%,
+                    #4a4a4a 55%,
+                    #2c2c2c 75%,
+                    #1a1a1a 100%);
             background-size: 400% 400%;
             animation: fluidFlow 12s ease-in-out infinite alternate;
             border-radius: inherit;
@@ -499,7 +499,7 @@
             }
         }
 
-        /* 为每个卡片设置不同动画延迟，产生交错流动感 */
+        /* 卡片交错延迟 */
         .minimal-card:nth-child(1)::before { animation-delay: 0s; }
         .minimal-card:nth-child(2)::before { animation-delay: -4s; }
         .minimal-card:nth-child(3)::before { animation-delay: -8s; }
@@ -642,7 +642,7 @@
             pointer-events: auto;
         }
 
-        /* 返回首页按钮（去浮动弹跳，保留扫光） */
+        /* 返回首页按钮（保留扫光） */
         .back-btn {
             position: fixed;
             bottom: 0;
@@ -993,7 +993,7 @@
         </div>
     </div>
 
-    <!-- 第三页：卡片已内置流体背景动画 -->
+    <!-- 第三页：流体深色卡片 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
@@ -1022,7 +1022,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页 1/2/3 保持不变 -->
+    <!-- 详情页 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://123-zcx-1425995704.cos.ap-shanghai.myqcloud.com/ZT1.webp" alt="1"></div>
