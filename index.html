@@ -221,7 +221,7 @@
             .card-video { flex: 0 0 65%; max-height: 65%; }
         }
 
-        /* 移动端：取消内部滚动，三张卡片适配一屏高度 */
+        /* 移动端最终优化：视频区拉长、文案压缩、三卡一屏精准适配 */
         @media (max-width: 768px) {
             :root { --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -260,32 +260,35 @@
                 25% { color: var(--accent); transform: scale(1.03); text-shadow: 0 0 10px rgba(255,140,66,0.4); }
             }
 
-            .cards-row { grid-template-columns: 1fr; gap: 4px; height: 100%; }
+            .cards-row { grid-template-columns: 1fr; gap: 5px; }
             .cards-grid { grid-template-columns: 1fr; padding-bottom: 80px; }
             .page4-text { font-size: 6rem; }
 
-            /* 第三页不设置内部滚动，卡片正好占满一屏 */
+            /* 第三页无内部滚动，精确等分一屏 */
             .page3 {
                 overflow-y: visible;
-                padding: 3vh 3vw;
+                padding: 2vh 3vw;
+            }
+            .page3 .cards-row {
+                height: 100%;
+                align-content: stretch;
+                gap: 4px;
             }
             .minimal-card {
-                padding: 8px 12px;
+                height: calc((100vh - 4vh - 8px) / 3);  /* 上下padding共4vh，两处gap共8px */
+                padding: 5px 8px 3px;
                 border-radius: 14px;
-                margin: 0;
-                height: auto;
-                flex-shrink: 0;
             }
             .card-video {
-                flex: 0 0 38%;
-                max-height: 38%;
-                margin-bottom: 5px;
-                border-radius: 10px;
+                flex: 0 0 55%;
+                max-height: 55%;
+                margin-bottom: 3px;
+                border-radius: 8px;
             }
-            .card-divider { margin-bottom: 4px; }
-            .card-title { font-size: 1.1rem; margin-bottom: 3px; }
-            .card-description { font-size: 0.7rem; line-height: 1.25; margin-bottom: 0; }
-            .card-arrow { width: 18px; height: 18px; }
+            .card-divider { margin-bottom: 2px; }
+            .card-title { font-size: 1rem; margin-bottom: 1px; }
+            .card-description { font-size: 0.65rem; line-height: 1.2; margin-bottom: 0; }
+            .card-arrow { width: 16px; height: 16px; bottom: 2px; }
             .back-btn { height: 60px; font-size: 0.9rem; }
         }
     </style>
