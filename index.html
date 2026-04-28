@@ -74,8 +74,12 @@
         }
 
         @keyframes rotate-smile {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
         /* ========== 第一页 ========== */
@@ -553,7 +557,6 @@
             display: block;
         }
 
-        /* 强制隐藏浏览器默认视频控件 */
         video::-webkit-media-controls {
             display: none !important;
         }
@@ -566,7 +569,6 @@
         video::--webkit-media-controls {
             display: none !important;
         }
-        /* 针对Firefox等可能出现的控件 */
         video::-moz-media-controls {
             display: none !important;
         }
@@ -696,54 +698,135 @@
             pointer-events: auto;
         }
 
+        /* ========== 高级液态玻璃返回按钮 · 方案一（含圆角动态箭头） ========== */
         .back-btn {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 70px;
+            height: 80px;
             z-index: 55;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1a1a1a;
-            font-weight: 800;
-            font-size: 1.2rem;
-            letter-spacing: 0.06em;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(8px);
+            gap: 12px;
+            color: #ff8c42;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+
+            background: rgba(255, 245, 235, 0.45);
+            backdrop-filter: blur(20px) saturate(200%);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+
             border: none;
-            border-top: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 
+                0 -10px 30px rgba(255, 140, 66, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(255, 140, 66, 0.2);
+
             cursor: pointer;
             overflow: hidden;
-            transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
+        /* 底部发光条 */
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff8c42, #ffaa66, #ff8c42, transparent);
+            background-size: 200% 100%;
+            animation: colorFlow 3s linear infinite;
+            z-index: 2;
+            border-radius: 3px;
+            opacity: 0.8;
+        }
+
+        @keyframes colorFlow {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 流动水波纹光带 */
         .back-btn::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
+            left: -120%;
+            width: 80%;
             height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 140, 66, 0.25) 50%, transparent 100%);
-            pointer-events: none;
-            transition: left 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
+            background: linear-gradient(
+                105deg,
+                transparent 35%,
+                rgba(255, 255, 255, 0.6) 45%,
+                rgba(255, 200, 150, 0.3) 55%,
+                transparent 65%
+            );
             z-index: 0;
+            pointer-events: none;
+            animation: glassFlow 4s ease-in-out infinite;
+        }
+
+        @keyframes glassFlow {
+            0% { left: -120%; opacity: 0; }
+            30% { opacity: 0.8; }
+            60% { left: 110%; opacity: 0.2; }
+            100% { left: -120%; opacity: 0; }
+        }
+
+        /* 悬停状态 */
+        .back-btn:hover {
+            color: #fff;
+            background: rgba(255, 140, 66, 0.25);
+            backdrop-filter: blur(30px) saturate(250%);
+            -webkit-backdrop-filter: blur(30px) saturate(250%);
+            box-shadow: 
+                0 -20px 50px rgba(255, 140, 66, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7),
+                0 0 0 2px rgba(255, 140, 66, 0.5),
+                0 0 80px rgba(255, 140, 66, 0.3);
+            letter-spacing: 0.12em;
+            transform: translateY(-2px);
+        }
+
+        .back-btn:hover::before {
+            opacity: 1;
+            animation: colorFlow 1s linear infinite;
         }
 
         .back-btn:hover::after {
-            left: 100%;
+            animation: glassFlow 1.5s ease-in-out infinite;
         }
 
-        .back-btn:hover {
-            color: #ff8c42;
-            background: rgba(255, 255, 255, 1);
-            border-top-color: #ff8c42;
-            box-shadow: 0 -6px 24px rgba(255, 140, 66, 0.25);
+        /* 按钮内文字与箭头容器 */
+        .back-btn-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .back-btn>* {
+        /* 圆角动态箭头 */
+        .back-arrow {
+            width: 28px;
+            height: 28px;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .back-btn:hover .back-arrow {
+            transform: translateX(-4px);
+        }
+
+        /* 文字层级 */
+        .back-btn > * {
             position: relative;
             z-index: 1;
         }
@@ -867,6 +950,15 @@
             }
             .ai-bottom-row {
                 gap: 14px;
+            }
+            .back-btn {
+                border-radius: 14px 14px 0 0;
+                height: 70px;
+                font-size: 1.2rem;
+            }
+            .back-arrow {
+                width: 24px;
+                height: 24px;
             }
         }
 
@@ -1016,11 +1108,23 @@
                 height: 16px;
                 bottom: 2px;
             }
+
             .back-btn {
-                height: 60px;
-                font-size: 1rem;
-                font-weight: 800;
+                height: 64px;
+                font-size: 1.1rem;
+                letter-spacing: 0.06em;
+                border-radius: 16px 16px 0 0;
             }
+            .back-btn::before {
+                height: 2px;
+                left: 5%;
+                width: 90%;
+            }
+            .back-arrow {
+                width: 22px;
+                height: 22px;
+            }
+
             .ai-bottom-row {
                 grid-template-columns: 1fr;
                 gap: 8px;
@@ -1166,7 +1270,14 @@
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01LtEpYd23trxhydvJ1_!!3952997314.webp" alt="23"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01WkTQFl23trxiLWLhL_!!3952997314.webp" alt="24"></div>
         </div>
-        <button class="back-btn" onclick="goBack()">返回首页</button>
+        <button class="back-btn" onclick="goBack()">
+            <span class="back-btn-content">
+                <svg class="back-arrow" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 20L10 14L16 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                返回首页
+            </span>
+        </button>
     </div>
 
     <!-- 详情页2：详情页（原有3张 + 新增一排3张，链接已分别指定） -->
@@ -1179,7 +1290,14 @@
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01tg8g5m23trxjWiK44_!!3952997314.webp" alt="新增2"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01jVXWM723trxi9hyb1_!!3952997314.webp" alt="新增3"></div>
         </div>
-        <button class="back-btn" onclick="goBack()">返回首页</button>
+        <button class="back-btn" onclick="goBack()">
+            <span class="back-btn-content">
+                <svg class="back-arrow" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 20L10 14L16 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                返回首页
+            </span>
+        </button>
     </div>
 
     <!-- 详情页3：AI辅助（原有布局不变） -->
@@ -1197,7 +1315,14 @@
                 </div>
             </div>
         </div>
-        <button class="back-btn" onclick="goBack()">返回首页</button>
+        <button class="back-btn" onclick="goBack()">
+            <span class="back-btn-content">
+                <svg class="back-arrow" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 20L10 14L16 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                返回首页
+            </span>
+        </button>
     </div>
 
     <script>
@@ -1236,9 +1361,12 @@
                 setTimeout(() => updateScroll(), 50);
             }
 
-            homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
-            aboutLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(3 * vh); });
-            workLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(2 * vh); });
+            homeLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(0); });
+            aboutLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(3 * vh); });
+            workLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(2 * vh); });
 
             document.addEventListener('mousemove', (e) => {
                 lastMouseX = e.clientX;
@@ -1271,7 +1399,8 @@
                 textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
-                try { document.execCommand('copy'); showToast(wrapper, toast); } catch (err) {}
+                try { document.execCommand('copy');
+                    showToast(wrapper, toast); } catch (err) {}
                 document.body.removeChild(textarea);
             }
 
@@ -1282,9 +1411,16 @@
             }
 
             const yearDigits = document.getElementById('yearDigits');
-            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
-            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
-            const chars = FINAL_TEXT.split(''), totalChars = chars.length;
+            const FINAL_TEXT = '2020–2026',
+                SPIN_DURATION = 1000,
+                TICK_INTERVAL = 20,
+                LOOP_DELAY = 600;
+            let loopActive = false,
+                intervalId = null,
+                loopTimeout = null,
+                startTime = 0;
+            const chars = FINAL_TEXT.split(''),
+                totalChars = chars.length;
 
             function getRandomPool(c) {
                 if (c >= '0' && c <= '9') return '0123456789'.split('');
@@ -1293,7 +1429,9 @@
                 return [c];
             }
             const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
+            let slotPositions = new Array(totalChars).fill(0),
+                locked = new Array(totalChars).fill(false),
+                lockIndex = 0;
 
             function clearTimers() {
                 if (intervalId) clearInterval(intervalId);
@@ -1305,7 +1443,8 @@
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
             function updateSlotChars() {
-                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const elapsed = performance.now() - startTime,
+                    globalProgress = Math.min(1, elapsed / SPIN_DURATION);
                 const targetLockCount = Math.floor(globalProgress * totalChars);
                 while (lockIndex < targetLockCount && lockIndex < totalChars) {
                     const idx = lockIndex;
@@ -1359,7 +1498,10 @@
 
             const title = document.getElementById('titleMove');
             if (title) {
-                let targetX = 0, currentX = 0, rafId = null;
+                let targetX = 0,
+                    currentX = 0,
+                    rafId = null;
+
                 function animate() {
                     const now = performance.now() / 1000;
                     const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
@@ -1417,15 +1559,19 @@
                 const inPage2 = sY >= vh && sY < 2 * vh;
                 if (inPage2) {
                     page2.classList.add('active');
-                    if (!loopActive) { loopActive = true; startSlotSpin(); }
+                    if (!loopActive) { loopActive = true;
+                        startSlotSpin(); }
                 } else {
                     page2.classList.remove('active');
-                    if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; }
+                    if (loopActive) { loopActive = false;
+                        clearTimers();
+                        yearDigits.textContent = FINAL_TEXT; }
                 }
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
-                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() => {}); });
+                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() =>
+                        {}); });
                 } else {
                     page3.classList.remove('active');
                     document.querySelectorAll('.page3 video').forEach(v => v.pause());
@@ -1445,13 +1591,30 @@
             window.addEventListener('scroll', () => {
                 if (currentPage !== 'home') return;
                 if (!ticking) {
-                    requestAnimationFrame(() => { updateScroll(); ticking = false; });
+                    requestAnimationFrame(() => { updateScroll();
+                        ticking = false; });
                     ticking = true;
                 }
             }, { passive: true });
 
-            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home') updateScroll(); });
+            window.addEventListener('resize', () => { vh = window.innerHeight; if (currentPage === 'home')
+            updateScroll(); });
             updateScroll();
+
+            // 为所有 back-btn 添加鼠标跟随光晕效果（方案一专属）
+            document.querySelectorAll('.back-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    btn.style.setProperty('--x', x + '%');
+                    btn.style.setProperty('--y', y + '%');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.setProperty('--x', '50%');
+                    btn.style.setProperty('--y', '50%');
+                });
+            });
         })();
     </script>
 </body>
