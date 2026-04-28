@@ -553,6 +553,24 @@
             display: block;
         }
 
+        /* 强制隐藏浏览器默认视频控件 */
+        video::-webkit-media-controls {
+            display: none !important;
+        }
+        video::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+        video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+        video::--webkit-media-controls {
+            display: none !important;
+        }
+        /* 针对Firefox等可能出现的控件 */
+        video::-moz-media-controls {
+            display: none !important;
+        }
+
         .card-divider {
             width: 100%;
             height: 1px;
@@ -1091,7 +1109,7 @@
         </div>
     </div>
 
-    <!-- 第三页：流体深色卡片 -->
+    <!-- 第三页：流体深色卡片（视频控件已强制隐藏） -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
@@ -1120,7 +1138,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1：主图渲染（原有21张 + 新增一排3张，统一使用指定链接） -->
+    <!-- 详情页1：主图渲染（使用 ZT1~ZT18 + 新增一排图片） -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="1"></div>
