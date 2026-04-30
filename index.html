@@ -40,18 +40,98 @@
         body.smile-cursor {
             cursor: none;
         }
-
         body.smile-cursor a,
         body.smile-cursor button {
             cursor: none;
         }
-
         a,
         .software-item,
         .icon-wrapper,
         .profile-img,
         .hero-title span {
             cursor: pointer !important;
+        }
+
+        /* ========== 加载画面 (与首页同色系) ========== */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #loading-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loading-overlay .frame {
+            width: min(72vmin, 380px);
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+        }
+        #loading-overlay svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            color: #2c2c2c;
+        }
+        #loading-overlay .load-meta {
+            display: grid;
+            gap: 5px;
+            text-align: center;
+        }
+        #loading-overlay .load-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+        }
+        #loading-overlay .load-tag {
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.55);
+        }
+        #loading-overlay .load-dots {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 2px;
+        }
+        #loading-overlay .load-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.35);
+            animation: dotBounce 1.3s ease-in-out infinite;
+        }
+        #loading-overlay .load-dots span:nth-child(2) {
+            animation-delay: 0.18s;
+        }
+        #loading-overlay .load-dots span:nth-child(3) {
+            animation-delay: 0.36s;
+        }
+        @keyframes dotBounce {
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            35% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
         }
 
         #smile-cursor {
@@ -67,12 +147,10 @@
             opacity: 0;
             transition: opacity 0.2s ease;
         }
-
         body.smile-cursor #smile-cursor {
             opacity: 1;
             animation: rotate-smile 2s linear infinite;
         }
-
         @keyframes rotate-smile {
             from {
                 transform: translate(-50%, -50%) rotate(0deg);
@@ -95,7 +173,6 @@
             will-change: transform, opacity;
             transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .page1.hidden {
             opacity: 0;
             pointer-events: none;
@@ -109,7 +186,6 @@
             padding: max(1.5rem, 2.5vw) max(2rem, 4vw);
             position: relative;
         }
-
         .nav-links {
             display: flex;
             gap: clamp(1.8rem, 3vw, 2.8rem);
@@ -117,7 +193,6 @@
             font-weight: 500;
             letter-spacing: -0.01em;
         }
-
         .nav-links a {
             color: var(--text);
             text-decoration: none;
@@ -125,7 +200,6 @@
             position: relative;
             padding-bottom: 2px;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -138,11 +212,9 @@
             transform-origin: left;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .nav-links a:hover::after {
             transform: scaleX(1);
         }
-
         .nav-links a:hover {
             transform: scale(1.18);
         }
@@ -156,7 +228,6 @@
             gap: clamp(4rem, 8vw, 6.5rem);
             padding: 1rem clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
         }
-
         .hero-title {
             display: flex;
             align-items: center;
@@ -172,23 +243,19 @@
             transform: translateX(0px) translateZ(0);
             backface-visibility: hidden;
         }
-
         .hero-title span:first-child {
             font-weight: 750;
         }
-
         .hero-title span:last-child {
             font-weight: 650;
             color: #202020;
         }
-
         .dot-text {
             display: inline-block;
             line-height: 1;
             vertical-align: middle;
             font-weight: 650;
         }
-
         .middle-dot {
             font-size: 1.1em;
             font-weight: 700;
@@ -196,7 +263,6 @@
             vertical-align: middle;
             margin: 0 0.05em;
         }
-
         .profile-img {
             width: clamp(70px, 10vw, 150px);
             border-radius: 8px;
@@ -208,7 +274,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
         }
-
         .hero-desc {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -225,7 +290,6 @@
             position: relative;
             overflow: visible;
         }
-
         .hero-desc::before {
             content: '';
             position: absolute;
@@ -235,12 +299,10 @@
             height: 1px;
             background: var(--border);
         }
-
         .hero-desc div:first-child {
             justify-self: start;
             margin-left: calc(-1*var(--offset));
         }
-
         .hero-desc div:last-child {
             justify-self: end;
             margin-right: calc(-1*var(--offset));
@@ -249,26 +311,21 @@
             font-weight: 550;
             line-height: 1.6;
         }
-
         .toolbox-line {
             display: block;
             margin-bottom: 0.2rem;
         }
-
         .toolbox-line strong {
             font-weight: 650;
         }
-
         .ai-line {
             display: block;
         }
-
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
-
         .software-item:hover {
             color: var(--accent);
             transform: scale(1.08);
@@ -287,13 +344,11 @@
             border-top: 1px solid var(--border);
             position: relative;
         }
-
         .footer-left {
             font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: 0.05em;
         }
-
         .footer-center {
             font-size: 1.2rem;
             letter-spacing: 0.3rem;
@@ -301,26 +356,22 @@
             left: 50%;
             transform: translateX(-50%);
         }
-
         .footer-right {
             display: flex;
             gap: 1.5rem;
             align-items: center;
         }
-
         .icon-wrapper {
             position: relative;
             display: inline-flex;
             cursor: pointer;
         }
-
         .icon-wrapper svg {
             width: 22px;
             height: 22px;
             fill: #1f1f1f;
             transition: fill 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .icon-text {
             font-size: 1.4rem;
             font-weight: 600;
@@ -328,14 +379,12 @@
             line-height: 1;
             transition: color 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .icon-wrapper:hover svg,
         .icon-wrapper:hover .icon-text {
             fill: var(--accent);
             color: var(--accent);
             transform: scale(1.1);
         }
-
         .icon-wrapper::after {
             content: attr(data-title);
             position: absolute;
@@ -354,7 +403,6 @@
             pointer-events: none;
             z-index: 100;
         }
-
         .icon-wrapper::before {
             content: '';
             position: absolute;
@@ -367,13 +415,11 @@
             visibility: hidden;
             transition: opacity 0.2s, visibility 0.2s;
         }
-
         .icon-wrapper:hover::after,
         .icon-wrapper:hover::before {
             opacity: 1;
             visibility: visible;
         }
-
         .icon-wrapper .copy-toast {
             position: absolute;
             bottom: calc(100% + 10px);
@@ -390,7 +436,6 @@
             transition: opacity 0.2s;
             z-index: 101;
         }
-
         .icon-wrapper .copy-toast.show {
             opacity: 1;
         }
@@ -409,18 +454,15 @@
             transition: opacity 0.3s ease;
             will-change: opacity;
         }
-
         .page2.active {
             opacity: 1;
             pointer-events: auto;
         }
-
         .splash-wrapper {
             display: flex;
             align-items: flex-start;
             justify-content: center;
         }
-
         .splash-title {
             font-size: clamp(5rem, 16vw, 14rem);
             font-weight: 750;
@@ -429,7 +471,6 @@
             line-height: 1;
             user-select: none;
         }
-
         .year-tag {
             font-size: clamp(1.1rem, 1.9vw, 1.5rem);
             font-weight: 550;
@@ -442,7 +483,6 @@
             margin-left: clamp(0.3rem, 0.8vw, 0.6rem);
             margin-top: 0.35em;
         }
-
         .year-digits {
             display: inline-block;
         }
@@ -463,13 +503,11 @@
             will-change: transform, opacity;
             padding: 4vh 2vw;
         }
-
         .page3.active {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
-
         .cards-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -498,7 +536,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .minimal-card::before {
             content: '';
             position: absolute;
@@ -518,24 +555,36 @@
             animation: fluidFlow 12s ease-in-out infinite alternate;
             border-radius: inherit;
         }
-
         @keyframes fluidFlow {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 50% 100%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 50% 0%; }
-            100% { background-position: 0% 100%; }
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 50% 100%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 50% 0%;
+            }
+            100% {
+                background-position: 0% 100%;
+            }
         }
-
-        .minimal-card:nth-child(1)::before { animation-delay: 0s; }
-        .minimal-card:nth-child(2)::before { animation-delay: -4s; }
-        .minimal-card:nth-child(3)::before { animation-delay: -8s; }
-
+        .minimal-card:nth-child(1)::before {
+            animation-delay: 0s;
+        }
+        .minimal-card:nth-child(2)::before {
+            animation-delay: -4s;
+        }
+        .minimal-card:nth-child(3)::before {
+            animation-delay: -8s;
+        }
         .minimal-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
         }
-
         .card-video {
             flex: 0 0 70%;
             max-height: 70%;
@@ -548,7 +597,6 @@
             z-index: 2;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .card-video video,
         .card-video img {
             width: 100%;
@@ -556,7 +604,6 @@
             object-fit: cover;
             display: block;
         }
-
         video::-webkit-media-controls {
             display: none !important;
         }
@@ -572,7 +619,6 @@
         video::-moz-media-controls {
             display: none !important;
         }
-
         .card-divider {
             width: 100%;
             height: 1px;
@@ -582,7 +628,6 @@
             position: relative;
             z-index: 2;
         }
-
         .card-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -595,7 +640,6 @@
             z-index: 2;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
-
         .card-description {
             font-size: 0.85rem;
             line-height: 1.4;
@@ -611,12 +655,10 @@
             z-index: 2;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
-
         .card-description span {
             flex: 1;
             margin-right: 30px;
         }
-
         .card-arrow {
             position: absolute;
             right: 0;
@@ -626,15 +668,14 @@
             transition: transform 0.2s ease;
             line-height: 0;
             z-index: 3;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
         }
-
         .card-arrow svg {
             width: 100%;
             height: 100%;
             display: block;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
         }
-
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
         }
@@ -653,12 +694,10 @@
             transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: opacity;
         }
-
         .page4.active {
             opacity: 1;
             pointer-events: auto;
         }
-
         .page4-text {
             font-size: clamp(8rem, 16vw, 14rem);
             font-weight: 700;
@@ -669,11 +708,9 @@
             line-height: 1.2;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .page4.active .page4-text {
             transform: scale(1);
         }
-
         .page4:not(.active) .page4-text {
             transform: scale(0.9);
         }
@@ -692,13 +729,12 @@
             pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .detail-page.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* ========== 高级液态玻璃返回按钮 · 方案一（含圆角动态箭头） ========== */
+        /* ========== 高级液态玻璃返回按钮 ========== */
         .back-btn {
             position: fixed;
             bottom: 0;
@@ -715,24 +751,18 @@
             font-size: 1.4rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-
             background: rgba(255, 245, 235, 0.45);
             backdrop-filter: blur(20px) saturate(200%);
             -webkit-backdrop-filter: blur(20px) saturate(200%);
-
             border: none;
             border-radius: 20px 20px 0 0;
-            box-shadow: 
-                0 -10px 30px rgba(255, 140, 66, 0.15),
+            box-shadow: 0 -10px 30px rgba(255, 140, 66, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8),
                 0 0 0 1px rgba(255, 140, 66, 0.2);
-
             cursor: pointer;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        /* 底部发光条 */
         .back-btn::before {
             content: '';
             position: absolute;
@@ -747,13 +777,14 @@
             border-radius: 3px;
             opacity: 0.8;
         }
-
         @keyframes colorFlow {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
         }
-
-        /* 流动水波纹光带 */
         .back-btn::after {
             content: '';
             position: absolute;
@@ -761,50 +792,51 @@
             left: -120%;
             width: 80%;
             height: 100%;
-            background: linear-gradient(
-                105deg,
-                transparent 35%,
-                rgba(255, 255, 255, 0.6) 45%,
-                rgba(255, 200, 150, 0.3) 55%,
-                transparent 65%
-            );
+            background: linear-gradient(105deg,
+                    transparent 35%,
+                    rgba(255, 255, 255, 0.6) 45%,
+                    rgba(255, 200, 150, 0.3) 55%,
+                    transparent 65%);
             z-index: 0;
             pointer-events: none;
             animation: glassFlow 4s ease-in-out infinite;
         }
-
         @keyframes glassFlow {
-            0% { left: -120%; opacity: 0; }
-            30% { opacity: 0.8; }
-            60% { left: 110%; opacity: 0.2; }
-            100% { left: -120%; opacity: 0; }
+            0% {
+                left: -120%;
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            60% {
+                left: 110%;
+                opacity: 0.2;
+            }
+            100% {
+                left: -120%;
+                opacity: 0;
+            }
         }
-
-        /* 悬停状态 */
         .back-btn:hover {
             color: #fff;
             background: rgba(255, 140, 66, 0.25);
             backdrop-filter: blur(30px) saturate(250%);
             -webkit-backdrop-filter: blur(30px) saturate(250%);
-            box-shadow: 
-                0 -20px 50px rgba(255, 140, 66, 0.35),
+            box-shadow: 0 -20px 50px rgba(255, 140, 66, 0.35),
                 inset 0 1px 0 rgba(255, 255, 255, 0.7),
                 0 0 0 2px rgba(255, 140, 66, 0.5),
                 0 0 80px rgba(255, 140, 66, 0.3);
             letter-spacing: 0.12em;
             transform: translateY(-2px);
         }
-
         .back-btn:hover::before {
             opacity: 1;
             animation: colorFlow 1s linear infinite;
         }
-
         .back-btn:hover::after {
             animation: glassFlow 1.5s ease-in-out infinite;
         }
-
-        /* 按钮内文字与箭头容器 */
         .back-btn-content {
             position: relative;
             z-index: 1;
@@ -812,21 +844,16 @@
             align-items: center;
             gap: 10px;
         }
-
-        /* 圆角动态箭头 */
         .back-arrow {
             width: 28px;
             height: 28px;
             display: block;
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .back-btn:hover .back-arrow {
             transform: translateX(-4px);
         }
-
-        /* 文字层级 */
-        .back-btn > * {
+        .back-btn>* {
             position: relative;
             z-index: 1;
         }
@@ -838,7 +865,6 @@
             width: 100%;
             padding-bottom: 90px;
         }
-
         .card-box {
             width: 100%;
             border-radius: 20px;
@@ -850,12 +876,10 @@
             line-height: 0;
             border: 3.5px solid rgb(226, 131, 1);
         }
-
         .card-box:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
-
         .card-box img {
             width: 100%;
             height: auto;
@@ -872,7 +896,6 @@
             width: 100%;
             padding-bottom: 90px;
         }
-
         .ai-top-container {
             width: 100%;
             border-radius: 20px;
@@ -886,21 +909,18 @@
             min-height: 300px;
             position: relative;
         }
-
         .ai-top-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-
         .ai-bottom-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: var(--card-gap);
             width: 100%;
         }
-
         .ai-bottom-box {
             border-radius: 20px;
             overflow: hidden;
@@ -914,12 +934,10 @@
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
         }
-
         .ai-bottom-box:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
-
         .ai-bottom-box img {
             width: 100%;
             height: 100%;
@@ -1059,7 +1077,6 @@
                 margin-left: clamp(0.2rem, 0.8vw, 0.4rem);
                 margin-top: 0.25em;
             }
-
             .cards-row {
                 grid-template-columns: 1fr;
                 gap: 5px;
@@ -1108,7 +1125,6 @@
                 height: 16px;
                 bottom: 2px;
             }
-
             .back-btn {
                 height: 64px;
                 font-size: 1.1rem;
@@ -1124,7 +1140,6 @@
                 width: 22px;
                 height: 22px;
             }
-
             .ai-bottom-row {
                 grid-template-columns: 1fr;
                 gap: 8px;
@@ -1136,10 +1151,36 @@
             .ai-bottom-box {
                 border-radius: 16px;
             }
+            #loading-overlay .frame {
+                width: min(78vmin, 300px);
+            }
+            #loading-overlay .load-title {
+                font-size: 17px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ==================== 加载画面 (浅灰背景) ==================== -->
+    <div id="loading-overlay">
+        <div class="frame">
+            <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                <g id="load-group">
+                    <path id="load-path" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" opacity="0.25"></path>
+                </g>
+            </svg>
+        </div>
+        <div class="load-meta">
+            <div class="load-title">Heart Wave</div>
+            <div class="load-tag">f(x) Heart Wave · 加载中</div>
+        </div>
+        <div class="load-dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- ==================== 笑脸光标 ==================== -->
     <div id="smile-cursor">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
             <defs>
@@ -1213,7 +1254,7 @@
         </div>
     </div>
 
-    <!-- 第三页：流体深色卡片（视频控件已强制隐藏） -->
+    <!-- 第三页 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')">
@@ -1242,7 +1283,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1：主图渲染（使用 ZT1~ZT18 + 新增一排图片） -->
+    <!-- 详情页1：主图渲染 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="1"></div>
@@ -1280,7 +1321,7 @@
         </button>
     </div>
 
-    <!-- 详情页2：详情页（原有3张 + 新增一排3张，链接已分别指定） -->
+    <!-- 详情页2：详情页 -->
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情1"></div>
@@ -1300,7 +1341,7 @@
         </button>
     </div>
 
-    <!-- 详情页3：AI辅助（原有布局不变） -->
+    <!-- 详情页3：AI辅助 -->
     <div class="detail-page" id="detail3">
         <div class="ai-layout">
             <div class="ai-top-container">
@@ -1327,6 +1368,126 @@
 
     <script>
         (() => {
+            // ==================== 加载动画逻辑 ====================
+            const SVG_NS = 'http://www.w3.org/2000/svg';
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const loadGroup = document.getElementById('load-group');
+            const loadPath = document.getElementById('load-path');
+
+            const heartConfig = {
+                name: "Heart Wave",
+                tag: "f(x) Heart Wave",
+                rotate: false,
+                particleCount: 104,
+                trailSpan: 0.18,
+                durationMs: 8400,
+                rotationDurationMs: 22000,
+                pulseDurationMs: 5600,
+                strokeWidth: 3.9,
+                heartWaveB: 6.4,
+                heartWaveRoot: 3.3,
+                heartWaveAmp: 0.9,
+                heartWaveScaleX: 23.2,
+                heartWaveScaleY: 24.5,
+                point(progress, detailScale, config) {
+                    const xLimit = Math.sqrt(config.heartWaveRoot);
+                    const x = -xLimit + progress * xLimit * 2;
+                    const safeRoot = Math.max(0, config.heartWaveRoot - x * x);
+                    const b = config.heartWaveB;
+                    const wave = config.heartWaveAmp * Math.sqrt(safeRoot) * Math.sin(b * Math.PI * x);
+                    const curve = Math.pow(Math.abs(x), 2 / 3);
+                    const y = curve + wave;
+                    const scaleX = config.heartWaveScaleX;
+                    const scaleY = config.heartWaveScaleY + detailScale * 1.5;
+                    return { x: 50 + x * scaleX, y: 18 + (1.75 - y) * scaleY };
+                },
+            };
+
+            loadPath.setAttribute('stroke-width', String(heartConfig.strokeWidth));
+
+            const loadParticles = Array.from({ length: heartConfig.particleCount }, () => {
+                const circle = document.createElementNS(SVG_NS, 'circle');
+                circle.setAttribute('fill', 'currentColor');
+                loadGroup.appendChild(circle);
+                return circle;
+            });
+
+            function normalizeProgress(p) {
+                return ((p % 1) + 1) % 1;
+            }
+            function getDetailScale(time) {
+                const pulseProgress = (time % heartConfig.pulseDurationMs) / heartConfig.pulseDurationMs;
+                const pulseAngle = pulseProgress * Math.PI * 2;
+                return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
+            }
+            function buildLoadPath(detailScale, steps = 480) {
+                return Array.from({ length: steps + 1 }, (_, index) => {
+                    const pt = heartConfig.point(index / steps, detailScale, heartConfig);
+                    return `${index === 0 ? 'M' : 'L'} ${pt.x.toFixed(2)} ${pt.y.toFixed(2)}`;
+                }).join(' ');
+            }
+            function getLoadParticle(index, progress, detailScale) {
+                const tailOffset = index / (heartConfig.particleCount - 1);
+                const pt = heartConfig.point(normalizeProgress(progress - tailOffset * heartConfig.trailSpan),
+                    detailScale, heartConfig);
+                const fade = Math.pow(1 - tailOffset, 0.56);
+                return {
+                    x: pt.x,
+                    y: pt.y,
+                    radius: 0.9 + fade * 2.7,
+                    opacity: 0.08 + fade * 0.9,
+                };
+            }
+
+            let loadingRafId = null;
+            const loadStartedAt = performance.now();
+
+            function renderLoading(now) {
+                const time = now - loadStartedAt;
+                const progress = (time % heartConfig.durationMs) / heartConfig.durationMs;
+                const detailScale = getDetailScale(time);
+                loadPath.setAttribute('d', buildLoadPath(detailScale));
+                loadParticles.forEach((node, index) => {
+                    const p = getLoadParticle(index, progress, detailScale);
+                    node.setAttribute('cx', p.x.toFixed(2));
+                    node.setAttribute('cy', p.y.toFixed(2));
+                    node.setAttribute('r', p.radius.toFixed(2));
+                    node.setAttribute('opacity', p.opacity.toFixed(3));
+                });
+                loadingRafId = requestAnimationFrame(renderLoading);
+            }
+            loadingRafId = requestAnimationFrame(renderLoading);
+
+            // 等待最小显示时间 + 页面资源加载完成
+            const MIN_LOAD_TIME = 2600;
+            const loadStartTime = performance.now();
+
+            const pageLoaded = new Promise(resolve => {
+                if (document.readyState === 'complete') resolve();
+                else window.addEventListener('load', resolve, { once: true });
+            });
+
+            const minTimeElapsed = new Promise(resolve => {
+                const elapsed = performance.now() - loadStartTime;
+                const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
+                setTimeout(resolve, remaining);
+            });
+
+            Promise.all([pageLoaded, minTimeElapsed]).then(() => {
+                setTimeout(() => {
+                    if (loadingRafId) cancelAnimationFrame(loadingRafId);
+                    loadingRafId = null;
+                    loadingOverlay.classList.add('fade-out');
+                    setTimeout(() => {
+                        document.body.style.overflow = '';
+                    }, 600);
+                }, 200);
+            });
+
+            // 加载期间锁定滚动
+            document.body.style.overflow = 'hidden';
+
+            // ==================== 主站逻辑 ====================
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
 
@@ -1601,7 +1762,6 @@
             updateScroll(); });
             updateScroll();
 
-            // 为所有 back-btn 添加鼠标跟随光晕效果（方案一专属）
             document.querySelectorAll('.back-btn').forEach(btn => {
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
