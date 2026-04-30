@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>周成鑫 · 3D渲染作品集</title>
 
-    <!-- 预连接关键资源域名 -->
     <link rel="preconnect" href="https://img.alicdn.com" crossorigin>
     <link rel="preconnect" href="https://cloud.video.taobao.com" crossorigin>
     <link rel="icon" type="image/webp" href="https://img.alicdn.com/imgextra/i4/3952997314/O1CN01qvsLVi23trxjOwpuR_!!3952997314.webp">
@@ -55,7 +54,7 @@
             cursor: pointer !important;
         }
 
-        /* ========== 加载画面 (与首页同色系) ========== */
+        /* 加载画面 */
         #loading-overlay {
             position: fixed;
             inset: 0;
@@ -120,12 +119,8 @@
             background: rgba(0, 0, 0, 0.35);
             animation: dotBounce 1.3s ease-in-out infinite;
         }
-        #loading-overlay .load-dots span:nth-child(2) {
-            animation-delay: 0.18s;
-        }
-        #loading-overlay .load-dots span:nth-child(3) {
-            animation-delay: 0.36s;
-        }
+        #loading-overlay .load-dots span:nth-child(2) { animation-delay: 0.18s; }
+        #loading-overlay .load-dots span:nth-child(3) { animation-delay: 0.36s; }
         @keyframes dotBounce {
             0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
             35% { transform: translateY(-10px); opacity: 1; }
@@ -154,7 +149,7 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* ========== 第一页 ========== */
+        /* 第一页 */
         .page1 {
             position: fixed;
             inset: 0;
@@ -196,9 +191,7 @@
             padding-bottom: 2px;
             -webkit-tap-highlight-color: transparent;
         }
-        .nav-links a:active {
-            transform: scale(0.95);
-        }
+        .nav-links a:active { transform: scale(0.95); }
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -211,12 +204,8 @@
             transform-origin: left;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-        }
-        .nav-links a:hover {
-            transform: scale(1.12);
-        }
+        .nav-links a:hover::after { transform: scaleX(1); }
+        .nav-links a:hover { transform: scale(1.12); }
 
         main {
             flex: 1;
@@ -243,13 +232,8 @@
             backface-visibility: hidden;
             will-change: transform;
         }
-        .hero-title span:first-child {
-            font-weight: 750;
-        }
-        .hero-title span:last-child {
-            font-weight: 650;
-            color: #202020;
-        }
+        .hero-title span:first-child { font-weight: 750; }
+        .hero-title span:last-child { font-weight: 650; color: #202020; }
         .dot-text {
             display: inline-block;
             line-height: 1;
@@ -315,12 +299,8 @@
             display: block;
             margin-bottom: 0.2rem;
         }
-        .toolbox-line strong {
-            font-weight: 650;
-        }
-        .ai-line {
-            display: block;
-        }
+        .toolbox-line strong { font-weight: 650; }
+        .ai-line { display: block; }
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -367,9 +347,7 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
-        .icon-wrapper:active {
-            transform: scale(0.9);
-        }
+        .icon-wrapper:active { transform: scale(0.9); }
         .icon-wrapper svg {
             width: 22px;
             height: 22px;
@@ -440,11 +418,9 @@
             transition: opacity 0.2s;
             z-index: 101;
         }
-        .icon-wrapper .copy-toast.show {
-            opacity: 1;
-        }
+        .icon-wrapper .copy-toast.show { opacity: 1; }
 
-        /* ========== 第二页 ========== */
+        /* 第二页 */
         .page2 {
             position: fixed;
             inset: 0;
@@ -492,7 +468,7 @@
             display: inline-block;
         }
 
-        /* ========== 第三页 ========== */
+        /* 第三页 */
         .page3 {
             position: fixed;
             inset: 0;
@@ -542,9 +518,7 @@
             z-index: 1;
             -webkit-tap-highlight-color: transparent;
         }
-        .minimal-card:active {
-            transform: scale(0.97);
-        }
+        .minimal-card:active { transform: scale(0.97); }
         .minimal-card::before {
             content: '';
             position: absolute;
@@ -592,8 +566,6 @@
             display: block;
         }
         video::-webkit-media-controls { display: none !important; }
-        video::-webkit-media-controls-enclosure { display: none !important; }
-        video::-webkit-media-controls-panel { display: none !important; }
         .card-divider {
             width: 100%;
             height: 1px;
@@ -649,13 +621,12 @@
             width: 100%;
             height: 100%;
             display: block;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
         }
         .minimal-card:hover .card-arrow {
             transform: translate(4px, -2px);
         }
 
-        /* ========== 第四页 ========== */
+        /* 第四页 */
         .page4 {
             position: fixed;
             inset: 0;
@@ -687,7 +658,7 @@
         .page4.active .page4-text { transform: scale(1); }
         .page4:not(.active) .page4-text { transform: scale(0.9); }
 
-        /* ========== 详情页 ========== */
+        /* 详情页 */
         .detail-page {
             position: fixed;
             inset: 0;
@@ -735,9 +706,7 @@
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             -webkit-tap-highlight-color: transparent;
         }
-        .back-btn:active {
-            transform: scale(0.98);
-        }
+        .back-btn:active { transform: scale(0.98); }
         .back-btn::before {
             content: '';
             position: absolute;
@@ -819,9 +788,7 @@
             border: 3.5px solid rgb(226, 131, 1);
             -webkit-tap-highlight-color: transparent;
         }
-        .card-box:active {
-            transform: scale(0.96);
-        }
+        .card-box:active { transform: scale(0.96); }
         .card-box:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -836,7 +803,7 @@
             decoding: async;
         }
 
-        /* AI辅助详情页布局 */
+        /* AI辅助布局 */
         .ai-layout {
             display: flex;
             flex-direction: column;
@@ -1061,7 +1028,7 @@
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')" aria-label="查看主图渲染作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/ROcWB40obKXmELuohfDODShNTlKJDxErHiTIa3Y7dxs.mp4" autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3C/svg%3E"></video>
+                    <video src="https://cloud.video.taobao.com/vod/ROcWB40obKXmELuohfDODShNTlKJDxErHiTIa3Y7dxs.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">主图渲染</div>
@@ -1069,7 +1036,7 @@
             </button>
             <button class="minimal-card" onclick="showDetail('detail2')" aria-label="查看详情页作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/6UGdtOaG3dxYIvWSrAfBvCS3rSqreOtoglnu-S5Cdk0.mp4" autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3C/svg%3E"></video>
+                    <video src="https://cloud.video.taobao.com/vod/6UGdtOaG3dxYIvWSrAfBvCS3rSqreOtoglnu-S5Cdk0.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">详情页</div>
@@ -1077,7 +1044,7 @@
             </button>
             <button class="minimal-card" onclick="showDetail('detail3')" aria-label="查看AI辅助作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/lWY7-8DoCCBgfzPfiGIZ5rVH12sS1ohR3o2fBlWTSog.mp4" autoplay loop muted playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3C/svg%3E"></video>
+                    <video src="https://cloud.video.taobao.com/vod/lWY7-8DoCCBgfzPfiGIZ5rVH12sS1ohR3o2fBlWTSog.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">AI辅助</div>
@@ -1094,7 +1061,7 @@
     <!-- 详情页1 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
-            <!-- 图片已添加 loading=lazy 和 decoding=async -->
+            <!-- 图片列表保持不变 -->
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ldT39L23trxhqjXDl_!!3952997314.webp" alt="渲染作品2" loading="lazy" decoding="async"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01rxoKVX23trxiCM7kn_!!3952997314.webp" alt="渲染作品3" loading="lazy" decoding="async"></div>
@@ -1181,7 +1148,7 @@
                 name: "Heart Wave",
                 tag: "f(x) Heart Wave",
                 rotate: false,
-                particleCount: window.innerWidth < 768 ? 52 : 104, // 移动端减半
+                particleCount: window.innerWidth < 768 ? 52 : 104,
                 trailSpan: 0.18,
                 durationMs: 8400,
                 pulseDurationMs: 5600,
@@ -1206,7 +1173,6 @@
             };
 
             loadPath.setAttribute('stroke-width', String(heartConfig.strokeWidth));
-
             const loadParticles = Array.from({ length: heartConfig.particleCount }, () => {
                 const circle = document.createElementNS(SVG_NS, 'circle');
                 circle.setAttribute('fill', 'currentColor');
@@ -1251,7 +1217,7 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
-            const MIN_LOAD_TIME = 1800; // 缩短为1.8秒
+            const MIN_LOAD_TIME = 1800;
             const loadStartTime = performance.now();
             const pageLoaded = new Promise(resolve => {
                 if (document.readyState === 'complete') resolve();
@@ -1263,18 +1229,20 @@
                 setTimeout(resolve, remaining);
             });
 
+            let loadingComplete = false;
             Promise.all([pageLoaded, minTimeElapsed]).then(() => {
                 setTimeout(() => {
                     if (loadingRafId) cancelAnimationFrame(loadingRafId);
                     loadingRafId = null;
                     loadingOverlay.classList.add('fade-out');
+                    loadingComplete = true;
                     setTimeout(() => { document.body.style.overflow = ''; }, 500);
                 }, 150);
             });
 
             document.body.style.overflow = 'hidden';
 
-            // ==================== 主站逻辑 ====================
+            // 主站逻辑
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
 
@@ -1531,6 +1499,36 @@
                     btn.style.setProperty('--y', '50%');
                 });
             });
+
+            // ★ 顺滑整屏滚动（累积触发，无冷却）
+            let wheelAccum = 0;
+            let lastWheelDir = 0;
+
+            window.addEventListener('wheel', (e) => {
+                if (!loadingComplete || currentPage !== 'home') return;
+                e.preventDefault();
+
+                const dir = e.deltaY > 0 ? 1 : -1;
+                // 方向改变时重置累积量（允许立即反向）
+                if (dir !== lastWheelDir) {
+                    wheelAccum = 0;
+                    lastWheelDir = dir;
+                }
+
+                wheelAccum += Math.abs(e.deltaY);
+
+                if (wheelAccum > vh * 0.3) {
+                    const currentScreen = Math.round(window.scrollY / vh);
+                    let nextScreen = currentScreen + dir;
+                    nextScreen = Math.max(0, Math.min(3, nextScreen));
+                    if (nextScreen !== currentScreen) {
+                        window.scrollTo({ top: nextScreen * vh, behavior: 'smooth' });
+                        setTimeout(() => updateScroll(), 50);
+                    }
+                    wheelAccum = 0;
+                }
+            }, { passive: false });
+
         })();
     </script>
 </body>
