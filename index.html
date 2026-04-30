@@ -34,7 +34,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* 高度将由 JS 动态设置，以保证与 window.innerHeight 一致 */
+            /* 高度由JS动态设置，不再写死400vh */
             overflow-x: hidden;
             cursor: default;
         }
@@ -862,7 +862,7 @@
             display: block;
         }
 
-        /* 响应式保持不变 */
+        /* 平板 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
@@ -874,6 +874,8 @@
             .back-btn { border-radius: 14px 14px 0 0; height: 70px; font-size: 1.2rem; }
             .back-arrow { width: 24px; height: 24px; }
         }
+
+        /* 移动端 */
         @media (max-width: 768px) {
             :root { --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -1056,7 +1058,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1：主图渲染（完整图片列表） -->
+    <!-- 详情页1 (完整图片列表) -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
@@ -1092,7 +1094,7 @@
         </button>
     </div>
 
-    <!-- 详情页2：详情页 -->
+    <!-- 详情页2 -->
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情作品1" loading="lazy" decoding="async"></div>
@@ -1110,7 +1112,7 @@
         </button>
     </div>
 
-    <!-- 详情页3：AI辅助 -->
+    <!-- 详情页3 -->
     <div class="detail-page" id="detail3">
         <div class="ai-layout">
             <div class="ai-top-container">
@@ -1135,7 +1137,7 @@
 
     <script>
         (() => {
-            // ========== 动态设置页面高度，修复缩放下的vh不一致 ==========
+            // ========== 动态高度，彻底解决缩放问题 ==========
             const screenCount = 4;
             function setPageHeight() {
                 document.body.style.height = `${screenCount * window.innerHeight}px`;
@@ -1508,7 +1510,7 @@
                 });
             });
 
-            // ★ 整屏滚动优化（短锁定 + 即时响应，使用动态vh）
+            // ★ 整屏滚动（使用动态vh，无累积）
             let wheelLock = false;
             window.addEventListener('wheel', (e) => {
                 if (!loadingComplete || currentPage !== 'home') return;
