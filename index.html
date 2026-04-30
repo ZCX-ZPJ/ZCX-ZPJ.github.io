@@ -862,7 +862,7 @@
             display: block;
         }
 
-        /* 平板 */
+        /* 响应式保持不变 */
         @media (max-width: 1024px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .card-box { border-radius: 16px; }
@@ -874,8 +874,6 @@
             .back-btn { border-radius: 14px 14px 0 0; height: 70px; font-size: 1.2rem; }
             .back-arrow { width: 24px; height: 24px; }
         }
-
-        /* 移动端 */
         @media (max-width: 768px) {
             :root { --card-gap: 6px; }
             header { padding: 1rem 1.5rem; }
@@ -1058,10 +1056,9 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1 -->
+    <!-- 详情页1：主图渲染（完整图片列表） -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
-            <!-- 图片列表保持不变 -->
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ldT39L23trxhqjXDl_!!3952997314.webp" alt="渲染作品2" loading="lazy" decoding="async"></div>
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01rxoKVX23trxiCM7kn_!!3952997314.webp" alt="渲染作品3" loading="lazy" decoding="async"></div>
@@ -1095,7 +1092,7 @@
         </button>
     </div>
 
-    <!-- 详情页2 -->
+    <!-- 详情页2：详情页 -->
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情作品1" loading="lazy" decoding="async"></div>
@@ -1113,7 +1110,7 @@
         </button>
     </div>
 
-    <!-- 详情页3 -->
+    <!-- 详情页3：AI辅助 -->
     <div class="detail-page" id="detail3">
         <div class="ai-layout">
             <div class="ai-top-container">
@@ -1138,7 +1135,7 @@
 
     <script>
         (() => {
-            // 加载动画逻辑
+            // ========== 加载动画 ==========
             const SVG_NS = 'http://www.w3.org/2000/svg';
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadGroup = document.getElementById('load-group');
@@ -1217,6 +1214,7 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
+            // 控制加载画面消失
             const MIN_LOAD_TIME = 1800;
             const loadStartTime = performance.now();
             const pageLoaded = new Promise(resolve => {
@@ -1242,7 +1240,7 @@
 
             document.body.style.overflow = 'hidden';
 
-            // 主站逻辑
+            // ========== 主站逻辑 ==========
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
 
@@ -1322,6 +1320,7 @@
                 setTimeout(() => toast.classList.remove('show'), 1200);
             }
 
+            // 年份老虎机动画
             const yearDigits = document.getElementById('yearDigits');
             const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
             let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
@@ -1500,32 +1499,29 @@
                 });
             });
 
-            // ★ 顺滑整屏滚动（累积触发，无冷却）
-            let wheelAccum = 0;
-            let lastWheelDir = 0;
-
+            // ★ 整屏滚动优化（短锁定 + 即时响应，无累积）
+            let wheelLock = false;
             window.addEventListener('wheel', (e) => {
                 if (!loadingComplete || currentPage !== 'home') return;
                 e.preventDefault();
 
-                const dir = e.deltaY > 0 ? 1 : -1;
-                // 方向改变时重置累积量（允许立即反向）
-                if (dir !== lastWheelDir) {
-                    wheelAccum = 0;
-                    lastWheelDir = dir;
+                if (wheelLock) return;
+                wheelLock = true;
+                setTimeout(() => { wheelLock = false; }, 180);
+
+                const delta = e.deltaY;
+                const currentScreen = Math.round(window.scrollY / vh);
+                let nextScreen = currentScreen;
+
+                if (delta > 20) {
+                    nextScreen = Math.min(3, currentScreen + 1);
+                } else if (delta < -20) {
+                    nextScreen = Math.max(0, currentScreen - 1);
                 }
 
-                wheelAccum += Math.abs(e.deltaY);
-
-                if (wheelAccum > vh * 0.3) {
-                    const currentScreen = Math.round(window.scrollY / vh);
-                    let nextScreen = currentScreen + dir;
-                    nextScreen = Math.max(0, Math.min(3, nextScreen));
-                    if (nextScreen !== currentScreen) {
-                        window.scrollTo({ top: nextScreen * vh, behavior: 'smooth' });
-                        setTimeout(() => updateScroll(), 50);
-                    }
-                    wheelAccum = 0;
+                if (nextScreen !== currentScreen) {
+                    window.scrollTo({ top: nextScreen * vh, behavior: 'smooth' });
+                    setTimeout(() => updateScroll(), 50);
                 }
             }, { passive: false });
 
