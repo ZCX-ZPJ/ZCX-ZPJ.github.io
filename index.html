@@ -34,7 +34,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* 高度由JS动态设置，不再写死400vh */
             overflow-x: hidden;
             cursor: default;
         }
@@ -93,6 +92,7 @@
             display: grid;
             gap: 5px;
             text-align: center;
+            justify-items: center;
         }
         #loading-overlay .load-title {
             font-size: 20px;
@@ -119,11 +119,56 @@
             background: rgba(0, 0, 0, 0.35);
             animation: dotBounce 1.3s ease-in-out infinite;
         }
-        #loading-overlay .load-dots span:nth-child(2) { animation-delay: 0.18s; }
-        #loading-overlay .load-dots span:nth-child(3) { animation-delay: 0.36s; }
+        #loading-overlay .load-dots span:nth-child(2) {
+            animation-delay: 0.18s;
+        }
+        #loading-overlay .load-dots span:nth-child(3) {
+            animation-delay: 0.36s;
+        }
         @keyframes dotBounce {
-            0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-            35% { transform: translateY(-10px); opacity: 1; }
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            35% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* 加载进度条 */
+        .load-progress-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .load-progress-bar {
+            width: 140px;
+            height: 2.5px;
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .load-progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 3px;
+            background: #2c2c2c;
+            transition: width 0.35s ease-out;
+            will-change: width;
+        }
+        .load-progress-text {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: rgba(0, 0, 0, 0.55);
+            min-width: 32px;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+            font-family: "SF Mono", "Menlo", "Consolas", monospace;
         }
 
         /* 微笑光标 */
@@ -145,8 +190,12 @@
             animation: rotate-smile 2s linear infinite;
         }
         @keyframes rotate-smile {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
         /* 第一页 */
@@ -191,7 +240,9 @@
             padding-bottom: 2px;
             -webkit-tap-highlight-color: transparent;
         }
-        .nav-links a:active { transform: scale(0.95); }
+        .nav-links a:active {
+            transform: scale(0.95);
+        }
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -204,8 +255,12 @@
             transform-origin: left;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .nav-links a:hover::after { transform: scaleX(1); }
-        .nav-links a:hover { transform: scale(1.12); }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        .nav-links a:hover {
+            transform: scale(1.12);
+        }
 
         main {
             flex: 1;
@@ -232,8 +287,13 @@
             backface-visibility: hidden;
             will-change: transform;
         }
-        .hero-title span:first-child { font-weight: 750; }
-        .hero-title span:last-child { font-weight: 650; color: #202020; }
+        .hero-title span:first-child {
+            font-weight: 750;
+        }
+        .hero-title span:last-child {
+            font-weight: 650;
+            color: #202020;
+        }
         .dot-text {
             display: inline-block;
             line-height: 1;
@@ -299,8 +359,12 @@
             display: block;
             margin-bottom: 0.2rem;
         }
-        .toolbox-line strong { font-weight: 650; }
-        .ai-line { display: block; }
+        .toolbox-line strong {
+            font-weight: 650;
+        }
+        .ai-line {
+            display: block;
+        }
         .software-item {
             display: inline-block;
             transition: color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -347,7 +411,9 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
-        .icon-wrapper:active { transform: scale(0.9); }
+        .icon-wrapper:active {
+            transform: scale(0.9);
+        }
         .icon-wrapper svg {
             width: 22px;
             height: 22px;
@@ -418,7 +484,9 @@
             transition: opacity 0.2s;
             z-index: 101;
         }
-        .icon-wrapper .copy-toast.show { opacity: 1; }
+        .icon-wrapper .copy-toast.show {
+            opacity: 1;
+        }
 
         /* 第二页 */
         .page2 {
@@ -518,7 +586,9 @@
             z-index: 1;
             -webkit-tap-highlight-color: transparent;
         }
-        .minimal-card:active { transform: scale(0.97); }
+        .minimal-card:active {
+            transform: scale(0.97);
+        }
         .minimal-card::before {
             content: '';
             position: absolute;
@@ -533,15 +603,31 @@
             border-radius: inherit;
         }
         @keyframes fluidFlow {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 50% 100%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 50% 0%; }
-            100% { background-position: 0% 100%; }
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 50% 100%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 50% 0%;
+            }
+            100% {
+                background-position: 0% 100%;
+            }
         }
-        .minimal-card:nth-child(1)::before { animation-delay: 0s; }
-        .minimal-card:nth-child(2)::before { animation-delay: -4s; }
-        .minimal-card:nth-child(3)::before { animation-delay: -8s; }
+        .minimal-card:nth-child(1)::before {
+            animation-delay: 0s;
+        }
+        .minimal-card:nth-child(2)::before {
+            animation-delay: -4s;
+        }
+        .minimal-card:nth-child(3)::before {
+            animation-delay: -8s;
+        }
         .minimal-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
@@ -565,7 +651,9 @@
             object-fit: cover;
             display: block;
         }
-        video::-webkit-media-controls { display: none !important; }
+        video::-webkit-media-controls {
+            display: none !important;
+        }
         .card-divider {
             width: 100%;
             height: 1px;
@@ -655,8 +743,12 @@
             line-height: 1.2;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .page4.active .page4-text { transform: scale(1); }
-        .page4:not(.active) .page4-text { transform: scale(0.9); }
+        .page4.active .page4-text {
+            transform: scale(1);
+        }
+        .page4:not(.active) .page4-text {
+            transform: scale(0.9);
+        }
 
         /* 详情页 */
         .detail-page {
@@ -700,13 +792,15 @@
             -webkit-backdrop-filter: blur(20px) saturate(200%);
             border: none;
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 -10px 30px rgba(255, 140, 66, 0.15), inset 0 1px 0 rgba(255,255,255,0.8), 0 0 0 1px rgba(255,140,66,0.2);
+            box-shadow: 0 -10px 30px rgba(255, 140, 66, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 1px rgba(255, 140, 66, 0.2);
             cursor: pointer;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             -webkit-tap-highlight-color: transparent;
         }
-        .back-btn:active { transform: scale(0.98); }
+        .back-btn:active {
+            transform: scale(0.98);
+        }
         .back-btn::before {
             content: '';
             position: absolute;
@@ -722,8 +816,12 @@
             opacity: 0.8;
         }
         @keyframes colorFlow {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
         }
         .back-btn::after {
             content: '';
@@ -732,28 +830,44 @@
             left: -120%;
             width: 80%;
             height: 100%;
-            background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.6) 45%, rgba(255,200,150,0.3) 55%, transparent 65%);
+            background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.6) 45%, rgba(255, 200, 150, 0.3) 55%, transparent 65%);
             z-index: 0;
             pointer-events: none;
             animation: glassFlow 4s ease-in-out infinite;
         }
         @keyframes glassFlow {
-            0% { left: -120%; opacity: 0; }
-            30% { opacity: 0.8; }
-            60% { left: 110%; opacity: 0.2; }
-            100% { left: -120%; opacity: 0; }
+            0% {
+                left: -120%;
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            60% {
+                left: 110%;
+                opacity: 0.2;
+            }
+            100% {
+                left: -120%;
+                opacity: 0;
+            }
         }
         .back-btn:hover {
             color: #fff;
             background: rgba(255, 140, 66, 0.3);
             backdrop-filter: blur(30px) saturate(250%);
             -webkit-backdrop-filter: blur(30px) saturate(250%);
-            box-shadow: 0 -20px 50px rgba(255,140,66,0.35), inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 2px rgba(255,140,66,0.5), 0 0 80px rgba(255,140,66,0.3);
+            box-shadow: 0 -20px 50px rgba(255, 140, 66, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 2px rgba(255, 140, 66, 0.5), 0 0 80px rgba(255, 140, 66, 0.3);
             letter-spacing: 0.12em;
             transform: translateY(-2px);
         }
-        .back-btn:hover::before { opacity: 1; animation: colorFlow 1s linear infinite; }
-        .back-btn:hover::after { animation: glassFlow 1.5s ease-in-out infinite; }
+        .back-btn:hover::before {
+            opacity: 1;
+            animation: colorFlow 1s linear infinite;
+        }
+        .back-btn:hover::after {
+            animation: glassFlow 1.5s ease-in-out infinite;
+        }
         .back-btn-content {
             position: relative;
             z-index: 1;
@@ -767,7 +881,9 @@
             display: block;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .back-btn:hover .back-arrow { transform: translateX(-4px); }
+        .back-btn:hover .back-arrow {
+            transform: translateX(-4px);
+        }
 
         .cards-grid {
             display: grid;
@@ -788,7 +904,9 @@
             border: 3.5px solid rgb(226, 131, 1);
             -webkit-tap-highlight-color: transparent;
         }
-        .card-box:active { transform: scale(0.96); }
+        .card-box:active {
+            transform: scale(0.96);
+        }
         .card-box:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -850,7 +968,9 @@
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        .ai-bottom-box:active { transform: scale(0.96); }
+        .ai-bottom-box:active {
+            transform: scale(0.96);
+        }
         .ai-bottom-box:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -864,68 +984,219 @@
 
         /* 平板 */
         @media (max-width: 1024px) {
-            .cards-grid { grid-template-columns: repeat(2, 1fr); }
-            .card-box { border-radius: 16px; }
-            .cards-row { gap: 14px; }
-            .minimal-card { padding: 20px 18px 18px; }
-            .card-title { font-size: 1.5rem; }
-            .card-video { flex: 0 0 65%; max-height: 65%; }
-            .ai-bottom-row { gap: 14px; }
-            .back-btn { border-radius: 14px 14px 0 0; height: 70px; font-size: 1.2rem; }
-            .back-arrow { width: 24px; height: 24px; }
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .card-box {
+                border-radius: 16px;
+            }
+            .cards-row {
+                gap: 14px;
+            }
+            .minimal-card {
+                padding: 20px 18px 18px;
+            }
+            .card-title {
+                font-size: 1.5rem;
+            }
+            .card-video {
+                flex: 0 0 65%;
+                max-height: 65%;
+            }
+            .ai-bottom-row {
+                gap: 14px;
+            }
+            .back-btn {
+                border-radius: 14px 14px 0 0;
+                height: 70px;
+                font-size: 1.2rem;
+            }
+            .back-arrow {
+                width: 24px;
+                height: 24px;
+            }
         }
 
         /* 移动端 */
         @media (max-width: 768px) {
-            :root { --card-gap: 6px; }
-            header { padding: 1rem 1.5rem; }
-            .nav-links { font-size: 1rem; gap: 1.5rem; }
-            main { justify-content: space-evenly; gap: 0; padding: 0.5rem 1.5rem; }
+            :root {
+                --card-gap: 6px;
+            }
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                font-size: 1rem;
+                gap: 1.5rem;
+            }
+            main {
+                justify-content: space-evenly;
+                gap: 0;
+                padding: 0.5rem 1.5rem;
+            }
             .hero-title {
-                white-space: normal; flex-wrap: wrap; text-align: center;
-                font-size: max(2.5rem, 10vw); gap: 0.6rem; margin: 0;
+                white-space: normal;
+                flex-wrap: wrap;
+                text-align: center;
+                font-size: max(2.5rem, 10vw);
+                gap: 0.6rem;
+                margin: 0;
             }
-            .hero-title .dot-text { width: 100%; text-align: center; margin-top: 0.2rem; }
-            .profile-img { width: 65px; min-width: 65px; }
+            .hero-title .dot-text {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.2rem;
+            }
+            .profile-img {
+                width: 65px;
+                min-width: 65px;
+            }
             .hero-desc {
-                display: flex; flex-direction: column; gap: 0.8rem;
-                padding-top: 1rem; font-size: max(0.95rem, 3.5vw); text-align: center;
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-top: 1rem;
+                font-size: max(0.95rem, 3.5vw);
+                text-align: center;
             }
-            .hero-desc::before { left: 0; width: 100%; }
+            .hero-desc::before {
+                left: 0;
+                width: 100%;
+            }
             .hero-desc div:first-child,
-            .hero-desc div:last-child { margin: 0; width: 100%; text-align: center; }
-            .hero-desc div:last-child { gap: 0.3rem; display: flex; flex-direction: column; align-items: center; }
-            .software-item:hover { transform: none; color: inherit; }
-            footer {
-                flex-direction: column; gap: 0.5rem; padding: 0.8rem 1.5rem;
-                font-size: 0.8rem; text-align: center;
+            .hero-desc div:last-child {
+                margin: 0;
+                width: 100%;
+                text-align: center;
             }
-            .footer-left { font-size: 0.85rem; }
-            .footer-center { position: static; transform: none; font-size: 1rem; }
-            .footer-right { justify-content: center; gap: 1.2rem; }
-            .icon-wrapper svg { width: 20px; height: 20px; }
-            .icon-text { font-size: 1.2rem; }
-            .splash-title { font-size: max(3.5rem, 14vw); letter-spacing: 0.04em; }
-            .year-tag { font-size: max(0.85rem, 3vw); margin-left: clamp(0.2rem, 0.8vw, 0.4rem); margin-top: 0.25em; }
-            .cards-row { grid-template-columns: 1fr; gap: 5px; }
-            .cards-grid { grid-template-columns: 1fr; padding-bottom: 80px; }
-            .page4-text { font-size: 6rem; }
-            .page3 { overflow-y: visible; padding: 2vh 3vw; }
-            .page3 .cards-row { height: 100%; align-content: stretch; gap: 4px; }
-            .minimal-card { height: calc((100vh - 4vh - 8px) / 3); padding: 5px 8px 3px; border-radius: 14px; }
-            .card-video { flex: 0 0 70%; max-height: 70%; margin-bottom: 3px; border-radius: 8px; }
-            .card-divider { margin-bottom: 2px; }
-            .card-title { font-size: 1rem; margin-bottom: 1px; }
-            .card-description { font-size: 0.65rem; line-height: 1.2; margin-bottom: 0; }
-            .card-arrow { width: 16px; height: 16px; bottom: 2px; }
-            .back-btn { height: 64px; font-size: 1.1rem; letter-spacing: 0.06em; border-radius: 16px 16px 0 0; }
-            .back-btn::before { height: 2px; left: 5%; width: 90%; }
-            .back-arrow { width: 22px; height: 22px; }
-            .ai-bottom-row { grid-template-columns: 1fr; gap: 8px; }
-            .ai-top-container { min-height: 200px; border-radius: 16px; }
-            .ai-bottom-box { border-radius: 16px; }
-            #loading-overlay .frame { width: min(78vmin, 300px); }
-            #loading-overlay .load-title { font-size: 17px; }
+            .hero-desc div:last-child {
+                gap: 0.3rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .software-item:hover {
+                transform: none;
+                color: inherit;
+            }
+            footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.8rem;
+                text-align: center;
+            }
+            .footer-left {
+                font-size: 0.85rem;
+            }
+            .footer-center {
+                position: static;
+                transform: none;
+                font-size: 1rem;
+            }
+            .footer-right {
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .icon-wrapper svg {
+                width: 20px;
+                height: 20px;
+            }
+            .icon-text {
+                font-size: 1.2rem;
+            }
+            .splash-title {
+                font-size: max(3.5rem, 14vw);
+                letter-spacing: 0.04em;
+            }
+            .year-tag {
+                font-size: max(0.85rem, 3vw);
+                margin-left: clamp(0.2rem, 0.8vw, 0.4rem);
+                margin-top: 0.25em;
+            }
+            .cards-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+                padding-bottom: 80px;
+            }
+            .page4-text {
+                font-size: 6rem;
+            }
+            .page3 {
+                overflow-y: visible;
+                padding: 2vh 3vw;
+            }
+            .page3 .cards-row {
+                height: 100%;
+                align-content: stretch;
+                gap: 4px;
+            }
+            .minimal-card {
+                height: calc((100vh - 4vh - 8px) / 3);
+                padding: 5px 8px 3px;
+                border-radius: 14px;
+            }
+            .card-video {
+                flex: 0 0 70%;
+                max-height: 70%;
+                margin-bottom: 3px;
+                border-radius: 8px;
+            }
+            .card-divider {
+                margin-bottom: 2px;
+            }
+            .card-title {
+                font-size: 1rem;
+                margin-bottom: 1px;
+            }
+            .card-description {
+                font-size: 0.65rem;
+                line-height: 1.2;
+                margin-bottom: 0;
+            }
+            .card-arrow {
+                width: 16px;
+                height: 16px;
+                bottom: 2px;
+            }
+            .back-btn {
+                height: 64px;
+                font-size: 1.1rem;
+                letter-spacing: 0.06em;
+                border-radius: 16px 16px 0 0;
+            }
+            .back-btn::before {
+                height: 2px;
+                left: 5%;
+                width: 90%;
+            }
+            .back-arrow {
+                width: 22px;
+                height: 22px;
+            }
+            .ai-bottom-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .ai-top-container {
+                min-height: 200px;
+                border-radius: 16px;
+            }
+            .ai-bottom-box {
+                border-radius: 16px;
+            }
+            #loading-overlay .frame {
+                width: min(78vmin, 300px);
+            }
+            #loading-overlay .load-title {
+                font-size: 17px;
+            }
+            .load-progress-bar {
+                width: 120px;
+            }
         }
     </style>
 </head>
@@ -943,6 +1214,12 @@
         <div class="load-meta">
             <div class="load-title">Heart Wave</div>
             <div class="load-tag">f(x) Heart Wave · 加载中</div>
+            <div class="load-progress-wrap">
+                <div class="load-progress-bar">
+                    <div class="load-progress-fill" id="loadProgressFill"></div>
+                </div>
+                <span class="load-progress-text" id="loadProgressText">0%</span>
+            </div>
         </div>
         <div class="load-dots">
             <span></span><span></span><span></span>
@@ -1028,7 +1305,7 @@
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')" aria-label="查看主图渲染作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/ROcWB40obKXmELuohfDODShNTlKJDxErHiTIa3Y7dxs.mp4" autoplay loop muted playsinline></video>
+                    <video src="https://cloud.video.taobao.com/vod/ROcWB40obKXmELuohfDODShNTlKJDxErHiTIa3Y7dxs.mp4" autoplay loop muted playsinline preload="none"></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">主图渲染</div>
@@ -1036,7 +1313,7 @@
             </button>
             <button class="minimal-card" onclick="showDetail('detail2')" aria-label="查看详情页作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/6UGdtOaG3dxYIvWSrAfBvCS3rSqreOtoglnu-S5Cdk0.mp4" autoplay loop muted playsinline></video>
+                    <video src="https://cloud.video.taobao.com/vod/6UGdtOaG3dxYIvWSrAfBvCS3rSqreOtoglnu-S5Cdk0.mp4" autoplay loop muted playsinline preload="none"></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">详情页</div>
@@ -1044,7 +1321,7 @@
             </button>
             <button class="minimal-card" onclick="showDetail('detail3')" aria-label="查看AI辅助作品">
                 <div class="card-video">
-                    <video src="https://cloud.video.taobao.com/vod/lWY7-8DoCCBgfzPfiGIZ5rVH12sS1ohR3o2fBlWTSog.mp4" autoplay loop muted playsinline></video>
+                    <video src="https://cloud.video.taobao.com/vod/lWY7-8DoCCBgfzPfiGIZ5rVH12sS1ohR3o2fBlWTSog.mp4" autoplay loop muted playsinline preload="none"></video>
                 </div>
                 <div class="card-divider"></div>
                 <div class="card-title">AI辅助</div>
@@ -1058,7 +1335,7 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1 (完整图片列表) -->
+    <!-- 详情页1 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
@@ -1137,20 +1414,24 @@
 
     <script>
         (() => {
-            // ========== 动态高度，彻底解决缩放问题 ==========
+            // ========== 动态高度 ==========
             const screenCount = 4;
+
             function setPageHeight() {
                 document.body.style.height = `${screenCount * window.innerHeight}px`;
             }
             setPageHeight();
             window.addEventListener('resize', setPageHeight);
 
-            // ========== 加载动画 ==========
+            // ========== 真实资源加载追踪 ==========
             const SVG_NS = 'http://www.w3.org/2000/svg';
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadGroup = document.getElementById('load-group');
             const loadPath = document.getElementById('load-path');
+            const loadProgressFill = document.getElementById('loadProgressFill');
+            const loadProgressText = document.getElementById('loadProgressText');
 
+            // 心形动画配置
             const heartConfig = {
                 name: "Heart Wave",
                 tag: "f(x) Heart Wave",
@@ -1188,26 +1469,31 @@
             });
 
             function normalizeProgress(p) { return ((p % 1) + 1) % 1; }
+
             function getDetailScale(time) {
                 const pulseProgress = (time % heartConfig.pulseDurationMs) / heartConfig.pulseDurationMs;
                 const pulseAngle = pulseProgress * Math.PI * 2;
                 return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
             }
+
             function buildLoadPath(detailScale, steps = 480) {
                 return Array.from({ length: steps + 1 }, (_, index) => {
                     const pt = heartConfig.point(index / steps, detailScale, heartConfig);
                     return `${index === 0 ? 'M' : 'L'} ${pt.x.toFixed(2)} ${pt.y.toFixed(2)}`;
                 }).join(' ');
             }
+
             function getLoadParticle(index, progress, detailScale) {
                 const tailOffset = index / (heartConfig.particleCount - 1);
-                const pt = heartConfig.point(normalizeProgress(progress - tailOffset * heartConfig.trailSpan), detailScale, heartConfig);
+                const pt = heartConfig.point(normalizeProgress(progress - tailOffset * heartConfig.trailSpan), detailScale,
+                    heartConfig);
                 const fade = Math.pow(1 - tailOffset, 0.56);
                 return { x: pt.x, y: pt.y, radius: 0.9 + fade * 2.7, opacity: 0.08 + fade * 0.9 };
             }
 
             let loadingRafId = null;
             const loadStartedAt = performance.now();
+
             function renderLoading(now) {
                 const time = now - loadStartedAt;
                 const progress = (time % heartConfig.durationMs) / heartConfig.durationMs;
@@ -1224,27 +1510,130 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
-            const MIN_LOAD_TIME = 1800;
-            const loadStartTime = performance.now();
-            const pageLoaded = new Promise(resolve => {
-                if (document.readyState === 'complete') resolve();
-                else window.addEventListener('load', resolve, { once: true });
-            });
-            const minTimeElapsed = new Promise(resolve => {
-                const elapsed = performance.now() - loadStartTime;
-                const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
-                setTimeout(resolve, remaining);
-            });
+            // ★ 收集所有图片URL并真实追踪加载
+            function collectImageUrls() {
+                const allImgs = document.querySelectorAll('img[src]');
+                const urls = new Set();
+                allImgs.forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (src && (src.startsWith('https://') || src.startsWith('http://'))) {
+                        urls.add(src);
+                    }
+                });
+                return Array.from(urls);
+            }
+
+            function preloadImage(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    let settled = false;
+
+                    function done() {
+                        if (settled) return;
+                        settled = true;
+                        img.onload = null;
+                        img.onerror = null;
+                        img.onabort = null;
+                        resolve();
+                    }
+
+                    img.onload = done;
+                    img.onerror = done;
+                    img.onabort = done;
+
+                    // 单资源超时 6 秒
+                    const timeout = setTimeout(() => {
+                        done();
+                    }, 6000);
+
+                    // 如果已经缓存，onload 可能在设置 src 后同步/异步触发
+                    img.src = url;
+
+                    // 对于已缓存的图片，complete 可能已经为 true
+                    // 但 onload 仍会异步触发；这里做一层保险
+                    if (img.complete && img.naturalWidth > 0) {
+                        clearTimeout(timeout);
+                        done();
+                    }
+                });
+            }
+
+            const MIN_DISPLAY_MS = 400; // 最少显示 0.4 秒，避免闪烁
+            const GLOBAL_TIMEOUT_MS = 8000; // 全局超时 8 秒
 
             let loadingComplete = false;
-            Promise.all([pageLoaded, minTimeElapsed]).then(() => {
-                setTimeout(() => {
-                    if (loadingRafId) cancelAnimationFrame(loadingRafId);
-                    loadingRafId = null;
-                    loadingOverlay.classList.add('fade-out');
-                    loadingComplete = true;
-                    setTimeout(() => { document.body.style.overflow = ''; }, 500);
-                }, 150);
+
+            function updateLoadProgress(loaded, total) {
+                const pct = total > 0 ? Math.round((loaded / total) * 100) : 100;
+                if (loadProgressFill) loadProgressFill.style.width = pct + '%';
+                if (loadProgressText) loadProgressText.textContent = pct + '%';
+            }
+
+            // 初始状态
+            updateLoadProgress(0, 1);
+
+            function startRealLoading() {
+                const imageUrls = collectImageUrls();
+                const total = imageUrls.length;
+
+                if (total === 0) {
+                    // 没有图片资源，直接完成
+                    updateLoadProgress(1, 1);
+                    return Promise.resolve();
+                }
+
+                updateLoadProgress(0, total);
+                let loadedCount = 0;
+
+                const loadPromises = imageUrls.map(url => {
+                    return preloadImage(url).then(() => {
+                        loadedCount++;
+                        updateLoadProgress(loadedCount, total);
+                    });
+                });
+
+                // 全局超时
+                const globalTimeout = new Promise(resolve => setTimeout(resolve, GLOBAL_TIMEOUT_MS));
+
+                // 所有资源加载完成 或 全局超时
+                return Promise.race([
+                    Promise.allSettled(loadPromises),
+                    globalTimeout
+                ]).then(() => {
+                    // 超时情况下确保进度条走到当前实际值
+                    if (loadedCount < total && total > 0) {
+                        updateLoadProgress(loadedCount, total);
+                    } else if (total > 0) {
+                        updateLoadProgress(total, total);
+                    }
+                });
+            }
+
+            function finishLoading() {
+                if (loadingRafId) cancelAnimationFrame(loadingRafId);
+                loadingRafId = null;
+                loadingOverlay.classList.add('fade-out');
+                loadingComplete = true;
+                setTimeout(() => { document.body.style.overflow = ''; }, 500);
+            }
+
+            // DOM 就绪后开始预加载
+            const domReady = (document.readyState === 'complete' || document.readyState === 'interactive') ?
+                Promise.resolve() :
+                new Promise(resolve => window.addEventListener('DOMContentLoaded', resolve, { once: true }));
+
+            const minDisplayPromise = new Promise(resolve => setTimeout(resolve, MIN_DISPLAY_MS));
+
+            domReady.then(() => {
+                const resourcesPromise = startRealLoading();
+                // 同时满足：资源加载完成（或超时）+ 最少显示时间
+                return Promise.all([resourcesPromise, minDisplayPromise]);
+            }).then(() => {
+                // 再给一小段缓冲让进度条动画完成
+                setTimeout(finishLoading, 120);
+            }).catch(() => {
+                // 极端情况兜底
+                setTimeout(finishLoading, MIN_DISPLAY_MS);
             });
 
             document.body.style.overflow = 'hidden';
@@ -1284,9 +1673,12 @@
                 setTimeout(() => updateScroll(), 50);
             }
 
-            homeLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(0); });
-            aboutLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(3 * vh); });
-            workLink.addEventListener('click', (e) => { e.preventDefault(); navigateTo(2 * vh); });
+            homeLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(0); });
+            aboutLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(3 * vh); });
+            workLink.addEventListener('click', (e) => { e.preventDefault();
+                navigateTo(2 * vh); });
 
             document.addEventListener('mousemove', (e) => {
                 lastMouseX = e.clientX;
@@ -1319,7 +1711,8 @@
                 textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
-                try { document.execCommand('copy'); showToast(wrapper, toast); } catch (err) {}
+                try { document.execCommand('copy');
+                    showToast(wrapper, toast); } catch (err) {}
                 document.body.removeChild(textarea);
             }
 
@@ -1330,9 +1723,16 @@
             }
 
             const yearDigits = document.getElementById('yearDigits');
-            const FINAL_TEXT = '2020–2026', SPIN_DURATION = 1000, TICK_INTERVAL = 20, LOOP_DELAY = 600;
-            let loopActive = false, intervalId = null, loopTimeout = null, startTime = 0;
-            const chars = FINAL_TEXT.split(''), totalChars = chars.length;
+            const FINAL_TEXT = '2020–2026',
+                SPIN_DURATION = 1000,
+                TICK_INTERVAL = 20,
+                LOOP_DELAY = 600;
+            let loopActive = false,
+                intervalId = null,
+                loopTimeout = null,
+                startTime = 0;
+            const chars = FINAL_TEXT.split(''),
+                totalChars = chars.length;
 
             function getRandomPool(c) {
                 if (c >= '0' && c <= '9') return '0123456789'.split('');
@@ -1341,17 +1741,22 @@
                 return [c];
             }
             const pools = chars.map(getRandomPool);
-            let slotPositions = new Array(totalChars).fill(0), locked = new Array(totalChars).fill(false), lockIndex = 0;
+            let slotPositions = new Array(totalChars).fill(0),
+                locked = new Array(totalChars).fill(false),
+                lockIndex = 0;
 
             function clearTimers() {
                 if (intervalId) clearInterval(intervalId);
                 if (loopTimeout) clearTimeout(loopTimeout);
-                intervalId = null; loopTimeout = null;
+                intervalId = null;
+                loopTimeout = null;
             }
+
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
             function updateSlotChars() {
-                const elapsed = performance.now() - startTime, globalProgress = Math.min(1, elapsed / SPIN_DURATION);
+                const elapsed = performance.now() - startTime,
+                    globalProgress = Math.min(1, elapsed / SPIN_DURATION);
                 const targetLockCount = Math.floor(globalProgress * totalChars);
                 while (lockIndex < targetLockCount && lockIndex < totalChars) {
                     const idx = lockIndex;
@@ -1401,7 +1806,10 @@
 
             const title = document.getElementById('titleMove');
             if (title) {
-                let targetX = 0, currentX = 0, rafId = null;
+                let targetX = 0,
+                    currentX = 0,
+                    rafId = null;
+
                 function animate() {
                     const now = performance.now() / 1000;
                     const swing = Math.sin(now * Math.PI * 2 / 3.5) * 60;
@@ -1457,15 +1865,19 @@
                 const inPage2 = sY >= vh && sY < 2 * vh;
                 if (inPage2) {
                     page2.classList.add('active');
-                    if (!loopActive) { loopActive = true; startSlotSpin(); }
+                    if (!loopActive) { loopActive = true;
+                        startSlotSpin(); }
                 } else {
                     page2.classList.remove('active');
-                    if (loopActive) { loopActive = false; clearTimers(); yearDigits.textContent = FINAL_TEXT; }
+                    if (loopActive) { loopActive = false;
+                        clearTimers();
+                        yearDigits.textContent = FINAL_TEXT; }
                 }
 
                 if (sY >= 2 * vh && sY < 3 * vh) {
                     page3.classList.add('active');
-                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(() => {}); });
+                    document.querySelectorAll('.page3 video').forEach(v => { if (v.paused) v.play().catch(
+                        () => {}); });
                 } else {
                     page3.classList.remove('active');
                     document.querySelectorAll('.page3 video').forEach(v => v.pause());
@@ -1485,7 +1897,8 @@
             window.addEventListener('scroll', () => {
                 if (currentPage !== 'home') return;
                 if (!ticking) {
-                    requestAnimationFrame(() => { updateScroll(); ticking = false; });
+                    requestAnimationFrame(() => { updateScroll();
+                        ticking = false; });
                     ticking = true;
                 }
             }, { passive: true });
@@ -1510,7 +1923,7 @@
                 });
             });
 
-            // ★ 整屏滚动（使用动态vh，无累积）
+            // ★ 整屏滚动（使用动态vh，无累积误差）
             let wheelLock = false;
             window.addEventListener('wheel', (e) => {
                 if (!loadingComplete || currentPage !== 'home') return;
