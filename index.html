@@ -53,7 +53,7 @@
             cursor: pointer !important;
         }
 
-        /* 加载画面 */
+        /* 加载画面 —— 默认可见，真正加载结束后淡出 */
         #loading-overlay {
             position: fixed;
             inset: 0;
@@ -138,7 +138,7 @@
             }
         }
 
-        /* 加载进度条 */
+        /* 真实加载进度条 */
         .load-progress-wrap {
             display: flex;
             align-items: center;
@@ -1423,7 +1423,7 @@
             setPageHeight();
             window.addEventListener('resize', setPageHeight);
 
-            // ========== 真实资源加载追踪 ==========
+            // ========== 真实资源加载追踪（监听现有 img 元素） ==========
             const SVG_NS = 'http://www.w3.org/2000/svg';
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadGroup = document.getElementById('load-group');
@@ -1431,7 +1431,7 @@
             const loadProgressFill = document.getElementById('loadProgressFill');
             const loadProgressText = document.getElementById('loadProgressText');
 
-            // 心形动画配置
+            // 心形动画配置（不变）
             const heartConfig = {
                 name: "Heart Wave",
                 tag: "f(x) Heart Wave",
@@ -1510,57 +1510,8 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
-            // ★ 收集所有图片URL并真实追踪加载
-            function collectImageUrls() {
-                const allImgs = document.querySelectorAll('img[src]');
-                const urls = new Set();
-                allImgs.forEach(img => {
-                    const src = img.getAttribute('src');
-                    if (src && (src.startsWith('https://') || src.startsWith('http://'))) {
-                        urls.add(src);
-                    }
-                });
-                return Array.from(urls);
-            }
-
-            function preloadImage(url) {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    let settled = false;
-
-                    function done() {
-                        if (settled) return;
-                        settled = true;
-                        img.onload = null;
-                        img.onerror = null;
-                        img.onabort = null;
-                        resolve();
-                    }
-
-                    img.onload = done;
-                    img.onerror = done;
-                    img.onabort = done;
-
-                    // 单资源超时 6 秒
-                    const timeout = setTimeout(() => {
-                        done();
-                    }, 6000);
-
-                    // 如果已经缓存，onload 可能在设置 src 后同步/异步触发
-                    img.src = url;
-
-                    // 对于已缓存的图片，complete 可能已经为 true
-                    // 但 onload 仍会异步触发；这里做一层保险
-                    if (img.complete && img.naturalWidth > 0) {
-                        clearTimeout(timeout);
-                        done();
-                    }
-                });
-            }
-
-            const MIN_DISPLAY_MS = 400; // 最少显示 0.4 秒，避免闪烁
+            const MIN_DISPLAY_MS = 400; // 最少显示 0.4 秒
             const GLOBAL_TIMEOUT_MS = 8000; // 全局超时 8 秒
-
             let loadingComplete = false;
 
             function updateLoadProgress(loaded, total) {
@@ -1569,15 +1520,24 @@
                 if (loadProgressText) loadProgressText.textContent = pct + '%';
             }
 
-            // 初始状态
+            // 初始 0%
             updateLoadProgress(0, 1);
 
-            function startRealLoading() {
-                const imageUrls = collectImageUrls();
-                const total = imageUrls.length;
+            function finishLoading() {
+                if (loadingComplete) return;
+                loadingComplete = true;
+                if (loadingRafId) cancelAnimationFrame(loadingRafId);
+                loadingRafId = null;
+                loadingOverlay.classList.add('fade-out');
+                setTimeout(() => { document.body.style.overflow = ''; }, 500);
+            }
+
+            // 真实追踪所有 <img> 标签的加载状态
+            function trackAllImages() {
+                const images = document.querySelectorAll('img');
+                const total = images.length;
 
                 if (total === 0) {
-                    // 没有图片资源，直接完成
                     updateLoadProgress(1, 1);
                     return Promise.resolve();
                 }
@@ -1585,54 +1545,65 @@
                 updateLoadProgress(0, total);
                 let loadedCount = 0;
 
-                const loadPromises = imageUrls.map(url => {
-                    return preloadImage(url).then(() => {
-                        loadedCount++;
-                        updateLoadProgress(loadedCount, total);
-                    });
+                function onImageComplete() {
+                    loadedCount++;
+                    updateLoadProgress(loadedCount, total);
+                    if (loadedCount >= total) {
+                        // 所有图片都处理完毕
+                        resolvePromise();
+                    }
+                }
+
+                let resolvePromise;
+                const promise = new Promise(resolve => {
+                    resolvePromise = resolve;
                 });
 
-                // 全局超时
-                const globalTimeout = new Promise(resolve => setTimeout(resolve, GLOBAL_TIMEOUT_MS));
-
-                // 所有资源加载完成 或 全局超时
-                return Promise.race([
-                    Promise.allSettled(loadPromises),
-                    globalTimeout
-                ]).then(() => {
-                    // 超时情况下确保进度条走到当前实际值
-                    if (loadedCount < total && total > 0) {
-                        updateLoadProgress(loadedCount, total);
-                    } else if (total > 0) {
-                        updateLoadProgress(total, total);
+                // 遍历所有图片，检测是否已缓存，否则绑定事件
+                images.forEach(img => {
+                    if (img.complete && img.naturalWidth > 0) {
+                        // 已经加载完成（缓存命中）
+                        onImageComplete();
+                    } else {
+                        // 监听 load 和 error 事件
+                        img.addEventListener('load', onImageComplete, { once: true });
+                        img.addEventListener('error', onImageComplete, { once: true });
                     }
                 });
+
+                // 兜底：如果某些图片从未触发事件（极少情况），超时后也结束
+                setTimeout(() => {
+                    if (loadedCount < total) {
+                        // 强制设置为完成
+                        updateLoadProgress(total, total);
+                        resolvePromise();
+                    }
+                }, GLOBAL_TIMEOUT_MS);
+
+                return promise;
             }
 
-            function finishLoading() {
-                if (loadingRafId) cancelAnimationFrame(loadingRafId);
-                loadingRafId = null;
-                loadingOverlay.classList.add('fade-out');
-                loadingComplete = true;
-                setTimeout(() => { document.body.style.overflow = ''; }, 500);
-            }
-
-            // DOM 就绪后开始预加载
-            const domReady = (document.readyState === 'complete' || document.readyState === 'interactive') ?
-                Promise.resolve() :
-                new Promise(resolve => window.addEventListener('DOMContentLoaded', resolve, { once: true }));
-
+            // 启动真实加载流程
             const minDisplayPromise = new Promise(resolve => setTimeout(resolve, MIN_DISPLAY_MS));
 
-            domReady.then(() => {
-                const resourcesPromise = startRealLoading();
-                // 同时满足：资源加载完成（或超时）+ 最少显示时间
-                return Promise.all([resourcesPromise, minDisplayPromise]);
-            }).then(() => {
-                // 再给一小段缓冲让进度条动画完成
-                setTimeout(finishLoading, 120);
+            // 同步监听 window.load 作为最终保障（浏览器标签页停止转圈）
+            const windowLoadPromise = new Promise(resolve => {
+                if (document.readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.addEventListener('load', resolve, { once: true });
+                }
+            });
+
+            // 同时满足：图片追踪完成 + 最小显示时间 + window.load 完成
+            Promise.all([
+                trackAllImages(),
+                minDisplayPromise,
+                windowLoadPromise
+            ]).then(() => {
+                setTimeout(finishLoading, 50); // 微小延迟确保动画最后一帧
             }).catch(() => {
-                // 极端情况兜底
+                // 极端兜底
                 setTimeout(finishLoading, MIN_DISPLAY_MS);
             });
 
@@ -1923,7 +1894,6 @@
                 });
             });
 
-            // ★ 整屏滚动（使用动态vh，无累积误差）
             let wheelLock = false;
             window.addEventListener('wheel', (e) => {
                 if (!loadingComplete || currentPage !== 'home') return;
