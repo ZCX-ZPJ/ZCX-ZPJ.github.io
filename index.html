@@ -53,7 +53,6 @@
             cursor: pointer !important;
         }
 
-        /* 加载画面 —— 默认可见，真正加载结束后淡出 */
         #loading-overlay {
             position: fixed;
             inset: 0;
@@ -138,7 +137,6 @@
             }
         }
 
-        /* 真实加载进度条 */
         .load-progress-wrap {
             display: flex;
             align-items: center;
@@ -171,7 +169,6 @@
             font-family: "SF Mono", "Menlo", "Consolas", monospace;
         }
 
-        /* 微笑光标 */
         #smile-cursor {
             position: fixed;
             top: 0;
@@ -198,7 +195,6 @@
             }
         }
 
-        /* 第一页 */
         .page1 {
             position: fixed;
             inset: 0;
@@ -488,7 +484,6 @@
             opacity: 1;
         }
 
-        /* 第二页 */
         .page2 {
             position: fixed;
             inset: 0;
@@ -536,7 +531,6 @@
             display: inline-block;
         }
 
-        /* 第三页 */
         .page3 {
             position: fixed;
             inset: 0;
@@ -566,7 +560,6 @@
             margin: 0;
         }
 
-        /* 卡片流体背景 */
         .minimal-card {
             position: relative;
             background: #000;
@@ -714,7 +707,6 @@
             transform: translate(4px, -2px);
         }
 
-        /* 第四页 */
         .page4 {
             position: fixed;
             inset: 0;
@@ -750,7 +742,6 @@
             transform: scale(0.9);
         }
 
-        /* 详情页 */
         .detail-page {
             position: fixed;
             inset: 0;
@@ -770,7 +761,6 @@
             pointer-events: auto;
         }
 
-        /* 返回按钮 */
         .back-btn {
             position: fixed;
             bottom: 0;
@@ -921,7 +911,6 @@
             decoding: async;
         }
 
-        /* AI辅助布局 */
         .ai-layout {
             display: flex;
             flex-direction: column;
@@ -982,7 +971,6 @@
             display: block;
         }
 
-        /* 平板 */
         @media (max-width: 1024px) {
             .cards-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1017,7 +1005,6 @@
             }
         }
 
-        /* 移动端 */
         @media (max-width: 768px) {
             :root {
                 --card-gap: 6px;
@@ -1202,7 +1189,6 @@
 </head>
 <body>
 
-    <!-- 加载画面 -->
     <div id="loading-overlay">
         <div class="frame">
             <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
@@ -1226,7 +1212,6 @@
         </div>
     </div>
 
-    <!-- 微笑光标 -->
     <div id="smile-cursor" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
             <defs>
@@ -1241,7 +1226,6 @@
         </svg>
     </div>
 
-    <!-- 第一页 -->
     <div class="page1" id="page1">
         <header>
             <nav class="nav-links">
@@ -1257,7 +1241,7 @@
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
-                <div>Hi, 我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
+                <div>Hi，我是周成鑫，一名数字创意设计师<br>专注将创意策略转化为视觉作品</div>
                 <div>
                     <span class="toolbox-line"><strong>日常工具箱：</strong>
                         <span class="software-item">C4D/Redshift</span>
@@ -1277,22 +1261,42 @@
             <div class="footer-center">···</div>
             <div class="footer-right">
                 <div class="icon-wrapper" data-title="ZHOU-9-57" data-copy="ZHOU-9-57" role="button" aria-label="复制微信号">
-                    <svg viewBox="0 0 24 24"><path d="M8.5 10c-.8 0-1.5.7-1.5 1.5S7.7 13 8.5 13s1.5-.7 1.5-1.5S9.3 10 8.5 10z"/><path d="M15.5 10c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/><path d="M21 11.5C21 7.4 17.5 4 13 4c-4.7 0-8.5 3.6-8.5 8 0 2.2 1 4.3 2.5 5.7L6 21l3.5-2.2c1 .4 2.2.7 3.5.7 4.5 0 8-3.4 8-8z"/></svg>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24ZM30.2424 19.2856C30.404 19.2856 30.564 19.2872 30.7232 19.296C29.8816 14.7096 25.1448 11.2 19.428 11.2C13.116 11.2 8 15.4792 8 20.7576C8 23.8528 9.7584 26.604 12.4856 28.3504C12.5208 28.3728 12.5904 28.4168 12.5904 28.4168L11.4864 31.8752L15.6176 29.7712C15.6176 29.7712 15.7472 29.808 15.812 29.8272C16.9472 30.1432 18.1648 30.3144 19.428 30.3144C19.6856 30.3144 19.9416 30.304 20.196 30.2912C19.9616 29.564 19.8328 28.8 19.8328 28.0112C19.8328 23.1912 24.4952 19.2856 30.2424 19.2856ZM20.6729 28.0673C20.6729 32.5273 24.9969 36.1425 30.3297 36.1425C31.3961 36.1425 32.4249 35.9969 33.3833 35.7289C33.4385 35.7145 33.5481 35.6817 33.5481 35.6817L37.0369 37.4609L36.1041 34.5377C36.1041 34.5377 36.1633 34.5009 36.1929 34.4825C38.4961 33.0073 39.9825 30.6833 39.9825 28.0673C39.9825 23.6089 35.6601 19.9937 30.3297 19.9937C24.9969 19.9937 20.6729 23.6089 20.6729 28.0673Z" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M23.4048 15.9128C24.2912 15.9128 25.0088 16.6072 25.0088 17.4656C25.0088 18.3232 24.2912 19.02 23.4048 19.02C22.5176 19.02 21.8008 18.3232 21.8008 17.4656C21.8008 16.6072 22.5176 15.9128 23.4048 15.9128" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M32.332 25.2857C32.332 24.5625 32.9384 23.9745 33.6872 23.9745C34.4368 23.9745 35.0432 24.5625 35.0432 25.2857C35.0432 26.0121 34.4368 26.6009 33.6872 26.6009C32.9384 26.6009 32.332 26.0121 32.332 25.2857" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M25.6129 25.2857C25.6129 24.5625 26.2209 23.9745 26.9689 23.9745C27.7185 23.9745 28.3257 24.5625 28.3257 25.2857C28.3257 26.0121 27.7185 26.6009 26.9689 26.6009C26.2209 26.6009 25.6129 26.0121 25.6129 25.2857" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4512 19.02C14.5648 19.02 13.8464 18.3232 13.8464 17.4656C13.8464 16.6072 14.5648 15.9128 15.4512 15.9128C16.3376 15.9128 17.0576 16.6072 17.0576 17.4656C17.0576 18.3232 16.3376 19.02 15.4512 19.02" fill="currentColor"/>
+                    </svg>
                     <span class="copy-toast">已复制</span>
                 </div>
                 <div class="icon-wrapper" data-title="2077821405" data-copy="2077821405" role="button" aria-label="复制QQ号">
-                    <span class="icon-text">Q</span>
+                    <svg height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fill-rule="evenodd">
+                            <path d="m0 0h32v32h-32z"/>
+                            <path d="m16 0c8.836556 0 16 7.163444 16 16s-7.163444 16-16 16-16-7.163444-16-16 7.163444-16 16-16zm0 8c-3.7399769.0001875-5.3104861 3.0644648-5.2111485 6.7175538-.5901401 1.4156544-.97168742 2.2735907-1.30533812 3.3055894-.70791437 2.1893722-.47854375 3.0954335-.30393072 3.115746.37475143.0435311 1.45865284-1.6481541 1.45865284-1.6481541 0 .9795924.5247821 2.2579032 1.6602545 3.1809958-.5483889.162531-1.7828087.5989055-1.488698 1.0754674.23789.3857182 4.0811325.2462809 5.1906568.126156 1.1095244.1201249 4.9527669.2595622 5.1906569-.126156.2939481-.4766869-.9417073-.9134051-1.4893484-1.0756549 1.1353099-.9230925 1.6599944-2.2012784 1.6599944-3.1808083 0 0 1.0839014 1.6916852 1.4586854 1.6481541.174613-.0203438.4039186-.9263738-.3038982-3.115746-.3327078-1.0289987-.7162061-1.8923413-1.3053381-3.3055582.0940374-3.7134327-1.5128902-6.7173975-5.2112008-6.717585z" fill="currentColor"/>
+                        </g>
+                    </svg>
                     <span class="copy-toast">已复制</span>
                 </div>
                 <div class="icon-wrapper" data-title="13226408301" data-copy="13226408301" role="button" aria-label="复制电话号码">
-                    <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1v3c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>
+                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="485.213px" height="485.212px" viewBox="0 0 485.213 485.212" style="enable-background:new 0 0 485.213 485.212;" xml:space="preserve">
+                        <g>
+                            <path d="M242.607,0C108.629,0,0.001,108.628,0.001,242.606c0,133.976,108.628,242.606,242.606,242.606
+                                c133.978,0,242.604-108.631,242.604-242.606C485.212,108.628,376.585,0,242.607,0z M370.719,353.989l-19.425,19.429
+                                c-3.468,3.463-13.623,5.624-13.949,5.624c-61.452,0.536-120.621-23.602-164.095-67.08c-43.593-43.618-67.759-102.998-67.11-164.657
+                                c0-0.028,2.224-9.892,5.689-13.324l19.424-19.427c7.108-7.141,20.762-10.368,30.327-7.168l4.086,1.363
+                                c9.537,3.197,19.55,13.742,22.185,23.457l9.771,35.862c2.635,9.743-0.919,23.604-8.025,30.712l-12.97,12.972
+                                c12.734,47.142,49.723,84.138,96.873,96.903l12.965-12.975c7.141-7.141,20.997-10.692,30.719-8.061l35.857,9.806
+                                c9.717,2.67,20.26,12.62,23.456,22.154l1.363,4.145C381.028,333.262,377.826,346.913,370.719,353.989z"/>
+                        </g>
+                    </svg>
                     <span class="copy-toast">已复制</span>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- 第二页 -->
     <div class="page2" id="page2">
         <div class="splash-wrapper">
             <div class="splash-title">作品集</div>
@@ -1300,7 +1304,6 @@
         </div>
     </div>
 
-    <!-- 第三页 -->
     <div class="page3" id="page3">
         <div class="cards-row">
             <button class="minimal-card" onclick="showDetail('detail1')" aria-label="查看主图渲染作品">
@@ -1330,12 +1333,10 @@
         </div>
     </div>
 
-    <!-- 第四页 -->
     <div class="page4" id="page4">
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
-    <!-- 详情页1 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
@@ -1371,7 +1372,6 @@
         </button>
     </div>
 
-    <!-- 详情页2 -->
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
             <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情作品1" loading="lazy" decoding="async"></div>
@@ -1389,7 +1389,6 @@
         </button>
     </div>
 
-    <!-- 详情页3 -->
     <div class="detail-page" id="detail3">
         <div class="ai-layout">
             <div class="ai-top-container">
@@ -1414,7 +1413,6 @@
 
     <script>
         (() => {
-            // ========== 动态高度 ==========
             const screenCount = 4;
 
             function setPageHeight() {
@@ -1423,7 +1421,6 @@
             setPageHeight();
             window.addEventListener('resize', setPageHeight);
 
-            // ========== 真实资源加载追踪（监听现有 img 元素） ==========
             const SVG_NS = 'http://www.w3.org/2000/svg';
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadGroup = document.getElementById('load-group');
@@ -1431,7 +1428,6 @@
             const loadProgressFill = document.getElementById('loadProgressFill');
             const loadProgressText = document.getElementById('loadProgressText');
 
-            // 心形动画配置（不变）
             const heartConfig = {
                 name: "Heart Wave",
                 tag: "f(x) Heart Wave",
@@ -1510,8 +1506,8 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
-            const MIN_DISPLAY_MS = 400; // 最少显示 0.4 秒
-            const GLOBAL_TIMEOUT_MS = 8000; // 全局超时 8 秒
+            const MIN_DISPLAY_MS = 400;
+            const GLOBAL_TIMEOUT_MS = 8000;
             let loadingComplete = false;
 
             function updateLoadProgress(loaded, total) {
@@ -1520,7 +1516,6 @@
                 if (loadProgressText) loadProgressText.textContent = pct + '%';
             }
 
-            // 初始 0%
             updateLoadProgress(0, 1);
 
             function finishLoading() {
@@ -1532,7 +1527,6 @@
                 setTimeout(() => { document.body.style.overflow = ''; }, 500);
             }
 
-            // 真实追踪所有 <img> 标签的加载状态
             function trackAllImages() {
                 const images = document.querySelectorAll('img');
                 const total = images.length;
@@ -1549,7 +1543,6 @@
                     loadedCount++;
                     updateLoadProgress(loadedCount, total);
                     if (loadedCount >= total) {
-                        // 所有图片都处理完毕
                         resolvePromise();
                     }
                 }
@@ -1559,22 +1552,17 @@
                     resolvePromise = resolve;
                 });
 
-                // 遍历所有图片，检测是否已缓存，否则绑定事件
                 images.forEach(img => {
                     if (img.complete && img.naturalWidth > 0) {
-                        // 已经加载完成（缓存命中）
                         onImageComplete();
                     } else {
-                        // 监听 load 和 error 事件
                         img.addEventListener('load', onImageComplete, { once: true });
                         img.addEventListener('error', onImageComplete, { once: true });
                     }
                 });
 
-                // 兜底：如果某些图片从未触发事件（极少情况），超时后也结束
                 setTimeout(() => {
                     if (loadedCount < total) {
-                        // 强制设置为完成
                         updateLoadProgress(total, total);
                         resolvePromise();
                     }
@@ -1583,10 +1571,8 @@
                 return promise;
             }
 
-            // 启动真实加载流程
             const minDisplayPromise = new Promise(resolve => setTimeout(resolve, MIN_DISPLAY_MS));
 
-            // 同步监听 window.load 作为最终保障（浏览器标签页停止转圈）
             const windowLoadPromise = new Promise(resolve => {
                 if (document.readyState === 'complete') {
                     resolve();
@@ -1595,21 +1581,18 @@
                 }
             });
 
-            // 同时满足：图片追踪完成 + 最小显示时间 + window.load 完成
             Promise.all([
                 trackAllImages(),
                 minDisplayPromise,
                 windowLoadPromise
             ]).then(() => {
-                setTimeout(finishLoading, 50); // 微小延迟确保动画最后一帧
+                setTimeout(finishLoading, 50);
             }).catch(() => {
-                // 极端兜底
                 setTimeout(finishLoading, MIN_DISPLAY_MS);
             });
 
             document.body.style.overflow = 'hidden';
 
-            // ========== 主站逻辑 ==========
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
 
