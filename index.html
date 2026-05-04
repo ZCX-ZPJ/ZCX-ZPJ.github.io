@@ -155,7 +155,7 @@
             height: 100%;
             border-radius: 3px;
             background: #2c2c2c;
-            transition: width 0.35s ease-out;
+            transition: width 0.2s ease-out;
             will-change: width;
         }
         .load-progress-text {
@@ -755,10 +755,12 @@
             pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: opacity;
+            visibility: hidden;
         }
         .detail-page.active {
             opacity: 1;
             pointer-events: auto;
+            visibility: visible;
         }
 
         .back-btn {
@@ -893,6 +895,8 @@
             line-height: 0;
             border: 3.5px solid rgb(226, 131, 1);
             -webkit-tap-highlight-color: transparent;
+            aspect-ratio: 1;
+            min-height: 0;
         }
         .card-box:active {
             transform: scale(0.96);
@@ -903,12 +907,10 @@
         }
         .card-box img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            object-fit: contain;
             background: inherit;
-            loading: lazy;
-            decoding: async;
         }
 
         .ai-layout {
@@ -956,6 +958,7 @@
             cursor: pointer;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
             -webkit-tap-highlight-color: transparent;
+            aspect-ratio: 1;
         }
         .ai-bottom-box:active {
             transform: scale(0.96);
@@ -1238,7 +1241,7 @@
         <main>
             <div class="hero-title" id="titleMove">
                 <span>周成鑫</span><span>—</span>
-                <img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01BXAr6b23trxdBZpUS_!!3952997314.webp" class="profile-img" alt="周成鑫头像" width="150" height="150">
+                <img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01BXAr6b23trxdBZpUS_!!3952997314.webp" class="profile-img" alt="周成鑫头像" width="150" height="150" data-critical="true">
                 <span class="dot-text">3D<span class="middle-dot">·</span>TYPESPORTFOLIO</span>
             </div>
             <div class="hero-desc">
@@ -1330,36 +1333,36 @@
         <div class="page4-text">我们谈谈吧</div>
     </div>
 
+    <!-- 详情页图片全部使用 data-src 延迟加载 -->
     <div class="detail-page" id="detail1">
         <div class="cards-grid">
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ldT39L23trxhqjXDl_!!3952997314.webp" alt="渲染作品2" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01rxoKVX23trxiCM7kn_!!3952997314.webp" alt="渲染作品3" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01jHqsjj23trxhdbOuz_!!3952997314.webp" alt="渲染作品4" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01DIxrTk23trxhpT5nO_!!3952997314.webp" alt="渲染作品5" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01RaDxE923trxhdbbOf_!!3952997314.webp" alt="渲染作品6" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN014KCHcu23trxhynmX7_!!3952997314.webp" alt="渲染作品7" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01i8ZXX723trxhxNUDL_!!3952997314.webp" alt="渲染作品8" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01S9qKhi23trxiPe1cc_!!3952997314.webp" alt="渲染作品9" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01uHik3t23trxhXWpvh_!!3952997314.webp" alt="渲染作品10" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01JCinjy23trxhXWQys_!!3952997314.webp" alt="渲染作品11" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01wgZoK723trxhymi0w_!!3952997314.webp" alt="渲染作品12" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01tiuUo723trxhpSQF1_!!3952997314.webp" alt="渲染作品13" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01Y0XRgD23trxhpUhZC_!!3952997314.webp" alt="渲染作品14" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i4/3952997314/O1CN01wtoMJU23trxiCM7lp_!!3952997314.webp" alt="渲染作品15" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01SD6po223trxiCLmz6_!!3952997314.webp" alt="渲染作品16" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ZFiEUJ23trxhxM92o_!!3952997314.webp" alt="渲染作品17" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01Hya99823trxhhKUww_!!3952997314.webp" alt="渲染作品18" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN016o31Yv23trxhjgIDP_!!3952997314.webp" alt="渲染作品19" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01zpgn1V23trxiNKiUb_!!3952997314.webp" alt="渲染作品20" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01VuVvEN23trxiAl4ON_!!3952997314.webp" alt="渲染作品21" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01ELrqDp23trxdJqnyi_!!3952997314.webp" alt="渲染作品22" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01LtEpYd23trxhydvJ1_!!3952997314.webp" alt="渲染作品23" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01WkTQFl23trxiLWLhL_!!3952997314.webp" alt="渲染作品24" loading="lazy" decoding="async"></div>
-            <!-- 新增加的一排三个作品 -->
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01yRoo2x23trxlfJHgO_!!3952997314.png" alt="渲染作品25" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01oMZhxW23trxlvnUoN_!!3952997314.png" alt="渲染作品26" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01xwj9R023trxlrzqmN_!!3952997314.png" alt="渲染作品27" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01vOWZn623trxiHMTAp_!!3952997314.webp" alt="渲染作品1" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ldT39L23trxhqjXDl_!!3952997314.webp" alt="渲染作品2" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01rxoKVX23trxiCM7kn_!!3952997314.webp" alt="渲染作品3" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01jHqsjj23trxhdbOuz_!!3952997314.webp" alt="渲染作品4" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01DIxrTk23trxhpT5nO_!!3952997314.webp" alt="渲染作品5" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01RaDxE923trxhdbbOf_!!3952997314.webp" alt="渲染作品6" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN014KCHcu23trxhynmX7_!!3952997314.webp" alt="渲染作品7" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01i8ZXX723trxhxNUDL_!!3952997314.webp" alt="渲染作品8" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01S9qKhi23trxiPe1cc_!!3952997314.webp" alt="渲染作品9" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01uHik3t23trxhXWpvh_!!3952997314.webp" alt="渲染作品10" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01JCinjy23trxhXWQys_!!3952997314.webp" alt="渲染作品11" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01wgZoK723trxhymi0w_!!3952997314.webp" alt="渲染作品12" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01tiuUo723trxhpSQF1_!!3952997314.webp" alt="渲染作品13" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01Y0XRgD23trxhpUhZC_!!3952997314.webp" alt="渲染作品14" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i4/3952997314/O1CN01wtoMJU23trxiCM7lp_!!3952997314.webp" alt="渲染作品15" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01SD6po223trxiCLmz6_!!3952997314.webp" alt="渲染作品16" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01ZFiEUJ23trxhxM92o_!!3952997314.webp" alt="渲染作品17" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01Hya99823trxhhKUww_!!3952997314.webp" alt="渲染作品18" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN016o31Yv23trxhjgIDP_!!3952997314.webp" alt="渲染作品19" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN01zpgn1V23trxiNKiUb_!!3952997314.webp" alt="渲染作品20" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01VuVvEN23trxiAl4ON_!!3952997314.webp" alt="渲染作品21" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01ELrqDp23trxdJqnyi_!!3952997314.webp" alt="渲染作品22" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01LtEpYd23trxhydvJ1_!!3952997314.webp" alt="渲染作品23" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01WkTQFl23trxiLWLhL_!!3952997314.webp" alt="渲染作品24" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01yRoo2x23trxlfJHgO_!!3952997314.png" alt="渲染作品25" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01oMZhxW23trxlvnUoN_!!3952997314.png" alt="渲染作品26" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01xwj9R023trxlrzqmN_!!3952997314.png" alt="渲染作品27" loading="lazy" decoding="async"></div>
         </div>
         <button class="back-btn" onclick="goBack()">
             <span class="back-btn-content">
@@ -1371,12 +1374,12 @@
 
     <div class="detail-page" id="detail2">
         <div class="cards-grid">
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情作品1" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01irl2An23trxjSAHyR_!!3952997314.webp" alt="详情作品2" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01W3XUvc23trxjSAQIT_!!3952997314.webp" alt="详情作品3" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01NEyvgV23trxjVxGJC_!!3952997314.webp" alt="详情作品4" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01tg8g5m23trxjWiK44_!!3952997314.webp" alt="详情作品5" loading="lazy" decoding="async"></div>
-            <div class="card-box"><img src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01jVXWM723trxi9hyb1_!!3952997314.webp" alt="详情作品6" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i2/3952997314/O1CN011vvXff23trxi7PiRZ_!!3952997314.webp" alt="详情作品1" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01irl2An23trxjSAHyR_!!3952997314.webp" alt="详情作品2" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01W3XUvc23trxjSAQIT_!!3952997314.webp" alt="详情作品3" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01NEyvgV23trxjVxGJC_!!3952997314.webp" alt="详情作品4" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01tg8g5m23trxjWiK44_!!3952997314.webp" alt="详情作品5" loading="lazy" decoding="async"></div>
+            <div class="card-box"><img data-src="https://img.alicdn.com/imgextra/i1/3952997314/O1CN01jVXWM723trxi9hyb1_!!3952997314.webp" alt="详情作品6" loading="lazy" decoding="async"></div>
         </div>
         <button class="back-btn" onclick="goBack()">
             <span class="back-btn-content">
@@ -1389,14 +1392,14 @@
     <div class="detail-page" id="detail3">
         <div class="ai-layout">
             <div class="ai-top-container">
-                <img src="https://img.alicdn.com/imgextra/i4/3952997314/O1CN01z2M1e923trxi5TvZX_!!3952997314.webp" alt="AI生成作品展示" loading="lazy" decoding="async">
+                <img data-src="https://img.alicdn.com/imgextra/i4/3952997314/O1CN01z2M1e923trxi5TvZX_!!3952997314.webp" alt="AI生成作品展示" loading="lazy" decoding="async">
             </div>
             <div class="ai-bottom-row">
                 <div class="ai-bottom-box">
-                    <img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01CGft5C23trxiQQdDq_!!3952997314.webp" alt="AI辅助案例1" loading="lazy" decoding="async">
+                    <img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN01CGft5C23trxiQQdDq_!!3952997314.webp" alt="AI辅助案例1" loading="lazy" decoding="async">
                 </div>
                 <div class="ai-bottom-box">
-                    <img src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN015rF3oT23trxhiA3T7_!!3952997314.webp" alt="AI辅助案例2" loading="lazy" decoding="async">
+                    <img data-src="https://img.alicdn.com/imgextra/i3/3952997314/O1CN015rF3oT23trxhiA3T7_!!3952997314.webp" alt="AI辅助案例2" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -1411,6 +1414,7 @@
     <script>
         (() => {
             const screenCount = 4;
+            const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
             function setPageHeight() {
                 document.body.style.height = `${screenCount * window.innerHeight}px`;
@@ -1429,7 +1433,7 @@
                 name: "Heart Wave",
                 tag: "f(x) Heart Wave",
                 rotate: false,
-                particleCount: window.innerWidth < 768 ? 52 : 104,
+                particleCount: isMobile ? 36 : 104,
                 trailSpan: 0.18,
                 durationMs: 8400,
                 pulseDurationMs: 5600,
@@ -1469,7 +1473,7 @@
                 return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
             }
 
-            function buildLoadPath(detailScale, steps = 480) {
+            function buildLoadPath(detailScale, steps = isMobile ? 280 : 480) {
                 return Array.from({ length: steps + 1 }, (_, index) => {
                     const pt = heartConfig.point(index / steps, detailScale, heartConfig);
                     return `${index === 0 ? 'M' : 'L'} ${pt.x.toFixed(2)} ${pt.y.toFixed(2)}`;
@@ -1503,42 +1507,76 @@
             }
             loadingRafId = requestAnimationFrame(renderLoading);
 
-            const MIN_DISPLAY_MS = 400;
-            const GLOBAL_TIMEOUT_MS = 8000;
+            const MIN_DISPLAY_MS = isMobile ? 350 : 400;
+            const GLOBAL_TIMEOUT_MS = isMobile ? 4500 : 6000;
             let loadingComplete = false;
 
-            function updateLoadProgress(loaded, total) {
-                const pct = total > 0 ? Math.round((loaded / total) * 100) : 100;
-                if (loadProgressFill) loadProgressFill.style.width = pct + '%';
-                if (loadProgressText) loadProgressText.textContent = pct + '%';
+            let displayProgress = 0;
+            let targetProgress = 0;
+            let progressAnimId = null;
+
+            function smoothProgressUpdate() {
+                if (displayProgress < targetProgress) {
+                    displayProgress += (targetProgress - displayProgress) * 0.28;
+                    if (targetProgress - displayProgress < 0.5) {
+                        displayProgress = targetProgress;
+                    }
+                }
+                const rounded = Math.round(displayProgress);
+                if (loadProgressFill) loadProgressFill.style.width = rounded + '%';
+                if (loadProgressText) loadProgressText.textContent = rounded + '%';
+                if (displayProgress < targetProgress || (targetProgress < 100 && !loadingComplete)) {
+                    progressAnimId = requestAnimationFrame(smoothProgressUpdate);
+                } else if (displayProgress >= 99.5 && targetProgress >= 100) {
+                    if (loadProgressFill) loadProgressFill.style.width = '100%';
+                    if (loadProgressText) loadProgressText.textContent = '100%';
+                }
             }
 
-            updateLoadProgress(0, 1);
+            function setProgress(pct) {
+                targetProgress = Math.min(100, Math.max(0, pct));
+                if (!progressAnimId) {
+                    progressAnimId = requestAnimationFrame(smoothProgressUpdate);
+                }
+            }
+
+            setProgress(0);
 
             function finishLoading() {
                 if (loadingComplete) return;
                 loadingComplete = true;
+                setProgress(100);
+                if (progressAnimId) {
+                    cancelAnimationFrame(progressAnimId);
+                    progressAnimId = null;
+                }
+                if (loadProgressFill) loadProgressFill.style.width = '100%';
+                if (loadProgressText) loadProgressText.textContent = '100%';
                 if (loadingRafId) cancelAnimationFrame(loadingRafId);
                 loadingRafId = null;
-                loadingOverlay.classList.add('fade-out');
-                setTimeout(() => { document.body.style.overflow = ''; }, 500);
+                setTimeout(() => {
+                    loadingOverlay.classList.add('fade-out');
+                    setTimeout(() => { document.body.style.overflow = ''; }, 500);
+                }, 150);
             }
 
-            function trackAllImages() {
-                const images = document.querySelectorAll('img');
-                const total = images.length;
+            function trackCriticalImages() {
+                const criticalImg = document.querySelector('img[data-critical="true"]');
+                const criticalImages = criticalImg ? [criticalImg] : [];
+                const total = criticalImages.length;
 
                 if (total === 0) {
-                    updateLoadProgress(1, 1);
+                    setProgress(60);
                     return Promise.resolve();
                 }
 
-                updateLoadProgress(0, total);
+                setProgress(10);
                 let loadedCount = 0;
 
                 function onImageComplete() {
                     loadedCount++;
-                    updateLoadProgress(loadedCount, total);
+                    const pct = 10 + Math.round((loadedCount / total) * 50);
+                    setProgress(pct);
                     if (loadedCount >= total) {
                         resolvePromise();
                     }
@@ -1549,7 +1587,7 @@
                     resolvePromise = resolve;
                 });
 
-                images.forEach(img => {
+                criticalImages.forEach(img => {
                     if (img.complete && img.naturalWidth > 0) {
                         onImageComplete();
                     } else {
@@ -1560,10 +1598,10 @@
 
                 setTimeout(() => {
                     if (loadedCount < total) {
-                        updateLoadProgress(total, total);
+                        setProgress(60);
                         resolvePromise();
                     }
-                }, GLOBAL_TIMEOUT_MS);
+                }, 2500);
 
                 return promise;
             }
@@ -1579,14 +1617,28 @@
             });
 
             Promise.all([
-                trackAllImages(),
+                trackCriticalImages(),
                 minDisplayPromise,
                 windowLoadPromise
             ]).then(() => {
-                setTimeout(finishLoading, 50);
+                setProgress(85);
+                setTimeout(() => {
+                    setProgress(100);
+                    setTimeout(finishLoading, 120);
+                }, 200);
             }).catch(() => {
-                setTimeout(finishLoading, MIN_DISPLAY_MS);
+                setTimeout(() => {
+                    setProgress(100);
+                    setTimeout(finishLoading, 100);
+                }, MIN_DISPLAY_MS);
             });
+
+            setTimeout(() => {
+                if (!loadingComplete) {
+                    setProgress(100);
+                    setTimeout(finishLoading, 80);
+                }
+            }, GLOBAL_TIMEOUT_MS);
 
             document.body.style.overflow = 'hidden';
 
@@ -1606,9 +1658,25 @@
             let lastMouseX = window.innerWidth / 2;
             let lastMouseY = window.innerHeight / 2;
 
+            const loadedDetails = {};
             const homeLink = document.getElementById('homeLink');
             const aboutLink = document.getElementById('aboutLink');
             const workLink = document.getElementById('workLink');
+
+            function activateDetailImages(detailId) {
+                if (loadedDetails[detailId]) return;
+                loadedDetails[detailId] = true;
+                const container = document.getElementById(detailId);
+                if (!container) return;
+                const lazyImgs = container.querySelectorAll('img[data-src]');
+                lazyImgs.forEach(img => {
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.setAttribute('src', src);
+                        img.removeAttribute('data-src');
+                    }
+                });
+            }
 
             function navigateTo(targetY) {
                 if (currentPage !== 'home') {
@@ -1787,6 +1855,7 @@
                 page4.classList.remove('active');
                 document.body.classList.remove('smile-cursor');
                 document.getElementById(detailId).classList.add('active');
+                activateDetailImages(detailId);
                 currentPage = detailId;
                 loopActive = false;
                 clearTimers();
